@@ -175,7 +175,7 @@ class AttachmentServiceProvider extends ServiceProvider
     {
 
         $storage = Storage::disk(config('filesystems.defaultFilesystemDriver'));
-        logger('STORAGE: ', [$storage]);
+        logger('STORAGE: ', [config('filesystems.defaultFilesystemDriver'), $storage]);
         do {
             $fileId = Uuid::uuid4()->getHex();
         } while (Attachment::query()->where('id', $fileId)->first() != null);
@@ -233,8 +233,10 @@ class AttachmentServiceProvider extends ServiceProvider
                 $fileContent = $file;
                 $filePath = $directory.'/'.$fileId.'.'.$fileExtension;
                 // Uploading to storage
-                $storage->put($filePath, $fileContent, 'public');
+                $file = $storage->put($filePath, $fileContent, 'public');
+                logger('URL: ', [Storage::url($file)]);
             }
+
 
         }
 
