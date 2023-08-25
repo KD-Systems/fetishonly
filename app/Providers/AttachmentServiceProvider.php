@@ -174,8 +174,7 @@ class AttachmentServiceProvider extends ServiceProvider
     public static function createAttachment($file, $directory, $generateThumbnail)
     {
 
-        $storage = Storage::disk('s3');
-        logger('STORAGE: ', [config('filesystems.defaultFilesystemDriver'), $storage]);
+        $storage = Storage::disk(config('filesystems.defaultFilesystemDriver'));
         do {
             $fileId = Uuid::uuid4()->getHex();
         } while (Attachment::query()->where('id', $fileId)->first() != null);
@@ -235,7 +234,6 @@ class AttachmentServiceProvider extends ServiceProvider
                 // Uploading to storage
                 $storage->put($filePath, $fileContent, 'public');
             }
-
 
         }
 
