@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('DEFAULT_FILESYSTEM', 'public'),
+    'default' => 'public',
 
     /*
     |--------------------------------------------------------------------------
@@ -62,10 +62,10 @@ return [
 
         's3' => [
             'driver' => 's3',
-            'key' => env('AWS_KEY'),
-            'secret' => env('AWS_SECRET'),
-            'region' => env('AWS_REGION'),
-            'bucket' => env('AWS_BUCKET'),
+            'key' => '',
+            'secret' => '',
+            'region' => '',
+            'bucket' => '',
             'url' => env('AWS_URL'),
             'endpoint' => env('AWS_ENDPOINT'),
             'visibility' => 'public',
@@ -106,5 +106,5 @@ return [
         ],
 
     ],
-    'defaultFilesystemDriver' => 's3',
+    'defaultFilesystemDriver' => '',
 ];
