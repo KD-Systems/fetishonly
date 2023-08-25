@@ -233,8 +233,7 @@ class AttachmentServiceProvider extends ServiceProvider
                 $fileContent = $file;
                 $filePath = $directory.'/'.$fileId.'.'.$fileExtension;
                 // Uploading to storage
-                $file = $storage->put($filePath, $fileContent, 'public');
-                logger('URL: ', [Storage::url($file)]);
+                $storage->put($filePath, $fileContent, 'public');
             }
 
 
