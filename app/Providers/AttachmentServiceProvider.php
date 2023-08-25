@@ -174,7 +174,7 @@ class AttachmentServiceProvider extends ServiceProvider
     public static function createAttachment($file, $directory, $generateThumbnail)
     {
 
-        $storage = Storage::disk(config('filesystems.defaultFilesystemDriver'));
+        $storage = Storage::disk('s3');
         logger('STORAGE: ', [config('filesystems.defaultFilesystemDriver'), $storage]);
         do {
             $fileId = Uuid::uuid4()->getHex();
