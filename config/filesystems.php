@@ -106,5 +106,5 @@ return [
         ],
 
     ],
-    'defaultFilesystemDriver' => '',
+    'defaultFilesystemDriver' => 's3',
 ];
