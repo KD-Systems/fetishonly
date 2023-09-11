@@ -28,8 +28,8 @@ input[type="radio"] {
 }
 
 .radio.selected {
-    box-shadow: 0px 0px 0px 1px #9b0979;
-    border: 2px solid #9b0979
+    box-shadow: 0px 0px 0px 1px #C1262C;
+    border: 2px solid #C1262C
 }
 
 .label-radio {
