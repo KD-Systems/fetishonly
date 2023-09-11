@@ -16,7 +16,7 @@
                         <div class="row">
                             <div class="col-lg-7 col-xl-6 mx-auto">
                                 <a href="{{action('HomeController@index')}}">
-                                    <img class="brand-logo pb-4" src="{{asset( (Cookie::get('app_theme') == null ? (getSetting('site.default_user_theme') == 'dark' ? getSetting('site.dark_logo') : getSetting('site.light_logo')) : (Cookie::get('app_theme') == 'dark' ? getSetting('site.dark_logo') : getSetting('site.light_logo'))) )}}">
+                                    <img class="brand-logo pb-4" src="https://freeonlytest.s3.us-west-1.amazonaws.com/WhatsApp%20Image%202023-09-11%20at%2010.24.06%20PM.jpeg">
                                 </a>
                                 @include('auth.register-form')
                                 @include('auth.social-login-box')
