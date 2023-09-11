@@ -124,7 +124,7 @@ var Admin = {
 
     activeSettingsTab : '',
     themeColors: {
-        theme_color_code: '#cb0c9f',
+        theme_color_code: '#C1262C',
         theme_gradient_from: '#7928CA',
         theme_gradient_to: '#FF0080'
     },

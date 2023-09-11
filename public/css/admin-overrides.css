@@ -73,17 +73,17 @@
 
 /* TODO: Re-use some of these (Settings & Compass menus overrides) */
 .compass .voyager .nav-tabs>li.active>a:hover {
-    background-color: #CB0C9F!important;
+    background-color: #C1262C!important;
 }
 
 .compass .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
     color: #fff;
-    background-color: #CB0C9F;
-    border-color: transparent transparent #CB0C9F;
+    background-color: #C1262C;
+    border-color: transparent transparent #C1262C;
 }
 
 .compass .nav-tabs>li.active>a:hover {
-    background-color: #CB0C9F;
+    background-color: #C1262C;
 }
 
 .compass .panel>:not(.panel-loading):not(.collapsing) {
@@ -99,17 +99,17 @@
 }
 
 .settings .voyager .nav-tabs>li.active>a:hover {
-    background-color: #CB0C9F!important;
+    background-color: #C1262C!important;
 }
 
 .settings .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
     color: #fff!important;
-    background-color: #CB0C9F!important;
-    border-color: transparent transparent #CB0C9F!important;
+    background-color: #C1262C!important;
+    border-color: transparent transparent #C1262C!important;
 }
 
 .settings .nav-tabs>li.active>a:hover {
-    background-color: #CB0C9F!important;
+    background-color: #C1262C!important;
 }
 
 .settings .panel>:not(.panel-loading):not(.collapsing) {
@@ -132,7 +132,7 @@
 }
 
 .primary-link{
-    color: #CB0C9F!important;
+    color: #C1262C!important;
 }
 
 .primary-link:hover{
