@@ -9,8 +9,6 @@
 // Disable dropzone uploader auto loading globally as we will instantiate it manually
 Dropzone.autoDiscover = false;
 
-console.log(mediaSettings.max_file_upload_size);
-
 var FileUpload = {
 
     attachaments: [],
@@ -50,7 +48,7 @@ var FileUpload = {
             chunkSize: chunkSize,
             parallelChunkUploads: false,
             retryChunks: true,
-            retryChunksLimit: 2,
+            retryChunksLimit: 20,
             init: function() {
                 // FileUpload.attachaments
                 FileUpload.attachaments.map((element)=>{

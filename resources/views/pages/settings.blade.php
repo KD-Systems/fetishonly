@@ -57,7 +57,7 @@
             <div class="col-md-8 col-lg-9 mb-5 mb-lg-0 min-vh-100 border-left border-right settings-content mt-1 mt-md-0 pl-md-0 pr-md-0">
                 <div class="ml-3 d-none d-md-flex justify-content-between">
                     <div>
-                        <h5 class="text-bold mt-0 mt-md-3 mb-0 {{(Cookie::get('app_theme') == null ? (getSetting('site.default_user_theme') == 'dark' ? '' : 'text-dark-r') : (Cookie::get('app_theme') == 'dark' ? '' : 'text-dark-r'))}}">{{ ucfirst(__($activeSettingsTab))}}</h5>
+                        <h5 class="text-bold mt-0 mt-md-3 mb-0 {{(Cookie::get('app_theme') == null ? (getSetting('site.default_user_theme') == 'dark' ? '' : 'text-dark-r') : (Cookie::get('app_theme') == 'dark' ? '' : 'text-dark-r'))}}">{{ $activeSettingsTab == 'verify' ? 'Become a creator' : ucfirst(__($activeSettingsTab))}}</h5>
                         <h6 class="mt-2 text-muted">{{__($currentSettingTab['heading'])}}</h6>
                     </div>
 {{--                    @include('elements.table-filter')--}}

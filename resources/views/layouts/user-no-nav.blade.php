@@ -9,6 +9,10 @@
 </head>
 <body class="d-flex flex-column">
 
+<!-- <div style="width: 100%; background-color: white; pedding: 15px 0; text-align: 'center';">
+        Hello
+</div> -->
+
 <div class="flex-fill">
     @include('template.user-side-menu')
 
@@ -30,7 +34,7 @@
 @if(getSetting('compliance.enable_age_verification_dialog'))
     @include('elements.site-entry-approval-box')
 @endif
-@include('template.footer-compact',['compact'=>true])
+@include('template.footer',['compact'=>true])
 @include('template.jsVars')
 @include('template.jsAssets',['additionalJs' => [
                '/libs/jquery-backstretch/jquery.backstretch.min.js',

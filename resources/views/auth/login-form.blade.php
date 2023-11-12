@@ -72,3 +72,22 @@
         </p>
     </div>
 @endif
+
+@push('javascript')
+<script>
+    var login = "user";
+
+    $("#option-switch").click(function(){
+        if(login == "user") {
+            $(this).text("User Login")
+            $("#option-client").css("display", "block");
+            login = "client";
+        } else {
+            $(this).text("Client Login")
+            $("#option-client").css("display", "none");
+            login = "user";
+        }
+    })
+    
+</script>
+@endpush

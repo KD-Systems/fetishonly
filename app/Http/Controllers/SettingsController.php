@@ -43,14 +43,16 @@ class SettingsController extends Controller
         'profile' => ['heading' => 'Update your bio, cover and avatar', 'icon' => 'person'],
         'account' => ['heading' => 'Manage your account settings', 'icon' => 'settings'],
         'wallet' => ['heading' => 'Your payments & wallet', 'icon' => 'wallet'],
-        'payments' => ['heading' => 'Your payments & wallet', 'icon' => 'card'],
-        'rates' => ['heading' => 'Prices & Bundles', 'icon' => 'layers'],
+        // 'payments' => ['heading' => 'Your payments & wallet', 'icon' => 'card'],
+        // 'rates' => ['heading' => 'Prices & Bundles', 'icon' => 'layers'],
         'subscriptions' => ['heading' => 'Your active subscriptions', 'icon' => 'people'],
         'referrals' => ['heading' => 'Invite other people to earn more', 'icon' => 'person-add'],
         'notifications' => ['heading' => 'Your email notifications settings', 'icon' => 'notifications'],
         'privacy' => ['heading' => 'Your privacy and safety matters', 'icon' => 'shield'],
         'verify' => ['heading' => 'Get verified and start to earning now', 'icon' => 'checkmark'],
     ];
+
+    private $user;
 
     public function __construct()
     {
@@ -68,6 +70,8 @@ class SettingsController extends Controller
      */
     public function checkIfValidRoute($route)
     {
+        $this->addROute();
+
         if ($route) {
             if (! isset($this->availableSettings[$route])) {
                 abort(404);
@@ -188,6 +192,7 @@ class SettingsController extends Controller
      */
     public function renderSettingView($route, $data = [])
     {
+        $this->addROute();
         $currentTab = $route ? $route : 'profile';
         $currentSettingTab = $this->availableSettings[$currentTab];
         Javascript::put(
@@ -201,6 +206,7 @@ class SettingsController extends Controller
                 ],
             ]
         );
+
 
         return view('pages.settings', array_merge(
             $data,
@@ -666,6 +672,13 @@ class SettingsController extends Controller
             if(!($user->email_verified_at && $user->birthdate && ($user->verification && $user->verification->status == 'verified') )){
                 unset($this->availableSettings['referrals']);
             }
+        }
+    }
+
+    private function addROute() {
+        if(auth()->user()->identity_verified_at != null) {
+            $this->availableSettings["rates"] = ['heading' => 'Prices & Bundles', 'icon' => 'layers'];
+            $this->availableSettings["payments"] = ['heading' => 'Your payments & wallet', 'icon' => 'card'];
         }
     }
 

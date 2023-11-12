@@ -103,6 +103,8 @@ class AttachmentController extends Controller
      * @throws \Pion\Laravel\ChunkUpload\Exceptions\UploadFailedException
      */
     public function uploadChunk(Request $request, $type = false){
+        ini_set('memory_limit', '-1');
+
         $receiver = new FileReceiver("file", $request, HandlerFactory::classFromRequest($request));
         if ($receiver->isUploaded() === false) {
             throw new UploadMissingFileException();

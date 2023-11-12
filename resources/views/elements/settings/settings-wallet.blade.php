@@ -27,7 +27,15 @@
 
     <div class="mt-3 inline-border-tabs">
         <nav class="nav nav-pills nav-justified">
-            @foreach(\App\Providers\SettingsServiceProvider::allowWithdrawals(Auth::user()) ? ['deposit', 'withdraw'] : ['deposit'] as $tab)
+
+            @php
+                $methods = ['deposit'];
+                if(auth()->user()->identity_verified_at != null) {
+                    $methods[] = 'withdraw';
+                }
+            @endphp
+
+            @foreach(\App\Providers\SettingsServiceProvider::allowWithdrawals(Auth::user()) ? $methods : ['deposit'] as $tab)
                 <a class="nav-item nav-link {{$activeTab == $tab ? 'active' : ''}}" href="{{route('my.settings',['type' => 'wallet', 'active' => $tab])}}">
 
                     <div class="d-flex align-items-center justify-content-center">

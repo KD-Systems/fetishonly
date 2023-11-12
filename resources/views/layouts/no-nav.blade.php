@@ -10,8 +10,9 @@
 @if(getSetting('compliance.enable_age_verification_dialog'))
     @include('elements.site-entry-approval-box')
 @endif
-@include('template.footer-compact',['compact'=>true])
+@include('template.footer',['compact'=>true])
 @include('template.jsVars')
 @include('template.jsAssets')
+@stack('javascript')
 </body>
 </html>

@@ -13,7 +13,7 @@
 
 // Admin routes ( Needs to be placed above )
 Route::group(['prefix' => 'admin', 'middleware' => 'jsVars'], function () {
-    Voyager::routes();
+    Voyager::routes();    
     Route::get('/metrics/new/users/value', 'MetricsController@newUsersValue')->name('admin.metrics.new.users.value');
     Route::get('/metrics/new/users/trend', 'MetricsController@newUsersTrend')->name('admin.metrics.new.users.trend');
     Route::get('/metrics/new/users/partition', 'MetricsController@newUsersPartition')->name('admin.metrics.new.users.partition');
