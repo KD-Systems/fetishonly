@@ -46,6 +46,7 @@ Route::get('socialAuth/{provider}/callback', ['uses' => 'Auth\LoginController@ha
  * (User) Protected routes
  */
 Route::group(['middleware' => ['auth','verified','2fa']], function () {
+    Route::get('resend/verify-email', ['uses' => 'HomeController@resendVerifyEmail', 'as'   => 'resend-verify-email']);
     // Settings panel routes
     Route::group(['prefix' => 'my', 'as' => 'my.'], function () {
 

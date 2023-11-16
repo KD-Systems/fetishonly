@@ -65,10 +65,10 @@
                         @else
                             <img class="img-responsive pull-left flip logo hidden-xs animated fadeIn" src="{{ Voyager::image($admin_logo_img) }}" alt="Logo Icon">
                         @endif
-                        <div class="copy animated fadeIn">
+                        <!-- <div class="copy animated fadeIn">
                             <h1>{{ Voyager::setting('admin.title', 'Voyager') }}</h1>
                             <p>{{ Voyager::setting('admin.description', __('voyager::login.welcome')) }}</p>
-                        </div>
+                        </div> -->
                     </div> <!-- .logo-title-container -->
                 </div>
             </div>

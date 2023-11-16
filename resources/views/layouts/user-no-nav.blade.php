@@ -9,9 +9,11 @@
 </head>
 <body class="d-flex flex-column">
 
-<!-- <div style="width: 100%; background-color: white; pedding: 15px 0; text-align: 'center';">
-        Hello
-</div> -->
+@if(Auth::user()->email_verified_at == NULL)
+    <div class="alert alert-warning text-center" style="color: white;">
+    You have not confirmed your email address yet. <a href="{{ route('resend-verify-email') }}">Click on this link</a> to resend the confirmation email.
+    </div>
+@endif
 
 <div class="flex-fill">
     @include('template.user-side-menu')

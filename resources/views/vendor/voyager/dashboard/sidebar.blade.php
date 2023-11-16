@@ -11,7 +11,8 @@
                             <img src="{{ Voyager::image($admin_logo_img) }}" alt="Logo Icon">
                         @endif
                     </div>
-                    <div class="title">{{Voyager::setting('admin.title', 'VOYAGER')}}</div>
+                    <!-- <div class="title">{{Voyager::setting('admin.title', 'VOYAGER')}}</div> -->
+                    <div class="title">FetishOnly Admin</div>
                 </a>
             </div><!-- .navbar-header -->
 

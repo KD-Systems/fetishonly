@@ -59,12 +59,17 @@
         <h5 class="mt-5 mb-3">{{__("Complete your verification")}}</h5>
         <p class="mb-1 mt-2">{{__("Please attach clear photos of your ID card back and front side.")}}</p>
         <div class="dropzone-previews dropzone w-100 ppl-0 pr-0 pt-1 pb-1 border rounded"></div>
+        <hr>
+        <label for=""><input type="checkbox" name="terms_all_users" required> TERMS OF USE FOR ALL USERS (<a href="https://dev.fetishonly.com/pages/TERMS%20OF%20USE%20FOR%20ALL%20USERS%202">Click Here</a>)</label>
+        <br>    
+        <label for=""><input type="checkbox" name="terms_for_creator" required> TERMS OF USE FOR CREATORS (<a href="https://dev.fetishonly.com/pages/terms-of-use-for-creators">Click Here</a>)</label>
+        <hr>
         <div class="d-flex flex-row-reverse">
             <button class="btn btn-primary mt-2">{{__("Submit")}}</button>
         </div>
     @endif
     @if(Auth::user()->email_verified_at && Auth::user()->birthdate && (Auth::user()->verification && Auth::user()->verification->status == 'verified'))
         <p class="mt-3">{{__("Your info looks good, you're all set to post new content!")}}</p>
-        @endif
+    @endif
 </form>
 @include('elements.uploaded-file-preview-template')

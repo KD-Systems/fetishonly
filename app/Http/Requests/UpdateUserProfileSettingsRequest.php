@@ -29,6 +29,7 @@ class UpdateUserProfileSettingsRequest extends FormRequest
         $rules = [
             'name' => 'required|max:255',
             'username' => 'required|string|alpha_dash|max:255|unique:users,username,'.Auth::user()->id,
+            'email' => 'required|unique:users,email,'.Auth::user()->id,
             'location' => 'max:500',
         ];
 

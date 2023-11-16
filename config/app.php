@@ -14,9 +14,9 @@ return [
     */
 
     'site' => [
-        'name' => env('APP_NAME', 'JustFans'),
+        'name' => env('APP_NAME', 'FetishOnly'),
         'slogan' => env('APP_SLOGAN', 'Premium creators sass social media platform.'),
-        'description' => env('APP_DESCRIPTION', 'JustFans is a premium creators sass social media platform.'),
+        'description' => env('APP_DESCRIPTION', 'FetishOnly is a premium creators sass social media platform.'),
         'light_logo' => '/img/logo-black.png',
         'dark_logo' => '/img/logo-white.png',
         'favicon' => '/img/rounded-logo-gradient.svg',

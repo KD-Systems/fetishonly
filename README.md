@@ -1,4 +1,4 @@
-## JustFans - Paid creator social media platform
+## FetishOnly - Paid creator social media platform
 
 #### About
 

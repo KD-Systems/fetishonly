@@ -85,17 +85,17 @@
                 <br>
 
                 <hr>
-
+                @if(Auth::user()->identity_verified_at == NULL)
                 <a role="button" class="btn btn-round btn-primary btn-block " href="/my/settings/verify">
                         <span class="d-none d-md-block d-xl-block d-lg-block ml-2 text-truncate new-post-label">Become a Creator</span>
                         <span class="d-block d-md-none d-flex align-items-center justify-content-center"><div class="ion-icon-wrapper flex-shrink-0 icon-medium d-flex justify-content-center align-items-center">
-            <div class="ion-icon-inner">
-            <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512"><path d="M448 256c0-106-86-192-192-192S64 150 64 256s86 192 192 192 192-86 192-192z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"></path><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M256 176v160M336 256H176"></path></svg>
-            </div>
-            </div>
-</span>
-                    </a>
-
+                <div class="ion-icon-inner">
+                <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512"><path d="M448 256c0-106-86-192-192-192S64 150 64 256s86 192 192 192 192-86 192-192z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"></path><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M256 176v160M336 256H176"></path></svg>
+                </div>
+                </div>
+                </span>
+            </a>
+            @endif
             </div>
         </div>
         @include('elements.checkout.checkout-box')

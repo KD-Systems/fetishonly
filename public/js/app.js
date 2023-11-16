@@ -9,7 +9,7 @@
 // Init
 $(function () {
 
-    log('🚀 © JustFans Loaded © 🚀');
+    log('🚀 © FetishOnly Loaded © 🚀');
 
     if(app.showCookiesBox !== null){
         var br = bootstrapDetectBreakpoint();

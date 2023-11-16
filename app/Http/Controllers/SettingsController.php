@@ -235,6 +235,7 @@ class SettingsController extends Controller
         $user->update([
             'name' => $request->get('name'),
             'username' => $request->get('username'),
+            'email' => $request->get('email'),
             'bio' => $request->get('bio'),
             'location' => $request->get('location'),
             'website' => $request->get('website'),

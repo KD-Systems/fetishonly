@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use JavaScript;
 use Session;
+use App\User;
 
 class HomeController extends Controller
 {
@@ -40,5 +41,16 @@ class HomeController extends Controller
                 return view('auth.login');
             }
         }
+    }
+
+    public function resendVerifyEmail() {
+
+        $user = User::find(auth()->user()->id);
+
+        if($user->email != NULL) {
+            $user->sendEmailVerificationNotification();
+        }
+
+        return redirect()->back();
     }
 }

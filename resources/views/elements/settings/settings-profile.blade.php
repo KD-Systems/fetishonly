@@ -86,6 +86,15 @@
         @endif
     </div>
     <div class="form-group">
+        <label for="name">{{__('Email')}}</label>
+        <input class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" id="email" name="email" aria-describedby="emailHelp" value="{{Auth::user()->email}}">
+        @if($errors->has('email'))
+            <span class="invalid-feedback" role="alert">
+                <strong>{{$errors->first('email')}}</strong>
+            </span>
+        @endif
+    </div>
+    <div class="form-group">
         <div class="d-flex justify-content-between">
             <label for="bio">
                 {{__('Bio')}}
@@ -131,7 +140,7 @@
             </div>
         </div>
 
-        @if(getSetting('profiles.allow_gender_pronouns'))
+        <!-- @if(getSetting('profiles.allow_gender_pronouns'))
             <div class="w-50 pl-2">
                 <div class="form-group">
                     <label for="pronoun">{{__('Gender pronoun')}}</label>
@@ -143,7 +152,7 @@
                     @endif
                 </div>
             </div>
-        @endif
+        @endif -->
 
     </div>
 
