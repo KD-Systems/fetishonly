@@ -60,9 +60,9 @@
         <p class="mb-1 mt-2">{{__("Please attach clear photos of your ID card back and front side.")}}</p>
         <div class="dropzone-previews dropzone w-100 ppl-0 pr-0 pt-1 pb-1 border rounded"></div>
         <hr>
-        <label for=""><input type="checkbox" name="terms_all_users" required> TERMS OF USE FOR ALL USERS (<a href="https://dev.fetishonly.com/pages/TERMS%20OF%20USE%20FOR%20ALL%20USERS%202">Click Here</a>)</label>
+        <label for=""><input type="checkbox" name="terms_all_users" required> I agree Terms of Use for all Users (<a href="https://dev.fetishonly.com/pages/TERMS%20OF%20USE%20FOR%20ALL%20USERS%202">Click Here</a>)</label>
         <br>    
-        <label for=""><input type="checkbox" name="terms_for_creator" required> TERMS OF USE FOR CREATORS (<a href="https://dev.fetishonly.com/pages/terms-of-use-for-creators">Click Here</a>)</label>
+        <label for=""><input type="checkbox" name="terms_for_creator" required> I agree Terms of Use for all Creators (<a href="https://dev.fetishonly.com/pages/terms-of-use-for-creators">Click Here</a>)</label>
         <hr>
         <div class="d-flex flex-row-reverse">
             <button class="btn btn-primary mt-2">{{__("Submit")}}</button>
