@@ -68,7 +68,7 @@ class MembersHelperServiceProvider extends ServiceProvider
                 return $v->id;
             }, $topSubbedUsers);
 
-            $members = User::limit(getSetting('feed.feed_suggestions_total_cards') * getSetting('feed.feed_suggestions_card_per_page'))->where('public_profile', 1);
+            $members = User::limit(getSetting('feed.feed_suggestions_total_cards') * getSetting('feed.feed_suggestions_card_per_page'))->where('public_profile', 1)->where('identity_verified_at', '!=', NULL);
 
             // If there are more than 9 users having subs, use those
             // Otherwise, grab latest 9 users by date
