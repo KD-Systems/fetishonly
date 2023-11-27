@@ -24,4 +24,4 @@ jobs:
       run: knock -v srv5299.mjhst.com 6335 3278 7524
 
     - name: Deploy to VPS
-      run: sshpass -p ${{ secrets.SSH_PASSWORD }} ssh dev_ftp@srv5299.mjhst.com 'cd ./../httpd/html/dev.fetishonly.com/public_html/deployment/ && ./deploy.sh'
+      run: sshpass -p Gy6YDAtd2mX9c5yS ssh dev_ftp@srv5299.mjhst.com 'cd ./../httpd/html/dev.fetishonly.com/public_html/deployment/ && ./deploy.sh'
