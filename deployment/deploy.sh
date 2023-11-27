@@ -11,6 +11,7 @@ echo "Start Installing..."
 
 
 echo "#1 Pulling git"
+git checkout develop
 git pull
 
 echo "#2 Installing composer"
