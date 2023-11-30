@@ -931,5 +931,6 @@
     "Report abuse":  "Report abuse",
     "A user I am following went live" : "A user I am following went live",
     "Request sent. You will be notified once your verification is processed.": "Request sent. You will be notified once your verification is processed.",
-    "Scheduling takes place on server time" : "Scheduling takes place on server time"
+    "Scheduling takes place on server time" : "Scheduling takes place on server time",
+    "ConnectWithTwitter": "Connect with your twitter account."
 }

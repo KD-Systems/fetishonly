@@ -7,6 +7,7 @@ use App\Http\Requests\SavePostCommentRequest;
 use App\Http\Requests\SavePostRequest;
 use App\Http\Requests\UpdatePostBookmarkRequest;
 use App\Http\Requests\UpdateReactionRequest;
+use App\Jobs\TwitterPostingJob;
 use App\Model\Attachment;
 use App\Model\Post;
 use App\Model\PostComment;
@@ -18,6 +19,7 @@ use App\Providers\GenericHelperServiceProvider;
 use App\Providers\ListsHelperServiceProvider;
 use App\Providers\NotificationServiceProvider;
 use App\Providers\PostsHelperServiceProvider;
+use App\User;
 use Carbon\Carbon;
 use Cookie;
 use Illuminate\Http\Request;
@@ -91,6 +93,23 @@ class PostsController extends Controller
         }
 
         return view('pages.post', $data);
+    }
+
+    public function sharePost($post_id, $username) {
+
+        try {
+            $postUser = User::where('username', $username)->first();
+            $post = Post::find($post_id);
+
+            TwitterPostingJob::dispatch($postUser, $post);
+            return response()->json([
+                'success' => true
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => false
+            ]);
+        }
     }
 
     /**
@@ -175,12 +194,15 @@ class PostsController extends Controller
             ];
 
             if ($type == 'create') {
-                $postID = Post::create(array_merge([
+                $post = Post::create(array_merge([
                     'user_id' => $request->user()->id,
                     'text' => $request->get('text'),
                     'price' => $request->get('price'),
                     'status' => $postStatus,
-                ], $postSchedulingData))->id;
+                ], $postSchedulingData));
+
+                $postID = $post->id;
+
             } elseif ($type == 'update') {
                 $postID = $request->get('id');
                 $post = Post::where('id', $postID)->where('user_id', Auth::user()->id)->first();

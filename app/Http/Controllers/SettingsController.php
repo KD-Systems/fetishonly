@@ -20,6 +20,7 @@ use App\Providers\AttachmentServiceProvider;
 use App\Providers\AuthServiceProvider;
 use App\Providers\EmailsServiceProvider;
 use App\Providers\GenericHelperServiceProvider;
+use App\TwitterAccess;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -178,6 +179,8 @@ class SettingsController extends Controller
                     $data['referrals'] = ReferralCodeUsage::with(['usedBy'])->where('referral_code', $user->referral_code)->orderBy('id', 'desc')->paginate(6);
                 }
                 break;
+            case 'twitter':
+                $data['twitter'] = TwitterAccess::where('user_id', Auth::user()->id)->first();
         }
 
         return $this->renderSettingView($request->route('type'), $data);
@@ -680,6 +683,7 @@ class SettingsController extends Controller
         if(auth()->user()->identity_verified_at != null) {
             $this->availableSettings["rates"] = ['heading' => 'Prices & Bundles', 'icon' => 'layers'];
             $this->availableSettings["payments"] = ['heading' => 'Your payments & wallet', 'icon' => 'card'];
+            $this->availableSettings["twitter"] = ['heading' => 'Connect with your twitter account', 'icon' => 'logo-twitter'];
         }
     }
 

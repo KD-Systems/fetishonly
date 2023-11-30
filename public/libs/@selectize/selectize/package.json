@@ -1,52 +1,31 @@
 {
-  "_args": [
-    [
-      "@selectize/selectize@0.13.6",
-      "/mnt/f/of-tools/builds/Script"
-    ]
+  "name": "@selectize/selectize",
+  "keywords": [
+    "select",
+    "ui",
+    "form",
+    "input",
+    "control",
+    "autocomplete",
+    "tagging",
+    "tag"
   ],
-  "_from": "@selectize/selectize@0.13.6",
-  "_id": "@selectize/selectize@0.13.6",
-  "_inBundle": false,
-  "_integrity": "sha512-UVkHH92l/4zLH/acfukry419K2yAKiDf6VmFQ9hZzMpWW2epE7xJIgK47mJLjAQnimP0ROo8BStfwelWcoTQyg==",
-  "_location": "/@selectize/selectize",
-  "_phantomChildren": {},
-  "_requested": {
-    "type": "version",
-    "registry": true,
-    "raw": "@selectize/selectize@0.13.6",
-    "name": "@selectize/selectize",
-    "escapedName": "@selectize%2fselectize",
-    "scope": "@selectize",
-    "rawSpec": "0.13.6",
-    "saveSpec": null,
-    "fetchSpec": "0.13.6"
-  },
-  "_requiredBy": [
-    "/"
-  ],
-  "_resolved": "https://registry.npmjs.org/@selectize/selectize/-/selectize-0.13.6.tgz",
-  "_spec": "0.13.6",
-  "_where": "/mnt/f/of-tools/builds/Script",
-  "author": {
-    "name": "Brian Reavis",
-    "email": "brian@thirdroute.com"
-  },
-  "bugs": {
-    "url": "https://github.com/selectize/selectize.js/issues"
-  },
-  "contributors": [
-    {
-      "name": "Ris Adams",
-      "email": "selectize@risadams.com"
-    }
-  ],
-  "dependencies": {
-    "@selectize/sifter": "^0.6.2",
-    "jquery-ui": "^1.13.0",
-    "microplugin": "0.0.3"
-  },
+  "main": "dist/js/selectize.js",
   "description": "Selectize is a jQuery-based custom <select> UI control. Useful for tagging, contact lists, country selectors, etc.",
+  "version": "0.13.6",
+  "author": "Brian Reavis <brian@thirdroute.com>",
+  "contributors": [
+    "Ris Adams <selectize@risadams.com>"
+  ],
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/selectize/selectize.js.git"
+  },
+  "dependencies": {
+    "microplugin": "0.0.3",
+    "@selectize/sifter": "^0.6.2"
+  },
   "devDependencies": {
     "@types/jquery": "^3.5.13",
     "bootstrap-sass": "^3.4.1",
@@ -84,40 +63,21 @@
     "popper.js": "1.16.1",
     "sass": "1.53.0"
   },
-  "engines": {
-    "node": "*"
-  },
-  "homepage": "https://github.com/selectize/selectize.js#readme",
-  "keywords": [
-    "select",
-    "ui",
-    "form",
-    "input",
-    "control",
-    "autocomplete",
-    "tagging",
-    "tag"
-  ],
-  "license": "Apache-2.0",
-  "main": "dist/js/selectize.js",
-  "name": "@selectize/selectize",
   "optionalDependencies": {
     "jquery-ui": "^1.13.0"
   },
   "peerDependencies": {
     "jquery": "^1.7.0 || ^2 || ^3"
   },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/selectize/selectize.js.git"
-  },
   "scripts": {
+    "test": "karma start",
     "build": "make",
     "clean": "rm -rf dist build node_modules",
-    "grunt": "grunt",
     "prestart": "npm run build",
     "start": "grunt serve",
-    "test": "karma start"
+    "grunt": "grunt"
   },
-  "version": "0.13.6"
+  "engines": {
+    "node": "*"
+  }
 }

@@ -13,7 +13,7 @@
 
 // Admin routes ( Needs to be placed above )
 Route::group(['prefix' => 'admin', 'middleware' => 'jsVars'], function () {
-    Voyager::routes();    
+    Voyager::routes();
     Route::get('/metrics/new/users/value', 'MetricsController@newUsersValue')->name('admin.metrics.new.users.value');
     Route::get('/metrics/new/users/trend', 'MetricsController@newUsersTrend')->name('admin.metrics.new.users.trend');
     Route::get('/metrics/new/users/partition', 'MetricsController@newUsersPartition')->name('admin.metrics.new.users.partition');
@@ -46,6 +46,10 @@ Route::get('socialAuth/{provider}/callback', ['uses' => 'Auth\LoginController@ha
  * (User) Protected routes
  */
 Route::group(['middleware' => ['auth','verified','2fa']], function () {
+
+    Route::get('twitter-verify', ['uses' => 'TwitterAccessController@index']);
+    Route::get('twitter-test', ['uses' => 'TwitterAccessController@test']);
+
     Route::get('resend/verify-email', ['uses' => 'HomeController@resendVerifyEmail', 'as'   => 'resend-verify-email']);
     // Settings panel routes
     Route::group(['prefix' => 'my', 'as' => 'my.'], function () {
@@ -154,6 +158,7 @@ Route::group(['middleware' => ['auth','verified','2fa']], function () {
 
     // Posts routes
     Route::group(['prefix' => 'posts', 'as' => 'posts.'], function () {
+        Route::get('share/{post_id}/{username}', ['uses' => 'PostsController@sharePost', 'as'   => 'share']);
         Route::post('/save', ['uses' => 'PostsController@savePost', 'as'   => 'save']);
         Route::get('/create', ['uses' => 'PostsController@create', 'as'   => 'create']);
         Route::get('/edit/{post_id}', ['uses' => 'PostsController@edit', 'as'   => 'edit']);

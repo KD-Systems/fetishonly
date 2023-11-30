@@ -2,6 +2,8 @@
 
 use App\Providers\GenericHelperServiceProvider;
 use App\Providers\InstallerServiceProvider;
+use App\TwitterAccess;
+use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Storage;
 
 if (! function_exists('getSetting')) {
@@ -77,6 +79,7 @@ function handledExec($command, $throw_exception = true) {
 }
 
 function checkMysqlndForPDO(){
+    return true;
     $dbHost = env('DB_HOST');
     $dbUser = env('DB_USERNAME');
     $dbPass = env('DB_PASSWORD');
@@ -94,4 +97,50 @@ function checkForMysqlND(){
         return true;
     }
     return false;
+}
+
+function getTwitterToken(TwitterAccess $twitterAccess) {
+
+    if($twitterAccess->refreshed_at > now()->subHours(2))
+    {
+        return $twitterAccess;
+    }
+
+    $client_id = env('X_CLIENT_ID', '');
+    $client_secret = env('X_CLIENT_SECRET', '');
+    $basic_auth = base64_encode($client_id.':'.$client_secret);
+
+    $client = new Client();
+
+    try {
+        $response = $client->post('https://api.twitter.com/2/oauth2/token', [
+            'headers' => [
+                'Content-Type' => 'application/x-www-form-urlencoded',
+                'Authorization' => 'Basic '.$basic_auth
+            ],
+            'form_params' => [
+                'refresh_token' => $twitterAccess->refresh_token,
+                'grant_type'    => 'refresh_token',
+                'client_id'     => $client_id,
+                'code_verifier' => 'challenge'
+            ]
+        ]);
+
+        if($response->getStatusCode() != 200)
+            throw new Exception('Error');
+
+        $response = json_decode($response->getBody()->getContents(), true);
+
+        $twitterAccess->update([
+            'access_token'  => $response['access_token'],
+            'refresh_token' => $response['refresh_token'],
+            'refreshed_at'  => now()
+        ]);
+
+        return $twitterAccess;
+
+    } catch (Exception $ex) {
+        return $ex->getMessage();
+    }
+
 }

@@ -167,7 +167,7 @@
             @endif
         @endif
 
-        @if(!getSetting('site.hide_create_post_menu') && (auth()->user()->identity_verified_at != null))
+        @if(!getSetting('site.hide_create_post_menu') && (auth()->check() && auth()->user()->identity_verified_at != null))
             @if(GenericHelper::isEmailEnforcedAndValidated())
                 <li class="nav-item">
                     <a role="button" class="btn btn-round btn-primary btn-block " href="{{route('posts.create')}}">

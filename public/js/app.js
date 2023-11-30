@@ -371,6 +371,18 @@ function shareOrCopyLink(url = false) {
     }
 }
 
+
+function sharePostOnTwitter(url) {
+    // console.log(url);
+    $.ajax({
+        methods: 'GET',
+        url: url,
+        success: function(response) {
+            launchToast('success', trans('Success'), trans('Post shared to twitter.'), 'now');
+        }
+    });
+}
+
 /**
  * Auto Adjusts textareas on resize
  * @param el

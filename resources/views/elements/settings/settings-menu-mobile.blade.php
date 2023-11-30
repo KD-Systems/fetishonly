@@ -3,7 +3,7 @@
         @foreach($availableSettings as $route => $setting)
             <a class="nav-item nav-link {{$activeSettingsTab == $route ? 'active' : ''}}" href="{{route('my.settings',['type'=>$route])}}">
                 <div class="d-flex justify-content-center">
-                    @include('elements.icon',['icon'=>$setting['icon'].'-outline','centered'=>'false','variant'=>'medium'])
+                    @include('elements.icon',['icon'=>str_contains($setting['icon'], 'logo-') ? $setting['icon'] : $setting['icon'].'-outline','centered'=>'false','variant'=>'medium'])
                 </div>
             </a>
         @endforeach

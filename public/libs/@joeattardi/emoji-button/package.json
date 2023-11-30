@@ -1,52 +1,30 @@
 {
-  "_args": [
-    [
-      "@joeattardi/emoji-button@3.1.1",
-      "/mnt/f/of-tools/builds/Script"
-    ]
-  ],
-  "_from": "@joeattardi/emoji-button@3.1.1",
-  "_id": "@joeattardi/emoji-button@3.1.1",
-  "_inBundle": false,
-  "_integrity": "sha512-UCGY3t5ey+py4CQ06ebsCG3RFjN5IzXL6xF/skFCks5gdIXGjMDSGd9BopuKLcBxTfo4QfcxWuF+Wkugo0cqqA==",
-  "_location": "/@joeattardi/emoji-button",
-  "_phantomChildren": {},
-  "_requested": {
-    "type": "version",
-    "registry": true,
-    "raw": "@joeattardi/emoji-button@3.1.1",
-    "name": "@joeattardi/emoji-button",
-    "escapedName": "@joeattardi%2femoji-button",
-    "scope": "@joeattardi",
-    "rawSpec": "3.1.1",
-    "saveSpec": null,
-    "fetchSpec": "3.1.1"
-  },
-  "_requiredBy": [
-    "/"
-  ],
-  "_resolved": "https://registry.npmjs.org/@joeattardi/emoji-button/-/emoji-button-3.1.1.tgz",
-  "_spec": "3.1.1",
-  "_where": "/mnt/f/of-tools/builds/Script",
-  "author": {
-    "name": "Joe Attardi",
-    "email": "jattardi@gmail.com",
-    "url": "https://joeattardi.codes"
-  },
-  "bugs": {
-    "url": "https://github.com/joeattardi/emoji-button/issues"
-  },
-  "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.22",
-    "@fortawesome/free-regular-svg-icons": "^5.10.2",
-    "@fortawesome/free-solid-svg-icons": "^5.10.2",
-    "@popperjs/core": "^2.0.0",
-    "focus-trap": "^5.1.0",
-    "tiny-emitter": "^2.1.0",
-    "tslib": "^1.10.0",
-    "twemoji": "^12.1.5"
-  },
+  "name": "@joeattardi/emoji-button",
+  "version": "3.1.1",
   "description": "Vanilla JavaScript emoji picker",
+  "keywords": [
+    "emoji",
+    "javascript"
+  ],
+  "main": "dist/index.js",
+  "types": "index.d.ts",
+  "scripts": {
+    "build": "NODE_ENV=production rollup -c",
+    "build:watch": "rollup -cw",
+    "prepublishOnly": "NODE_ENV=production rollup -c",
+    "test": "jest",
+    "test:watch": "jest --watchAll",
+    "lint": "eslint src/*.ts",
+    "prettify": "prettier src/*.ts --write"
+  },
+  "author": "Joe Attardi <jattardi@gmail.com> (https://joeattardi.codes)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joeattardi/emoji-button.git"
+  },
+  "homepage": "https://github.com/joeattardi/emoji-button",
+  "bugs": "https://github.com/joeattardi/emoji-button/issues",
+  "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
@@ -72,31 +50,18 @@
     "ts-jest": "^25.2.1",
     "typescript": "^3.7.5"
   },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.22",
+    "@fortawesome/free-regular-svg-icons": "^5.10.2",
+    "@fortawesome/free-solid-svg-icons": "^5.10.2",
+    "@popperjs/core": "^2.0.0",
+    "focus-trap": "^5.1.0",
+    "tiny-emitter": "^2.1.0",
+    "tslib": "^1.10.0",
+    "twemoji": "^12.1.5"
+  },
   "files": [
     "dist",
     "index.d.ts"
-  ],
-  "homepage": "https://github.com/joeattardi/emoji-button",
-  "keywords": [
-    "emoji",
-    "javascript"
-  ],
-  "license": "MIT",
-  "main": "dist/index.js",
-  "name": "@joeattardi/emoji-button",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/joeattardi/emoji-button.git"
-  },
-  "scripts": {
-    "build": "NODE_ENV=production rollup -c",
-    "build:watch": "rollup -cw",
-    "lint": "eslint src/*.ts",
-    "prepublishOnly": "NODE_ENV=production rollup -c",
-    "prettify": "prettier src/*.ts --write",
-    "test": "jest",
-    "test:watch": "jest --watchAll"
-  },
-  "types": "index.d.ts",
-  "version": "3.1.1"
+  ]
 }
