@@ -21,6 +21,8 @@ composer install --no-interaction --prefer-dist --optimize-autoloader
 echo "#3 Running migration"
 php artisan migrate --force
 
+npm run prod
+
 echo "#4 clearing caches"
 php artisan optimize:clear
 
