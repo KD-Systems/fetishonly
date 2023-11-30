@@ -21,17 +21,18 @@ composer install --no-interaction --prefer-dist --optimize-autoloader
 echo "#3 Running migration"
 php artisan migrate --force
 
+echo "#4 node production build"
 npm run prod
 
-echo "#4 clearing caches"
+echo "#5 clearing caches"
 php artisan optimize:clear
 
 
-echo "#5 Optimizing caches"
+echo "#6 Optimizing caches"
 php artisan config:cache
 php artisan event:cache
 php artisan route:cache
 php artisan view:cache
 
-echo "#6 Starting application..."
+echo "#7 Starting application..."
 php artisan up
