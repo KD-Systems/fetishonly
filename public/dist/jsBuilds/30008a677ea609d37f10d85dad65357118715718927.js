@@ -50,6 +50,7 @@ appTheme+=".css";$('#app-theme').attr('href',appTheme);}
 function launchToast(type,title,message,subtitle=''){$.toast({type:'',title:title,subtitle:subtitle,content:message,dismissible:true,indicator:{type:type},delay:5000,});}
 function shareOrCopyLink(url=false){if(url===false){url=window.location.href;}
 if(navigator.share){navigator.share({title:document.title,url:url}).then(()=>console.log('Successful share')).catch(error=>console.log('Error sharing:',error));}else{copyToClipboard(url);launchToast('success',trans('Success'),trans('Link copied to clipboard')+'.','now');}}
+function sharePostOnTwitter(url){$.ajax({methods:'GET',url:url,success:function(response){launchToast('success',trans('Success'),trans('Post shared to twitter.'),'now');}});}
 function textAreaAdjust(el){el.style.height=(el.scrollHeight>el.clientHeight)?(el.scrollHeight)+"px":"45px";}
 function getNotificationsActiveFilter(){let activeType='';if(window.location.href.indexOf('/likes')>=0){activeType='/likes';}else if(window.location.href.indexOf('/messages')>=0){activeType='/messages';}else if(window.location.href.indexOf('/subscriptions')>=0){activeType='/subscriptions';}else if(window.location.href.indexOf('/tips')>=0){activeType='/tips';}else if(window.location.href.indexOf('/promos')>=0){activeType='/promos';}
 return activeType;}
