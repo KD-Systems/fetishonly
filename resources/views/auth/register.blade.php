@@ -26,7 +26,7 @@
                 </div>
             </div>
             <div class="col-md-6 d-none d-md-flex bg-image p-0 m-0">
-                <div class="d-flex m-0 p-0 bg-gradient-primary w-100 h-100">
+                <div class="d-flex m-0 p-0 bg-primary w-100 h-100">
                     <img src="{{asset('/img/pattern-lines.svg')}}" alt="pattern-lines" class="img-fluid opacity-10">
                 </div>
             </div>
