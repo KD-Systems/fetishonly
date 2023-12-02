@@ -13,7 +13,7 @@ echo "Start Installing..."
 echo "#1 Pulling git"
 git reset --hard
 
-git checkout develop
+git checkout main
 git pull
 
 echo "#2 Installing composer"
