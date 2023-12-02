@@ -9,9 +9,10 @@
 </head>
 <body class="d-flex flex-column">
 
-@if(Auth::check() && Auth::user()->email_verified_at == NULL)
+{{-- @if(Auth::check() && Auth::user()->email_verified_at == NULL) --}}
+@if(true)
     <div class="alert alert-warning text-center" style="color: white;">
-    You have not confirmed your email address yet. <a class="text-bold text-black" href="{{ route('resend-verify-email') }}">Click on this link</a> to resend the confirmation email.
+    You have not confirmed your email address yet. <a class="text-bold text-white" href="{{ route('resend-verify-email') }}">Click on this link</a> to resend the confirmation email.
     </div>
 @endif
 

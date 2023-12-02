@@ -146,13 +146,6 @@ $light-gradient-state:        #EBEFF4 !default;
 
 // Gradient Colors map
 $theme-gradient-colors: (
-    "secondary":  ($secondary-gradient, $secondary-gradient-state),
-    "success":    ($success-gradient, $success-gradient-state),
-    "info":       ($info-gradient, $info-gradient-state),
-    "warning":    ($warning-gradient, $warning-gradient-state),
-    "danger":     ($danger-gradient, $danger-gradient-state),
-    "light":      ($light-gradient, $light-gradient-state),
-    "dark":       ($dark-gradient, $dark-gradient-state)
 ) !default;
 
 
