@@ -1,5 +1,4 @@
 @if(!Auth::user()->email_verified_at) @include('elements.resend-verification-email-box') @endif
-@if(true) @include('elements.resend-verification-email-box') @endif
 
 @if(getSetting('ai.open_ai_enabled'))
     @include('elements.suggest-description')
