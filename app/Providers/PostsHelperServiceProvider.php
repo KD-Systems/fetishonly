@@ -222,7 +222,66 @@ class PostsHelperServiceProvider extends ServiceProvider
         $posts = Post::withCount('tips')
             ->with($relations);
 
+        // If logged in and previewing his own posts or admin, show pre-approved posts as well
+        if(Auth::check() && (Auth::user()->id === $userID || Auth::user()->role_id === 1)){
+            $posts->whereIn('status', [
+                Post::PENDING_STATUS,
+                Post::APPROVED_STATUS,
+                Post::DISAPPROVED_STATUS
+            ]);
+        }
+        else{
+            $posts->where('status', Post::APPROVED_STATUS);
+        }
+
+        // For profile page
+        // if ($ownPosts) {
+        //     $posts->where('user_id', $userID);
+        //     // Registered
+        //     if(Auth::check() && Auth::user()->id !== $userID) {
+        //         $posts = self::filterPosts($posts, $userID, 'scheduled');
+        //     }
+        //     // Un-registered
+        //     elseif (!Auth::check()){
+        //         $posts = self::filterPosts($posts, $userID, 'scheduled');
+        //     }
+        // }
+        // // For bookmarks page
+        // elseif ($bookMarksOnly) {
+        //     $posts = self::filterPosts($posts, $userID, 'bookmarks');
+        //     $posts = self::filterPosts($posts, $userID, 'blocked');
+        // }
+        // // For feed page
+        // else {
+        //     $posts = self::filterPosts($posts, $userID, 'all');
+        // }
+
+        if (!$ownPosts) {
+            $posts = self::filterPosts($posts, $userID, 'scheduled');
+        }
+
+        // Media type filters
+        // if ($mediaType) {
+        //     $posts = self::filterPosts($posts, $userID, 'media', $mediaType);
+        // }
+
+        // Filtering the search term
+        if($searchTerm){
+            $posts = self::filterPosts($posts, $userID, 'search',false,false,$searchTerm);
+        }
+
+        // Processing sorting
         $posts = self::filterPosts($posts, $userID, 'order',false,$sortOrder);
+
+        if ($pageNumber) {
+            $posts = $posts->paginate(getSetting('feed.feed_posts_per_page'), ['*'], 'page', $pageNumber)->appends(request()->query());
+        } else {
+            $posts = $posts->paginate(getSetting('feed.feed_posts_per_page'))->appends(request()->query());
+        }
+
+        if(Auth::check() && Auth::user()->role_id === 1){
+            $hasSub = true;
+        }
 
         if ($encodePostsToHtml) {
             // Posts encoded as JSON
@@ -264,107 +323,6 @@ class PostsHelperServiceProvider extends ServiceProvider
         }
 
         return $data;
-        // If logged in and previewing his own posts or admin, show pre-approved posts as well
-        if(Auth::check() && (Auth::user()->id === $userID || Auth::user()->role_id === 1)){
-            $posts->whereIn('status', [
-                Post::PENDING_STATUS,
-                Post::APPROVED_STATUS,
-                Post::DISAPPROVED_STATUS
-            ]);
-        }
-        else{
-            $posts->where('status', Post::APPROVED_STATUS);
-        }
-
-        // For profile page
-        if ($ownPosts) {
-            $posts->where('user_id', $userID);
-            // Registered
-            if(Auth::check() && Auth::user()->id !== $userID) {
-                $posts = self::filterPosts($posts, $userID, 'scheduled');
-            }
-            // Un-registered
-            elseif (!Auth::check()){
-                $posts = self::filterPosts($posts, $userID, 'scheduled');
-            }
-        }
-        // For bookmarks page
-        elseif ($bookMarksOnly) {
-            $posts = self::filterPosts($posts, $userID, 'bookmarks');
-            $posts = self::filterPosts($posts, $userID, 'blocked');
-        }
-        // For feed page
-        else {
-            $posts = self::filterPosts($posts, $userID, 'all');
-        }
-
-        if (!$ownPosts) {
-            $posts = self::filterPosts($posts, $userID, 'scheduled');
-        }
-
-        // Media type filters
-        if ($mediaType) {
-            $posts = self::filterPosts($posts, $userID, 'media', $mediaType);
-        }
-
-        // Filtering the search term
-        if($searchTerm){
-            $posts = self::filterPosts($posts, $userID, 'search',false,false,$searchTerm);
-        }
-
-        // Processing sorting
-        // $posts = self::filterPosts($posts, $userID, 'order',false,$sortOrder);
-
-        if ($pageNumber) {
-            $posts = $posts->paginate(getSetting('feed.feed_posts_per_page'), ['*'], 'page', $pageNumber)->appends(request()->query());
-        } else {
-            $posts = $posts->paginate(getSetting('feed.feed_posts_per_page'))->appends(request()->query());
-        }
-
-        if(Auth::check() && Auth::user()->role_id === 1){
-            $hasSub = true;
-        }
-
-        // if ($encodePostsToHtml) {
-        //     // Posts encoded as JSON
-        //     $data = [
-        //         'total' => $posts->total(),
-        //         'currentPage' => $posts->currentPage(),
-        //         'last_page' => $posts->lastPage(),
-        //         'prev_page_url' => $posts->previousPageUrl(),
-        //         'next_page_url' => $posts->nextPageUrl(),
-        //         'first_page_url' => $posts->nextPageUrl(),
-        //         'hasMore' => $posts->hasMorePages(),
-        //     ];
-        //     $postsData = $posts->map(function ($post) use ($hasSub, $ownPosts, $data) {
-        //         if ($ownPosts) {
-        //             $post->setAttribute('isSubbed', $hasSub);
-        //         } else {
-        //             $post->setAttribute('isSubbed', true);
-        //         }
-        //         $post->setAttribute('postPage',$data['currentPage']);
-        //         $post = ['id' => $post->id, 'html' => View::make('elements.feed.post-box')->with('post', $post)->render()];
-
-        //         return $post;
-        //     });
-        //     $data['posts'] = $postsData;
-        // } else {
-        //     // Collection data posts | To be rendered on the server side
-        //     $postsCurrentPage = $posts->currentPage();
-        //     $posts->map(function ($post) use ($hasSub, $ownPosts, $postsCurrentPage) {
-        //         if ($ownPosts) {
-        //             $post->hasSub = $hasSub;
-        //             $post->setAttribute('isSubbed', $hasSub);
-        //         } else {
-        //             $post->setAttribute('isSubbed', true);
-        //         }
-        //         $post->setAttribute('postPage',$postsCurrentPage);
-        //         return $post;
-        //     });
-        //     $data = $posts;
-        // }
-
-        // return $data;
     }
 
     /**
