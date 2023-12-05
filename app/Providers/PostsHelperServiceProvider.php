@@ -222,6 +222,48 @@ class PostsHelperServiceProvider extends ServiceProvider
         $posts = Post::withCount('tips')
             ->with($relations);
 
+        $posts = self::filterPosts($posts, $userID, 'order',false,$sortOrder);
+
+        if ($encodePostsToHtml) {
+            // Posts encoded as JSON
+            $data = [
+                'total' => $posts->total(),
+                'currentPage' => $posts->currentPage(),
+                'last_page' => $posts->lastPage(),
+                'prev_page_url' => $posts->previousPageUrl(),
+                'next_page_url' => $posts->nextPageUrl(),
+                'first_page_url' => $posts->nextPageUrl(),
+                'hasMore' => $posts->hasMorePages(),
+            ];
+            $postsData = $posts->map(function ($post) use ($hasSub, $ownPosts, $data) {
+                if ($ownPosts) {
+                    $post->setAttribute('isSubbed', $hasSub);
+                } else {
+                    $post->setAttribute('isSubbed', true);
+                }
+                $post->setAttribute('postPage',$data['currentPage']);
+                $post = ['id' => $post->id, 'html' => View::make('elements.feed.post-box')->with('post', $post)->render()];
+
+                return $post;
+            });
+            $data['posts'] = $postsData;
+        } else {
+            // Collection data posts | To be rendered on the server side
+            $postsCurrentPage = $posts->currentPage();
+            $posts->map(function ($post) use ($hasSub, $ownPosts, $postsCurrentPage) {
+                if ($ownPosts) {
+                    $post->hasSub = $hasSub;
+                    $post->setAttribute('isSubbed', $hasSub);
+                } else {
+                    $post->setAttribute('isSubbed', true);
+                }
+                $post->setAttribute('postPage',$postsCurrentPage);
+                return $post;
+            });
+            $data = $posts;
+        }
+
+        return $data;
         // If logged in and previewing his own posts or admin, show pre-approved posts as well
         if(Auth::check() && (Auth::user()->id === $userID || Auth::user()->role_id === 1)){
             $posts->whereIn('status', [
@@ -271,7 +313,7 @@ class PostsHelperServiceProvider extends ServiceProvider
         }
 
         // Processing sorting
-        $posts = self::filterPosts($posts, $userID, 'order',false,$sortOrder);
+        // $posts = self::filterPosts($posts, $userID, 'order',false,$sortOrder);
 
         if ($pageNumber) {
             $posts = $posts->paginate(getSetting('feed.feed_posts_per_page'), ['*'], 'page', $pageNumber)->appends(request()->query());
@@ -283,46 +325,46 @@ class PostsHelperServiceProvider extends ServiceProvider
             $hasSub = true;
         }
 
-        if ($encodePostsToHtml) {
-            // Posts encoded as JSON
-            $data = [
-                'total' => $posts->total(),
-                'currentPage' => $posts->currentPage(),
-                'last_page' => $posts->lastPage(),
-                'prev_page_url' => $posts->previousPageUrl(),
-                'next_page_url' => $posts->nextPageUrl(),
-                'first_page_url' => $posts->nextPageUrl(),
-                'hasMore' => $posts->hasMorePages(),
-            ];
-            $postsData = $posts->map(function ($post) use ($hasSub, $ownPosts, $data) {
-                if ($ownPosts) {
-                    $post->setAttribute('isSubbed', $hasSub);
-                } else {
-                    $post->setAttribute('isSubbed', true);
-                }
-                $post->setAttribute('postPage',$data['currentPage']);
-                $post = ['id' => $post->id, 'html' => View::make('elements.feed.post-box')->with('post', $post)->render()];
+        // if ($encodePostsToHtml) {
+        //     // Posts encoded as JSON
+        //     $data = [
+        //         'total' => $posts->total(),
+        //         'currentPage' => $posts->currentPage(),
+        //         'last_page' => $posts->lastPage(),
+        //         'prev_page_url' => $posts->previousPageUrl(),
+        //         'next_page_url' => $posts->nextPageUrl(),
+        //         'first_page_url' => $posts->nextPageUrl(),
+        //         'hasMore' => $posts->hasMorePages(),
+        //     ];
+        //     $postsData = $posts->map(function ($post) use ($hasSub, $ownPosts, $data) {
+        //         if ($ownPosts) {
+        //             $post->setAttribute('isSubbed', $hasSub);
+        //         } else {
+        //             $post->setAttribute('isSubbed', true);
+        //         }
+        //         $post->setAttribute('postPage',$data['currentPage']);
+        //         $post = ['id' => $post->id, 'html' => View::make('elements.feed.post-box')->with('post', $post)->render()];
 
-                return $post;
-            });
-            $data['posts'] = $postsData;
-        } else {
-            // Collection data posts | To be rendered on the server side
-            $postsCurrentPage = $posts->currentPage();
-            $posts->map(function ($post) use ($hasSub, $ownPosts, $postsCurrentPage) {
-                if ($ownPosts) {
-                    $post->hasSub = $hasSub;
-                    $post->setAttribute('isSubbed', $hasSub);
-                } else {
-                    $post->setAttribute('isSubbed', true);
-                }
-                $post->setAttribute('postPage',$postsCurrentPage);
-                return $post;
-            });
-            $data = $posts;
-        }
+        //         return $post;
+        //     });
+        //     $data['posts'] = $postsData;
+        // } else {
+        //     // Collection data posts | To be rendered on the server side
+        //     $postsCurrentPage = $posts->currentPage();
+        //     $posts->map(function ($post) use ($hasSub, $ownPosts, $postsCurrentPage) {
+        //         if ($ownPosts) {
+        //             $post->hasSub = $hasSub;
+        //             $post->setAttribute('isSubbed', $hasSub);
+        //         } else {
+        //             $post->setAttribute('isSubbed', true);
+        //         }
+        //         $post->setAttribute('postPage',$postsCurrentPage);
+        //         return $post;
+        //     });
+        //     $data = $posts;
+        // }
 
-        return $data;
+        // return $data;
     }
 
     /**
