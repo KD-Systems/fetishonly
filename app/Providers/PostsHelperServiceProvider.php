@@ -235,35 +235,35 @@ class PostsHelperServiceProvider extends ServiceProvider
         }
 
         // For profile page
-        // if ($ownPosts) {
-        //     $posts->where('user_id', $userID);
-        //     // Registered
-        //     if(Auth::check() && Auth::user()->id !== $userID) {
-        //         $posts = self::filterPosts($posts, $userID, 'scheduled');
-        //     }
-        //     // Un-registered
-        //     elseif (!Auth::check()){
-        //         $posts = self::filterPosts($posts, $userID, 'scheduled');
-        //     }
-        // }
-        // // For bookmarks page
-        // elseif ($bookMarksOnly) {
-        //     $posts = self::filterPosts($posts, $userID, 'bookmarks');
-        //     $posts = self::filterPosts($posts, $userID, 'blocked');
-        // }
-        // // For feed page
-        // else {
-        //     $posts = self::filterPosts($posts, $userID, 'all');
-        // }
+        if ($ownPosts) {
+            $posts->where('user_id', $userID);
+            // Registered
+            if(Auth::check() && Auth::user()->id !== $userID) {
+                $posts = self::filterPosts($posts, $userID, 'scheduled');
+            }
+            // Un-registered
+            elseif (!Auth::check()){
+                $posts = self::filterPosts($posts, $userID, 'scheduled');
+            }
+        }
+        // For bookmarks page
+        elseif ($bookMarksOnly) {
+            $posts = self::filterPosts($posts, $userID, 'bookmarks');
+            $posts = self::filterPosts($posts, $userID, 'blocked');
+        }
+        // For feed page
+        else {
+            $posts = self::filterPosts($posts, $userID, 'all');
+        }
 
         if (!$ownPosts) {
             $posts = self::filterPosts($posts, $userID, 'scheduled');
         }
 
         // Media type filters
-        // if ($mediaType) {
-        //     $posts = self::filterPosts($posts, $userID, 'media', $mediaType);
-        // }
+        if ($mediaType) {
+            $posts = self::filterPosts($posts, $userID, 'media', $mediaType);
+        }
 
         // Filtering the search term
         if($searchTerm){
