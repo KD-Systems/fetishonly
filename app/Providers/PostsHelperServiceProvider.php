@@ -220,7 +220,7 @@ class PostsHelperServiceProvider extends ServiceProvider
 
         // Fetching basic posts information
         $posts = Post::withCount('tips')
-            ->with($relations);
+            ->with($relations)->has('user');
 
         // If logged in and previewing his own posts or admin, show pre-approved posts as well
         if(Auth::check() && (Auth::user()->id === $userID || Auth::user()->role_id === 1)){
@@ -261,9 +261,9 @@ class PostsHelperServiceProvider extends ServiceProvider
         }
 
         // Media type filters
-        // if ($mediaType) {
-        //     $posts = self::filterPosts($posts, $userID, 'media', $mediaType);
-        // }
+        if ($mediaType) {
+            $posts = self::filterPosts($posts, $userID, 'media', $mediaType);
+        }
 
         // Filtering the search term
         if($searchTerm){

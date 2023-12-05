@@ -2,7 +2,7 @@
     <div class="post-header pl-3 pr-3">
         <div class="d-flex">
             <div class="avatar-wrapper">
-                <img class="avatar rounded-circle" src="{{$post->user->avatar ?? ''}}">
+                <img class="avatar rounded-circle" src="{{$post->user->avatar}}">
             </div>
             <div class="post-details pl-2 w-100">
                 <div class="d-flex justify-content-between">
@@ -164,7 +164,7 @@
                                 data-available-credit="{{Auth::user()->wallet->total}}"
                                 data-username="{{$post->user->username}}"
                                 data-name="{{$post->user->name}}"
-                                data-avatar="{{$post->user->avatar ?? ''}}"
+                                data-avatar="{{$post->user->avatar}}"
                                 data-recipient-id="{{$post->user_id}}">
                             @endif
                             <div class=" d-flex align-items-center">
