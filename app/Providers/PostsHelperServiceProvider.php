@@ -235,17 +235,17 @@ class PostsHelperServiceProvider extends ServiceProvider
         }
 
         // For profile page
-        // if ($ownPosts) {
-        //     $posts->where('user_id', $userID);
-        //     // Registered
-        //     if(Auth::check() && Auth::user()->id !== $userID) {
-        //         $posts = self::filterPosts($posts, $userID, 'scheduled');
-        //     }
-        //     // Un-registered
-        //     elseif (!Auth::check()){
-        //         $posts = self::filterPosts($posts, $userID, 'scheduled');
-        //     }
-        // }
+        if ($ownPosts) {
+            $posts->where('user_id', $userID);
+            // // Registered
+            // if(Auth::check() && Auth::user()->id !== $userID) {
+            //     $posts = self::filterPosts($posts, $userID, 'scheduled');
+            // }
+            // // Un-registered
+            // elseif (!Auth::check()){
+            //     $posts = self::filterPosts($posts, $userID, 'scheduled');
+            // }
+        }
         // // For bookmarks page
         // elseif ($bookMarksOnly) {
         //     $posts = self::filterPosts($posts, $userID, 'bookmarks');
