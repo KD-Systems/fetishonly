@@ -236,7 +236,14 @@ class PostsHelperServiceProvider extends ServiceProvider
 
         // For profile page
         if ($ownPosts) {
-            $posts->where('user_id', Auth::user()->id);
+            // if(!Auth::check()) {
+            //     $posts->where('user_id', $userID);
+            // } else {
+
+            //     if(Auth::user()->id === $userID) {
+            //     }
+            // }
+            $posts->where('user_id', $userID);
             // // Registered
             // if(Auth::check() && Auth::user()->id !== $userID) {
             //     $posts = self::filterPosts($posts, $userID, 'scheduled');

@@ -50,6 +50,9 @@ Route::group(['middleware' => ['auth','verified','2fa']], function () {
     Route::get('twitter-verify', ['uses' => 'TwitterAccessController@index']);
     Route::get('twitter-test', ['uses' => 'TwitterAccessController@test']);
 
+    Route::get('free-trail/{id}/delete', ['uses' => 'FreeTrailController@delete', 'as' => 'free-trail-delete']);
+    Route::get('free-trail/{slug}', ['uses' => 'FreeTrailController@show', 'as' => 'free-trail-link']);
+
     Route::get('resend/verify-email', ['uses' => 'HomeController@resendVerifyEmail', 'as'   => 'resend-verify-email']);
     // Settings panel routes
     Route::group(['prefix' => 'my', 'as' => 'my.'], function () {
@@ -75,6 +78,7 @@ Route::group(['middleware' => ['auth','verified','2fa']], function () {
 
         // Profile save
         Route::get('/settings/{type?}', ['uses' => 'SettingsController@index', 'as'   => 'settings']);
+        Route::post('/settings/rates/free-trail', ['uses' => 'FreeTrailController@store', 'as'   => 'settings.rates.free-trail']);
         Route::post('/settings/account/save', ['uses' => 'SettingsController@saveAccount', 'as'   => 'settings.account.save']);
 
         /*
