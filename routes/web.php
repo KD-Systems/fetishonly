@@ -52,6 +52,7 @@ Route::group(['middleware' => ['auth','verified','2fa']], function () {
 
     Route::get('free-trail/{id}/delete', ['uses' => 'FreeTrailController@delete', 'as' => 'free-trail-delete']);
     Route::get('free-trail/{slug}', ['uses' => 'FreeTrailController@show', 'as' => 'free-trail-link']);
+    Route::post('free-trail/{slug}/active', ['uses' => 'FreeTrailController@active', 'as' => 'free-trail-active']);
 
     Route::get('resend/verify-email', ['uses' => 'HomeController@resendVerifyEmail', 'as'   => 'resend-verify-email']);
     // Settings panel routes

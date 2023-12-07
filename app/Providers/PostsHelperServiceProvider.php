@@ -305,7 +305,7 @@ class PostsHelperServiceProvider extends ServiceProvider
                 if ($ownPosts) {
                     $post->setAttribute('isSubbed', $hasSub);
                 } else {
-                    $post->setAttribute('isSubbed', true);
+                    $post->setAttribute('isSubbed', $hasSub);
                 }
                 $post->setAttribute('postPage',$data['currentPage']);
                 $post = ['id' => $post->id, 'html' => View::make('elements.feed.post-box')->with('post', $post)->render()];
