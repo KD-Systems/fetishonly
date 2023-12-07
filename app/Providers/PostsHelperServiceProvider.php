@@ -236,7 +236,14 @@ class PostsHelperServiceProvider extends ServiceProvider
 
         // For profile page
         if ($ownPosts) {
-            $posts->where('user_id', Auth::user()->id);
+            // if(!Auth::check()) {
+            //     $posts->where('user_id', $userID);
+            // } else {
+
+            //     if(Auth::user()->id === $userID) {
+            //     }
+            // }
+            $posts->where('user_id', $userID);
             // // Registered
             // if(Auth::check() && Auth::user()->id !== $userID) {
             //     $posts = self::filterPosts($posts, $userID, 'scheduled');
@@ -298,7 +305,7 @@ class PostsHelperServiceProvider extends ServiceProvider
                 if ($ownPosts) {
                     $post->setAttribute('isSubbed', $hasSub);
                 } else {
-                    $post->setAttribute('isSubbed', true);
+                    $post->setAttribute('isSubbed', $hasSub);
                 }
                 $post->setAttribute('postPage',$data['currentPage']);
                 $post = ['id' => $post->id, 'html' => View::make('elements.feed.post-box')->with('post', $post)->render()];

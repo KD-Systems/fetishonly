@@ -21,7 +21,7 @@ class Subscription extends Model
      */
     protected $fillable = [
         'sender_user_id', 'recipient_user_id', 'stripe_subscription_id', 'paypal_agreement_id', 'paypal_plan_id',
-        'amount', 'expires_at', 'canceled_at', 'ccbill_subscription_id'
+        'amount', 'expires_at', 'canceled_at', 'ccbill_subscription_id', 'type', 'provider', 'status'
     ];
 
     /**

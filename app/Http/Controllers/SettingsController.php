@@ -20,6 +20,7 @@ use App\Providers\AttachmentServiceProvider;
 use App\Providers\AuthServiceProvider;
 use App\Providers\EmailsServiceProvider;
 use App\Providers\GenericHelperServiceProvider;
+use App\TrailLink;
 use App\TwitterAccess;
 use App\User;
 use Carbon\Carbon;
@@ -181,6 +182,10 @@ class SettingsController extends Controller
                 break;
             case 'twitter':
                 $data['twitter'] = TwitterAccess::where('user_id', Auth::user()->id)->first();
+                break;
+            case 'rates':
+                $data['trail_links'] = TrailLink::where('user_id', Auth::user()->id)->get();
+                break;
         }
 
         return $this->renderSettingView($request->route('type'), $data);
