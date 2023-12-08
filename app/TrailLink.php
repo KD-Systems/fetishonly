@@ -21,4 +21,10 @@ class TrailLink extends Model
     protected $casts = [
         'expire_at' => 'datetime'
     ];
+
+    protected $with = ['trailLog'];
+
+    public function trailLog() {
+        return $this->hasMany(TrailLog::class, 'trail_links_id', 'id');
+    }
 }

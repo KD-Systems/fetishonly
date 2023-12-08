@@ -14,11 +14,19 @@
             <h3 class="text-center">{{ $trailLink->duration }} days free trail.</h3>
         </div>
     </div>
-    @if ($trailLink->expire_at <= now())
+    @if ($trailLink->expire_at <= now() || $trailLink->trailLog->count() >= $trailLink->limit)
         <div class="row">
             <div class="col-md-12">
                 <div class="text-center">
                     <button class="btn btn-success" disabled>Trail is expired!</button>
+                </div>
+            </div>
+        </div>
+    @elseif($trailLink->trailLog->where('user_id', Auth::user()->id)->first())
+        <div class="row">
+            <div class="col-md-12">
+                <div class="text-center">
+                    <button class="btn btn-success" disabled>You have used this trail!</button>
                 </div>
             </div>
         </div>

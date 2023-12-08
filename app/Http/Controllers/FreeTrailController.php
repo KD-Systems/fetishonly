@@ -54,6 +54,9 @@ class FreeTrailController extends Controller
     public function active($slug) {
         $trailLink = TrailLink::where('slug', $slug)->firstOrFail();
 
+        if($trailLink->expire_at <= now() || $trailLink->trailLog->count() >= $trailLink->limit)
+            return back();
+
         $user = User::find($trailLink->user_id);
 
 

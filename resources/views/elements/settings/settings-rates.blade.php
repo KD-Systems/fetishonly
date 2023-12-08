@@ -101,7 +101,7 @@
                 </tr>
                 <tr>
                     <td><p style="margin: 0; pedding: 0;">Claims count</p></td>
-                    <td><p class="text-right" style="margin: 0; pedding: 0;">{{ 'Not claimed yet' }}</p></td>
+                    <td><p class="text-right" style="margin: 0; pedding: 0;">{{ $item->trailLog->count() }}</p></td>
                 </tr>
                 <tr>
                     <td colspan="2">
