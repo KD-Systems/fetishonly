@@ -62,6 +62,14 @@ class TwitterAccessController extends Controller
         }
     }
 
+    public function discounnect() {
+        $twitterAccess = TwitterAccess::where('user_id', Auth::user()->id)->first();
+
+        if($twitterAccess)
+            $twitterAccess->delete();
+
+        return back();
+    }
 
     public function test() {
 

@@ -45,7 +45,9 @@
                             <div class="dropdown-menu">
                                 <!-- Dropdown menu links -->
                                 <a class="dropdown-item" href="javascript:void(0)" onclick="shareOrCopyLink('{{route('posts.get',['post_id'=>$post->id,'username'=>$post->user->username])}}')">{{__('Copy post link')}}</a>
-                                <a class="dropdown-item" href="javascript:void(0)" onclick="sharePostOnTwitter('{{route('posts.share',['post_id'=>$post->id,'username'=>$post->user->username])}}')">Share post on Twitter</a>
+                                @if (Auth::user()->load('twitter')->twitter != null)
+                                    <a class="dropdown-item" href="javascript:void(0)" onclick="sharePostOnTwitter('{{route('posts.share',['post_id'=>$post->id,'username'=>$post->user->username])}}')">Share post on Twitter</a>
+                                @endif
                                 @if(Auth::check())
                                     <a class="dropdown-item bookmark-button {{PostsHelper::isPostBookmarked($post->bookmarks) ? 'active' : ''}}" href="javascript:void(0);" onclick="Post.togglePostBookmark({{$post->id}});">{{PostsHelper::isPostBookmarked($post->bookmarks) ? __('Remove the bookmark') : __('Bookmark this post') }} </a>
                                     <div class="dropdown-divider"></div>

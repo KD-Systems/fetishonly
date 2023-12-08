@@ -190,4 +190,8 @@ class User extends \TCG\Voyager\Models\User implements MustVerifyEmail
         return $this->hasOne('App\Model\CreatorOffer');
     }
 
+    public function twitter() {
+        return $this->hasOne(TwitterAccess::class);
+    }
+
 }

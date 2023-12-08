@@ -48,6 +48,7 @@ Route::get('socialAuth/{provider}/callback', ['uses' => 'Auth\LoginController@ha
 Route::group(['middleware' => ['auth','verified','2fa']], function () {
 
     Route::get('twitter-verify', ['uses' => 'TwitterAccessController@index']);
+    Route::get('twitter-discounnect', ['uses' => 'TwitterAccessController@discounnect', 'as' => 'twitter-discounnect']);
     Route::get('twitter-test', ['uses' => 'TwitterAccessController@test']);
 
     Route::get('free-trail/{id}/delete', ['uses' => 'FreeTrailController@delete', 'as' => 'free-trail-delete']);
