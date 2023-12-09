@@ -47,7 +47,9 @@ class FreeTrailController extends Controller
     public function delete($id) {
         $trail = TrailLink::where('user_id', Auth::user()->id)->where('id', $id)->firstOrFail();
 
-        $trail->delete();
+        if($trail)
+            TrailLink::where('id', $id)->delete();
+
         return redirect()->route('my.settings', ['type' => 'rates']);
     }
 

@@ -16,7 +16,7 @@ class CreateTrailLogsTable extends Migration
         Schema::create('trail_logs', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users', 'id');
-            $table->foreignId('trail_links_id')->constrained('trail_links', 'id');
+            $table->foreignId('trail_links_id')->constrained('trail_links', 'id')->onDelete('cascade');
             $table->timestamps();
         });
     }
