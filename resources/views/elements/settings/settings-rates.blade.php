@@ -106,7 +106,7 @@
                 <tr>
                     <td colspan="2">
                         <a href="{{ route('free-trail-delete', ['id' => $item->id]) }}" class="btn btn-sm btn-danger">Delete Link</a>
-                        <button class="btn btn-sm btn-info" onclick="navigator.clipboard.writeText('{{ route('free-trail-link', ['slug' => $item->slug]) }}');alert('Link copied!')">Copy Link</button>
+                        <button class="btn btn-sm btn-info" onclick="copyText('{{ route('free-trail-link', ['slug' => $item->slug]) }}')">Copy Link</button>
                     </td>
                 </tr>
             </table>
@@ -165,3 +165,31 @@
       </div>
     </div>
 </div>
+
+<script>
+
+    function copyText(text) {
+        var textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.setAttribute('readonly', '');
+        textarea.style.position = 'absolute';
+        textarea.style.left = '-9999px';
+        document.body.appendChild(textarea);
+
+        textarea.select();
+
+        try {
+            // Execute the copy command
+            var success = document.execCommand('copy');
+            var message = success ? 'Text copied to clipboard' : 'Unable to copy text to clipboard';
+            console.log(message);
+            alert(message);
+        } catch (err) {
+            console.error('Unable to copy text to clipboard', err);
+            alert(err)
+        }
+
+        document.body.removeChild(textarea);
+    }
+
+</script>
