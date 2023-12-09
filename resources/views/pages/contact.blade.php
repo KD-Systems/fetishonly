@@ -17,7 +17,10 @@
     <div class="container py-5 my-5">
 
         <div class="col-12 col-md-8 offset-md-2 mt-5">
-
+            <h3>Contact us with below</h3>
+            <p>Email: <a href="mailto:support@fetishonly.com">support@fetishonly.com</a> <br> <a href="mailto: support@webtechadvantage.com ">support@webtechadvantage.com </a></p>
+            <br>
+            <p>Address: Web Tech Advantage Corp, <br>Las Vegas, Nevada, USA</p>
             <div class="d-flex justify-content-center">
                 <div class="col-12 col-md-7 content-md pr-5">
                     <form class="well" role="form" method="post" action="{{route('contact.send')}}">
@@ -89,6 +92,9 @@
 
 
             </div>
+
+            <hr>
+            <p>CCBill Support  <a href="https://support.ccbill.com/">https://support.ccbill.com/</a></p>
         </div>
 
     </div>
