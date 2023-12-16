@@ -717,11 +717,11 @@ class MessengerController extends Controller
      * @return bool
      */
     protected static function hasUserBlocked($contactUserID, $userID){
-        $contactUser = User::where('id',$contactUserID)->first();
-        $blockedUsers = ListsHelperServiceProvider::getListMembers($contactUser->lists->firstWhere('type', 'blocked')->id);
-        if(in_array($userID, $blockedUsers)){
-            return true;
-        };
+        // $contactUser = User::where('id',$contactUserID)->first();
+        // $blockedUsers = ListsHelperServiceProvider::getListMembers($contactUser->lists->firstWhere('type', 'blocked')->id);
+        // if(in_array($userID, $blockedUsers)){
+        //     return true;
+        // };
         return false;
     }
 
