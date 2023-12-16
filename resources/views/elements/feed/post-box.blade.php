@@ -45,7 +45,7 @@
                             <div class="dropdown-menu">
                                 <!-- Dropdown menu links -->
                                 <a class="dropdown-item" href="javascript:void(0)" onclick="shareOrCopyLink('{{route('posts.get',['post_id'=>$post->id,'username'=>$post->user->username])}}')">{{__('Copy post link')}}</a>
-                                @if (Auth::user()->load('twitter')->twitter != null)
+                                @if (Auth::check() && Auth::user()->load('twitter')->twitter != null)
                                     <a class="dropdown-item" href="javascript:void(0)" onclick="sharePostOnTwitter('{{route('posts.share',['post_id'=>$post->id,'username'=>$post->user->username])}}')">Share post on Twitter</a>
                                 @endif
                                 @if(Auth::check())
