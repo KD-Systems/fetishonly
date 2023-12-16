@@ -1,4 +1,3 @@
-vendor
 .env
 storage/app/public/*
 storage/logs/*
@@ -6,3 +5,4 @@ Dockerfile
 docker-compose.yml
 docker/*
 script/*
+node_modules/*
