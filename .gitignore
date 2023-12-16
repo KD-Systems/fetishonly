@@ -6,3 +6,4 @@ docker-compose.yml
 docker/*
 script/*
 node_modules/*
+vendor/*
