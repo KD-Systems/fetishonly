@@ -74,6 +74,7 @@ var messenger = {
         }
         else{
             params.cluster = messengerVars.pusherCluster;
+            params.wsPort = '6001';
         }
         messenger.pusher = new Pusher(socketsDriver === 'soketi' ? soketi.key : pusher.key, params);
     },

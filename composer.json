@@ -10,6 +10,7 @@
     "require": {
         "php": "^7.3.0|^8.0",
         "anhskohbo/no-captcha": "^3.4",
+        "beyondcode/laravel-websockets": "^2.0@beta",
         "devfactory/minify": "1.0.*",
         "fideloper/proxy": "^4.4",
         "graham-campbell/markdown": "14.0",
@@ -26,7 +27,7 @@
         "paypal/rest-api-sdk-php": "^1.14",
         "pbmedia/laravel-ffmpeg": "^7.5",
         "pion/laravel-chunk-upload": "^1.4",
-        "pusher/pusher-php-server": "^4.1",
+        "pusher/pusher-php-server": "~3.0",
         "ramsey/uuid": "^4.2.2",
         "silviolleite/laravelpwa": "^2.0",
         "spatie/schema-org": "^2.8",
