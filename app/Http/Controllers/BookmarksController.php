@@ -19,7 +19,6 @@ class BookmarksController extends Controller
         'all' => ['heading' => 'All Bookmarks', 'icon' => 'bookmarks'],
         'photos' => ['heading' => 'Photos', 'icon' => 'image'],
         'videos' => ['heading' => 'Videos', 'icon' => 'videocam'],
-        'audio' => ['heading' => 'Audio', 'icon' => 'musical-notes'],
         'other' => ['heading' => 'Other', 'icon' => 'person'],
         'locked' => ['heading' => 'Locked', 'icon' => 'lock-closed'],
     ];
