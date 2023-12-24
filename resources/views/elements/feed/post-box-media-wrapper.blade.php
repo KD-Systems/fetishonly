@@ -21,7 +21,7 @@
             @elseif(AttachmentHelper::getAttachmentType($attachment->type) == 'video')
                 <div class="video-wrapper h-100 w-100 d-flex justify-content-center align-items-center" style="position: relative;">
                     <video class="video-preview w-100" src="{{$attachment->path}}#t=0.001" controls controlsList="nodownload" preload="metadata"></video>
-                    <p style="position: absolute; right: 30px; bottom: 40px; text-shadow: 4px 4px 5px rgb(0,0,0); color: #FFFFFF;">{{route('profile',['username'=>$post->user->username])}}</p>
+                    <p style="position: absolute; right: 30px; bottom: 2%; text-shadow: 4px 4px 5px rgb(0,0,0); color: #FFFFFF;">{{route('profile',['username'=>$post->user->username])}}</p>
                 </div>
             @elseif(AttachmentHelper::getAttachmentType($attachment->type) == 'audio')
                 <div class="video-wrapper h-100 w-100 d-flex justify-content-center align-items-center">
