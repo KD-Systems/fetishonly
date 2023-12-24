@@ -70,6 +70,14 @@ var FileUpload = {
             FileUpload.isLoading = true;
         });
 
+        FileUpload.myDropzone.on("uploadprogress", function (file, progress) {
+            if (file.previewElement) {
+                var progressElement = file.previewElement.querySelector("[data-dz-uploadprogress]");
+                progressElement.style.width = progress + "%";
+                progressElement.querySelector(".progress-text").textContent = progress.toFixed(2) + "%";
+            }
+        });
+
         FileUpload.myDropzone.on("success", (file, response) => {
             if(response.success){
                 file.upload.attachmentID = response.attachmentID;

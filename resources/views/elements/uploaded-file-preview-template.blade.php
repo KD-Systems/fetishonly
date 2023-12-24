@@ -1,6 +1,6 @@
 <div id="tpl" class="d-none bg-dark">
     <div class="dz-preview ml-1 mr-2 dz-file-preview">
-        <div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress></span></div>
+        <div class="dz-progress"><div class="dz-upload" data-dz-uploadprogress><span style="text-shadow: -1px 0px 6px rgba(39,39,39,1); color: red; position: absolute; top: -3px; margin-left: 15px;" class="progress-text"></span></div></div>
         <div class="dz-success-mark">
             <svg
                 width="54px"
