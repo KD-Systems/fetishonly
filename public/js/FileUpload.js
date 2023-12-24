@@ -68,6 +68,8 @@ var FileUpload = {
         FileUpload.myDropzone.on("addedfile", file => {
             FileUpload.updatePreviewElement(file, true);
             FileUpload.isLoading = true;
+
+            $("#show-warning").css("display", "block");
         });
 
         FileUpload.myDropzone.on("uploadprogress", function (file, progress) {
@@ -101,6 +103,8 @@ var FileUpload = {
                 }
             }
             FileUpload.isLoading = false;
+
+            $("#show-warning").css("display", "none");
         });
 
         FileUpload.myDropzone.on("removedfile", function(file) {
@@ -112,6 +116,7 @@ var FileUpload = {
                     FileUpload.removeAttachment(attachment);
                 }
             });
+            $("#show-warning").css("display", "none");
         });
 
         FileUpload.myDropzone.on("error", (file, errorMessage) => {
@@ -131,6 +136,7 @@ var FileUpload = {
             }
             FileUpload.myDropzone.removeFile(file);
             FileUpload.isLoading = false;
+            $("#show-warning").css("display", "none");
         });
     },
 
