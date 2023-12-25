@@ -305,7 +305,7 @@ class PostsHelperServiceProvider extends ServiceProvider
                 if ($ownPosts) {
                     $post->setAttribute('isSubbed', $hasSub);
                 } else {
-                    $post->setAttribute('isSubbed', $hasSub);
+                    $post->setAttribute('isSubbed', self::hasActiveSub(Auth::user()->id, $post->user_id));
                 }
                 $post->setAttribute('postPage',$data['currentPage']);
                 $post = ['id' => $post->id, 'html' => View::make('elements.feed.post-box')->with('post', $post)->render()];
@@ -321,7 +321,7 @@ class PostsHelperServiceProvider extends ServiceProvider
                     $post->hasSub = $hasSub;
                     $post->setAttribute('isSubbed', $hasSub);
                 } else {
-                    $post->setAttribute('isSubbed', true);
+                    $post->setAttribute('isSubbed', self::hasActiveSub(Auth::user()->id, $post->user_id));
                 }
                 $post->setAttribute('postPage',$postsCurrentPage);
                 return $post;
@@ -467,6 +467,7 @@ class PostsHelperServiceProvider extends ServiceProvider
      */
     public static function hasUserUnlockedPost($transactions)
     {
+        return false;
         if (Auth::check()) {
             if(Auth::user()->role_id === 1) {
                 return true;

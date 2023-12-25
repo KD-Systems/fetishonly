@@ -80,11 +80,10 @@
             </span>
         @endif
     </div>
-
     @if(count($post->attachments))
         <div class="post-media">
             @if($post->isSubbed || (getSetting('profiles.allow_users_enabling_open_profiles') && $post->user->open_profile))
-                @if((Auth::check() && Auth::user()->id !== $post->user_id && $post->price > 0 && !PostsHelper::hasUserUnlockedPost($post->postPurchases)) || (!Auth::check() && $post->price > 0 ))
+                @if((Auth::check() && Auth::user()->id !== $post->user_id && (!PostsHelper::hasUserUnlockedPost($post->postPurchases) && $post->price > 0)) || (!Auth::check() && $post->price > 0 ))
                     @include('elements.feed.post-locked',['type'=>'post','post'=>$post])
                 @else
                     @if(count($post->attachments) > 1)
