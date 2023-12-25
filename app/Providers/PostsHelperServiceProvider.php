@@ -148,6 +148,9 @@ class PostsHelperServiceProvider extends ServiceProvider
      */
     public static function hasActiveSub($sender_id, $recipient_id)
     {
+        if(Auth::check() && Auth::user()->role_id === 1)
+            return true;
+
         $hasSub = Subscription::where('sender_user_id', $sender_id)
             ->where('recipient_user_id', $recipient_id)
             ->where(function ($query) {
