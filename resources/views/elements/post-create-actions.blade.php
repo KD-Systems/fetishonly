@@ -50,5 +50,17 @@
             </span>
         </div>
     @endif
+    <div class="mt-1 ml-0 ml-md-2">
+        <span
+            class="h-pill h-pill-primary post-price-button"
+            onclick="{{!GenericHelper::isUserVerified() && getSetting('site.enforce_user_identity_checks') ? '' : 'PostCreate.showSetPricePostDialog()'}}"
+            data-toggle="tooltip" data-placement="bottom" title="{{__('Set post price')}}."
+        >
+            @include('elements.icon',['icon'=>'add-circle','variant'=>'medium','centered'=>true, 'classes' => 'mr-1'])
+            <span class="d-none d-md-block">{{__("Tag")}}</span>
+            <span class="d-block d-md-none">{{__("Tag")}}</span>
+            <span class="post-price-label ml-1">{{(isset($post) && $post) > 0 ? "(".config('app.site.currency_symbol')."$post->price".(config('app.site.currency_symbol') ? '' : config('app.site.currency_code')).")" : ''}}</span>
+        </span>
+    </div>
 </div>
 
