@@ -307,6 +307,9 @@ class PostsHelperServiceProvider extends ServiceProvider
             $postsData = $posts->map(function ($post) use ($hasSub, $ownPosts, $data) {
                 if ($ownPosts) {
                     $post->setAttribute('isSubbed', $hasSub);
+                } else if(Auth::check() && (Auth::user()->id === $post->user_id)) {
+                    logger("=>", [Auth::user()->id, $post->user_id]);
+                    $post->setAttribute('isSubbed', true);
                 } else {
                     $post->setAttribute('isSubbed', self::hasActiveSub(Auth::user()->id, $post->user_id));
                 }
@@ -323,6 +326,9 @@ class PostsHelperServiceProvider extends ServiceProvider
                 if ($ownPosts) {
                     $post->hasSub = $hasSub;
                     $post->setAttribute('isSubbed', $hasSub);
+                } else if(Auth::check() && (Auth::user()->id === $post->user_id)) {
+                    logger("=>", [Auth::user()->id, $post->user_id]);
+                    $post->setAttribute('isSubbed', true);
                 } else {
                     $post->setAttribute('isSubbed', self::hasActiveSub(Auth::user()->id, $post->user_id));
                 }
