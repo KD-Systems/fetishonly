@@ -47,8 +47,8 @@ class FeedController extends Controller
                 'username' => Auth::user()->username,
                 'user_id' => Auth::user()->id,
                 'lists' => [
-                    'blocked'=>Auth::user()->lists->firstWhere('type', 'blocked')->id,
-                    'following'=>Auth::user()->lists->firstWhere('type', 'following')->id,
+                    'blocked'=>Auth::user()->lists->firstWhere('type', 'blocked')->id ?? null,
+                    'following'=>Auth::user()->lists->firstWhere('type', 'following')->id ?? null,
                 ],
             ],
 
