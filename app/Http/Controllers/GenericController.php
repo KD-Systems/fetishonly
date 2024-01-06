@@ -128,6 +128,21 @@ class GenericController extends Controller
                     ]
                 );
             }
+
+            EmailsServiceProvider::sendGenericEmail(
+                [
+                    'email' => 'support@fetishonly.com',
+                    'subject' => __('Action required | New contact message received'),
+                    'title' => __('Hello, :name,', ['name' => 'Support']),
+                    'content' => __('There is a new contact message on :siteName that requires your attention.', ['siteName' => getSetting('site.name')]),
+                    'quote' => $request->get('message'),
+                    'replyTo' => $request->get('email'),
+                    'button' => [
+                        'text' => __('Go to admin'),
+                        'url' => route('voyager.dashboard').'/contact-messages',
+                    ],
+                ]
+            );
         }
         return back()->with('success', __('Message sent.'));
     }
