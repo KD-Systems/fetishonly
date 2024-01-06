@@ -60,7 +60,7 @@
             <div class="menu-divider"></div>
         @endif
         <li>
-            <a class="scroll-link d-flex align-items-center" href="{{route('pages.get',['slug'=>'help'])}}">
+            <a class="scroll-link d-flex align-items-center" href="{{route('contact')}}">
                 @include('elements.icon',['icon'=>'help-circle-outline','variant'=>'medium','centered'=>false,'classes'=>'mr-2'])
                 {{__('Help and support')}}</a>
         </li>
