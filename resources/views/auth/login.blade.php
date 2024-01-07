@@ -9,7 +9,7 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-lg-7 col-xl-6 mx-auto">
-                                <a href="{{action('HomeController@index')}}">
+                                <a href="{{action('HomeController@index')}}" style="width: 100%; display: flex; justify-content: center;">
                                     <img class="brand-logo pb-4" src="https://freeonlytest.s3.us-west-1.amazonaws.com/logo-removebg-preview%20%281%29.png">
                                 </a>
                                 @include('auth.login-form')
