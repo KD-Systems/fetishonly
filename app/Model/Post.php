@@ -12,6 +12,7 @@ class Post extends Model
     const PENDING_STATUS = 0;
     const APPROVED_STATUS = 1;
     const DISAPPROVED_STATUS = 2;
+    const PROCESSING_STATUS = 3;
 
 
     /**
