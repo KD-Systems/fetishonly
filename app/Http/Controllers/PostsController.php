@@ -8,6 +8,7 @@ use App\Http\Requests\SavePostRequest;
 use App\Http\Requests\UpdatePostBookmarkRequest;
 use App\Http\Requests\UpdateReactionRequest;
 use App\Jobs\TwitterPostingJob;
+use App\Jobs\VideoPostingJob;
 use App\Model\Attachment;
 use App\Model\Post;
 use App\Model\PostComment;
@@ -229,6 +230,20 @@ class PostsController extends Controller
 
                 if ($request->get('attachments')) {
                     Attachment::whereIn('id', $attachments)->update(['post_id' => $postID]);
+
+                    $checkForVideo = Attachment::where('post_id', $postID)->whereIn('type', ['mp4', 'mov'])->get();
+
+                    if($checkForVideo) {
+
+                        if (getSetting('media.enable_ffmpeg')) {
+                            $post->update([
+                                'status' => Post::PROCESSING_STATUS
+                            ]);
+
+                            VideoPostingJob::dispatch($post, $checkForVideo);
+                        }
+
+                    }
                 }
             }
 
