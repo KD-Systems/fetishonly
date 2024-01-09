@@ -59,6 +59,8 @@
                         @case(\App\Model\Notification::PPV_UNLOCK)
                             {{__('Someone unlocked your'). ' ' . $notification->PPVUnlockType . '.'}}
                         @break
+                        @default
+                            {{__('Your Post '). ' ' . App\Model\Post::find($notification->post_id)->text . ' is published.'}}
                     @endswitch
 
                 </div>

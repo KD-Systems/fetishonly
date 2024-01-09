@@ -228,6 +228,9 @@ class PostsController extends Controller
                     }
                 })->toArray();
 
+
+            $message = __('Post created.');
+
                 if ($request->get('attachments')) {
                     Attachment::whereIn('id', $attachments)->update(['post_id' => $postID]);
 
@@ -243,11 +246,13 @@ class PostsController extends Controller
                             VideoPostingJob::dispatch($post, $checkForVideo);
                         }
 
+
+                        $message = __('Your video is processing...');
+
                     }
                 }
             }
 
-            $message = __('Post created.');
             if ($type == 'update') {
                 $message = __('Post updated successfully.');
             }

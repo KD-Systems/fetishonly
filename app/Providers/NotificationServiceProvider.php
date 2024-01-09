@@ -396,6 +396,19 @@ class NotificationServiceProvider extends ServiceProvider
         }
     }
 
+
+    public static function createVideoPublishNotification($post) {
+        return self::createAndPublishNotification(
+            Notification::NEW_MESSAGE,
+            null,
+            $post,
+            null,
+            null,
+            null,
+            null
+        );
+    }
+
     /**
      * Dispatches a new post comment notification.
      *
