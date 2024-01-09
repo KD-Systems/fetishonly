@@ -243,7 +243,7 @@ class PostsController extends Controller
                                 'status' => Post::PROCESSING_STATUS
                             ]);
 
-                            VideoPostingJob::dispatch($post, $checkForVideo);
+                            VideoPostingJob::dispatch($post, $checkForVideo)->onQueue('low');
                         }
 
 
