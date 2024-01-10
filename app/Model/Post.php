@@ -2,6 +2,7 @@
 
 namespace App\Model;
 
+use App\PostTag;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
@@ -116,6 +117,10 @@ class Post extends Model
                 return __("disapproved");
                 break;
         }
+    }
+
+    public function tags() {
+        return $this->hasMany(PostTag::class, 'post_id', 'id');
     }
 
 }

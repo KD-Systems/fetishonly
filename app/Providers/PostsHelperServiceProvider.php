@@ -219,7 +219,7 @@ class PostsHelperServiceProvider extends ServiceProvider
      */
     public static function getFilteredPosts($userID, $encodePostsToHtml, $pageNumber, $mediaType, $ownPosts, $hasSub, $bookMarksOnly, $sortOrder = false, $searchTerm = '')
     {
-        $relations = ['user', 'reactions', 'attachments', 'bookmarks', 'postPurchases'];
+        $relations = ['user', 'reactions', 'attachments', 'bookmarks', 'postPurchases', 'tags.user'];
 
         // Fetching basic posts information
         $posts = Post::withCount('tips')

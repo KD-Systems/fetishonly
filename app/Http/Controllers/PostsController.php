@@ -13,6 +13,7 @@ use App\Model\Post;
 use App\Model\PostComment;
 use App\Model\Reaction;
 use App\Model\UserBookmark;
+use App\PostTag;
 use App\Providers\AttachmentServiceProvider;
 use App\Providers\EmailsServiceProvider;
 use App\Providers\GenericHelperServiceProvider;
@@ -181,6 +182,7 @@ class PostsController extends Controller
      */
     public function savePost(SavePostRequest $request)
     {
+
         try {
             if (! GenericHelperServiceProvider::isUserVerified() && getSetting('site.enforce_user_identity_checks')) {
                 return response()->json(['success' => false, 'errors' => ['permissions' => __('User not verified. Can not post content.')]], 500);
@@ -202,6 +204,24 @@ class PostsController extends Controller
                 ], $postSchedulingData));
 
                 $postID = $post->id;
+
+                $tagged = $request->postTagged;
+        foreach($tagged as $tags) {
+            logger($tags['id']);
+        }
+
+            if($request->has('postTagged')) {
+                $tagged = [];
+
+                foreach($request->postTagged as $item) {
+                    $tagged[] = [
+                        'post_id' => $postID,
+                        'user_id'   => $item['id']
+                    ];
+                }
+
+                PostTag::insert($tagged);
+            }
 
             } elseif ($type == 'update') {
                 $postID = $request->get('id');
