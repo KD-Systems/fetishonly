@@ -29,6 +29,7 @@
         <div class="col-12">
             @include('elements.uploaded-file-preview-template')
             @include('elements.post-price-setup',['postPrice'=>(isset($post) ? $post->price : 0)])
+            @include('elements.tag-creator')
             @include('elements.attachments-uploading-dialog')
             @include('elements.post-schedule-setup', isset($post) ? ['release_date' => $post->release_date,'expire_date' => $post->expire_date] : [])
             <div class="d-flex justify-content-between pt-4 pb-3 px-3 border-bottom">
@@ -54,6 +55,9 @@
                         <span class="invalid-feedback" role="alert">
                             <strong class="post-invalid-feedback">{{__('Your post must contain more than 10 characters.')}}</strong>
                         </span>
+
+                        <div id="tagged-list">
+                        </div>
 
                         <div class="d-flex justify-content-between w-100 mb-3 mt-3">
                             @include('elements.post-create-actions')

@@ -8,7 +8,14 @@
                 <div class="d-flex justify-content-between">
                     <div>
                         <div class="text-bold"><a href="{{route('profile',['username'=>$post->user->username])}}" class="text-dark-r">{{$post->user->name}}</a></div>
-                        <div><a href="{{route('profile',['username'=>$post->user->username])}}" class="text-dark-r text-hover"><span>@</span>{{$post->user->username}}</a></div>
+                        <div class="d-flex">
+                            <a href="{{route('profile',['username'=>$post->user->username])}}" class="text-dark-r text-hover"><span>@</span>{{$post->user->username}}</a>
+                            @if ($post->tags->count() > 0)
+                                <div style="margin-left: 10px"> with @foreach ($post->tags as $item)
+                                    <span><a href="{{ route('profile', ['username' => $item->user->username]) }}">{{ '@'.$item->user->username }}</a></span>
+                                @endforeach </div>
+                            @endif
+                        </div>
                     </div>
 
                     <div class="d-flex">

@@ -15,7 +15,17 @@ class FetchCreatorController extends Controller
     }
 
     public function get(Request $request) {
-        $users = User::where('id', '!=', Auth::user()->id)->where('username', 'LIKE', $request->mention.'%')->orWhere('name', 'LIKE', $request->mention.'%')->whereNotNull('identity_verified_at')->get();
+
+        $input = $request->all();
+
+        $users = User::when($request->has('not'), function($q) use ($input){
+            return $q->whereNotIn('id', $input['not']);
+        })->where('id', '!=', Auth::user()->id)
+        ->where(function($q) use ($request) {
+            return $q->where('username', 'LIKE', $request->mention.'%')->orWhere('name', 'LIKE', $request->mention.'%')->whereNotNull('identity_verified_at');
+        })
+        ->select('id', 'name', 'username')
+        ->get();
         return response()->json($users);
     }
 }

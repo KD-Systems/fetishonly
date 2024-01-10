@@ -53,8 +53,8 @@
     <div class="mt-1 ml-0 ml-md-2">
         <span
             class="h-pill h-pill-primary post-price-button"
-            onclick="{{!GenericHelper::isUserVerified() && getSetting('site.enforce_user_identity_checks') ? '' : 'PostCreate.showSetPricePostDialog()'}}"
-            data-toggle="tooltip" data-placement="bottom" title="{{__('Set post price')}}."
+            onclick="{{'PostCreate.showSetTagPostDialog()'}}"
+            data-toggle="tooltip" data-placement="bottom" title="{{__('Tag Creator')}}."
         >
             @include('elements.icon',['icon'=>'add-circle','variant'=>'medium','centered'=>true, 'classes' => 'mr-1'])
             <span class="d-none d-md-block">{{__("Tag")}}</span>

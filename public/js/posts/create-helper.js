@@ -19,6 +19,8 @@ var PostCreate = {
     postNotifications: false,
     postReleaseDate: null,
     postExpireDate: null,
+    suggessionList: [],
+    taggedList: [],
 
     /**
      * Toggles post notification state
@@ -74,6 +76,110 @@ var PostCreate = {
         $('.post-price-label').html('');
         $('#post-set-price-dialog').modal('hide');
         $('#post-price').removeClass('is-invalid');
+    },
+
+
+    /**
+     * Shows up the post price setter dialog
+     */
+    showSetTagPostDialog: function(){
+        $('#post-tag-creator-dialog').modal('show');
+    },
+
+    /**
+     * Saves the post price into the state
+     */
+    savePostTags: function(){
+        console.log('Working 2...');
+    },
+
+
+    /**
+     * Clears up post price
+     */
+    clearPostTag: function(){
+        console.log("Working...");
+    },
+
+    getCreator: function(e) {
+
+        var name = e.target.value;
+
+        if(name.length === 0) {
+            return;
+        }
+
+        var tags = null;
+
+        if(PostCreate.taggedList.length === 0) {
+            tags = '';
+        }
+
+        PostCreate.taggedList.map(item => {
+            if(tags === null) {
+                tags = '&not[]='+item.id;
+            } else {
+                tags += '&not[]='+item.id;
+            }
+        });
+
+        $.ajax({
+            type: 'GET',
+            url: '/fetch-creator?mention='+name+tags,
+            success: function(data) {
+                if(data.length === 0)
+                    return;
+
+                var html = '<div style="background-color: white; min-width: 250px; padding: 20px; border-radius: 6px; color: black;">';
+
+                data.map(item => {
+                    console.log(item);
+                    PostCreate.suggessionList.push(item);
+                    html += `<div style="padding: 5px; border-bottom: 1px solid #bbbbbb;" onclick="PostCreate.selectCreator(${item.id})">${item.name} (@${item.username})</div>`;
+                });
+
+                html += '</div>';
+
+                $("#creator-suggest").append(html);
+            }
+        });
+    },
+
+
+    selectCreator: function(id) {
+        var item = PostCreate.suggessionList.find(item => item.id === id);
+        PostCreate.taggedList.push(item);
+        PostCreate.updateTaggedList();
+        $("#post-tag").val("");
+        $("#creator-suggest").children().remove();
+        $("#post-tag-creator-dialog").modal('hide');
+    },
+
+    updateTaggedList: function() {
+
+        $("#tagged-list").children().remove();
+
+        if(PostCreate.taggedList.length === 0) {
+            return;
+        }
+
+        var html = '<span style="font-size: 12px; color:#C1262C;">tags: </span>';
+
+        PostCreate.taggedList.map(item => {
+            html += `<span style="font-size: 12px; color:#C1262C;" title="Click to remove" onclick="PostCreate.removeTag(${item.id})">@${item.username} </span>`;
+        });
+
+        $("#tagged-list").append(html);
+    },
+
+
+    removeTag: function(id) {
+
+        var items = PostCreate.taggedList.filter(item => item.id !== id);
+
+        PostCreate.taggedList = items;
+
+        PostCreate.updateTaggedList();
     },
 
     /**
@@ -176,7 +282,8 @@ var PostCreate = {
             'price': PostCreate.postPrice,
             'postNotifications' : PostCreate.postNotifications,
             'postReleaseDate': PostCreate.postReleaseDate,
-            'postExpireDate': PostCreate.postExpireDate
+            'postExpireDate': PostCreate.postExpireDate,
+            'postTagged': PostCreate.taggedList
         };
         if(type === 'create'){
             data.type = 'create';
