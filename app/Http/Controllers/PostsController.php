@@ -205,11 +205,6 @@ class PostsController extends Controller
 
                 $postID = $post->id;
 
-                $tagged = $request->postTagged;
-        foreach($tagged as $tags) {
-            logger($tags['id']);
-        }
-
             if($request->has('postTagged')) {
                 $tagged = [];
 
