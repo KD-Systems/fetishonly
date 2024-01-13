@@ -59,7 +59,6 @@
             @include('elements.icon',['icon'=>'add-circle','variant'=>'medium','centered'=>true, 'classes' => 'mr-1'])
             <span class="d-none d-md-block">{{__("Tag")}}</span>
             <span class="d-block d-md-none">{{__("Tag")}}</span>
-            <span class="post-price-label ml-1">{{(isset($post) && $post) > 0 ? "(".config('app.site.currency_symbol')."$post->price".(config('app.site.currency_symbol') ? '' : config('app.site.currency_code')).")" : ''}}</span>
         </span>
     </div>
 </div>

@@ -15,7 +15,8 @@
 
                     </div>
                 </div>
-
+                <br>
+                <button onclick="PostCreate.showInvite()" class="btn btn-link">Invite New User</button>
             </div>
         </div>
     </div>

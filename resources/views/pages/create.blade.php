@@ -30,6 +30,7 @@
             @include('elements.uploaded-file-preview-template')
             @include('elements.post-price-setup',['postPrice'=>(isset($post) ? $post->price : 0)])
             @include('elements.tag-creator')
+            @include('elements.invite-user')
             @include('elements.attachments-uploading-dialog')
             @include('elements.post-schedule-setup', isset($post) ? ['release_date' => $post->release_date,'expire_date' => $post->expire_date] : [])
             <div class="d-flex justify-content-between pt-4 pb-3 px-3 border-bottom">

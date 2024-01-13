@@ -182,6 +182,31 @@ var PostCreate = {
         PostCreate.updateTaggedList();
     },
 
+
+    showInvite: function() {
+        $("#post-tag-creator-dialog").modal('hide');
+        $('#invite-user-dialog').modal('show');
+        console.log("Hello");
+    },
+
+
+    sendInvitationEmail: function() {
+        var email = $("#inite_email").val();
+
+        if(email.length === 0) {
+            alert("Email is emtpy!");
+            return;
+        }
+
+        $.ajax({
+            'url': '/send-invitation/email?email='+email,
+            'method': 'GET',
+            success: function(data) {
+                $('#invite-user-dialog').modal('hide');
+            }
+        });
+    },
+
     /**
      * Initiates the post draft data, if available
      * @param data
