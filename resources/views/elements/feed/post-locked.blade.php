@@ -2,7 +2,7 @@
     <div class="row d-flex justify-content-center align-items-center">
         <div class="col-10">
             <div class="">
-                <img src="{{asset('/img/post-loc.jpeg')}}">
+                <img style="width: 100%;" src="{{asset('/img/post-loc.jpeg')}}">
             </div>
         </div>
     </div>
