@@ -63,7 +63,7 @@ class MessengerController extends Controller
                 'pusherDebug' => (bool) env('PUSHER_APP_LOGGING', false),
                 'pusherCluster' => config('broadcasting.connections.pusher.options.cluster'),
                 'bootFullMessenger' => true,
-                'lockedMessageSVGPath' => asset('/img/post-locked.svg'),
+                'lockedMessageSVGPath' => asset('/img/post-loc.jpeg'),
                 'minimumPostsLimit' => getSetting('compliance.minimum_posts_until_creator'),
                 'availableContacts' => $availableContacts
             ],
