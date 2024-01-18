@@ -90,7 +90,7 @@
 
     <div class="d-flex mb-2">
         @if ($post->categories->count() > 0)
-            <div style="margin-left: 10px"> Categoris: @foreach ($post->categories as $item)
+            <div style="margin-left: 10px"> Categories: @foreach ($post->categories as $item)
                 <span><a href="{{ route('feed', ['slug' => $item->slug]) }}">{{ $item->name }}</a>@if(!$loop->last), @endif</span>
             @endforeach </div>
         @endif
