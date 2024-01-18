@@ -38,7 +38,7 @@ class FetchCreatorController extends Controller
         foreach($categoreis as $item) {
             $data[] = [
                 'id' => $item->id,
-                'text' => $item->name
+                'text' => ucwords($item->name)
             ];
         }
 
