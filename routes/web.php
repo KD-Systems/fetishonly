@@ -160,7 +160,8 @@ Route::group(['middleware' => ['auth','verified','2fa']], function () {
     });
 
     // Feed routes
-    Route::get('/feed/{slug?}', ['uses' => 'FeedController@index', 'as'   => 'feed']);
+    Route::get('/feed', ['uses' => 'FeedController@index', 'as'   => 'feed']);
+    Route::get('/feed/category/{slug?}', ['uses' => 'FeedController@index', 'as'   => 'feed.category']);
     Route::get('/feed/posts', ['uses' => 'FeedController@getFeedPosts', 'as'   => 'feed.posts']);
 
     // File uploader routes

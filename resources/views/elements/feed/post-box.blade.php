@@ -91,7 +91,7 @@
     <div class="d-flex mb-2">
         @if ($post->categories->count() > 0)
             <div style="margin-left: 10px"> Genre: @foreach ($post->categories as $item)
-                <span><a href="{{ route('feed', ['slug' => $item->slug]) }}">{{ ucwords($item->name) }}</a>@if(!$loop->last), @endif</span>
+                <span><a href="{{ route('feed.category', ['slug' => $item->slug]) }}">{{ ucwords($item->name) }}</a>@if(!$loop->last), @endif</span>
             @endforeach </div>
         @endif
     </div>
