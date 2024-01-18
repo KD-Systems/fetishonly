@@ -96,7 +96,7 @@
 
                         <div class="d-none justify-content-between w-100 mb-3 mt-3" id="select-category">
                             <div>
-                                <label for="">Select Category (Max 3)</label>
+                                <label for="">Select Genre (Max 3)</label>
                             <select style="width: 100%;" name="categories[]" multiple="multiple" class="form-control category-select">
                             </select>
                             </div>
