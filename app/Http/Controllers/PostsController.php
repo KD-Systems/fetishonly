@@ -21,6 +21,7 @@ use App\Providers\ListsHelperServiceProvider;
 use App\Providers\NotificationServiceProvider;
 use App\Providers\PostsHelperServiceProvider;
 use App\User;
+use App\UserPostCategory;
 use Carbon\Carbon;
 use Cookie;
 use Illuminate\Http\Request;
@@ -205,18 +206,43 @@ class PostsController extends Controller
 
                 $postID = $post->id;
 
-            if($request->has('postTagged')) {
-                $tagged = [];
+                if($request->has('postTagged')) {
+                    $tagged = [];
 
-                foreach($request->postTagged as $item) {
-                    $tagged[] = [
-                        'post_id' => $postID,
-                        'user_id'   => $item['id']
-                    ];
+                    foreach($request->postTagged as $item) {
+                        $tagged[] = [
+                            'post_id' => $postID,
+                            'user_id'   => $item['id']
+                        ];
+                    }
+
+                    PostTag::insert($tagged);
                 }
 
-                PostTag::insert($tagged);
-            }
+                // logger($request->categoreis);
+
+                if($request->has('isCategoryRequired')) {
+
+                    if($request->isCategoryRequired == 'true') {
+                        $postCategoryIds = [];
+
+                        logger($request->postCategories);
+
+                        foreach($request->postCategories as $categoryId) {
+                            $postCategoryIds[] = [
+                                'post_id' => $postID,
+                                'category_id' => $categoryId,
+                                'user_id' => $request->user()->id,
+                                'created_at' => now(),
+                                'updated_at' => now()
+                            ];
+                        }
+
+                        if(count($postCategoryIds) > 0)
+                            UserPostCategory::insert($postCategoryIds);
+
+                    }
+                }
 
             } elseif ($type == 'update') {
                 $postID = $request->get('id');

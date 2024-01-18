@@ -29,6 +29,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'jsVars'], function () {
 
 
 Route::get('fetch-creator', [App\Http\Controllers\Api\FetchCreatorController::class, 'get']);
+Route::get('fetch-categories', [App\Http\Controllers\Api\FetchCreatorController::class, 'getCategories']);
 Route::get('send-invitation/email', [App\Http\Controllers\SendInvitationController::class, 'sendInvitationEmail']);
 
 // Home & contact page
@@ -137,6 +138,8 @@ Route::group(['middleware' => ['auth','verified','2fa']], function () {
 
     });
 
+    Route::get('categories', ['uses' => 'CategoryController@index', 'as' => 'categories']);
+
     Route::post('authorizeStreamPresence', ['uses' => 'StreamsController@authorizeUser', 'as'  => 'public.stream.authorizeUser']);
     Route::post('stream/comments/add', ['uses' => 'StreamsController@addComment', 'as'  => 'public.stream.comment.add']);
     Route::delete('stream/comments/delete', ['uses' => 'StreamsController@deleteComment', 'as'  => 'public.stream.comment.delete']);
@@ -157,7 +160,7 @@ Route::group(['middleware' => ['auth','verified','2fa']], function () {
     });
 
     // Feed routes
-    Route::get('/feed', ['uses' => 'FeedController@index', 'as'   => 'feed']);
+    Route::get('/feed/{slug?}', ['uses' => 'FeedController@index', 'as'   => 'feed']);
     Route::get('/feed/posts', ['uses' => 'FeedController@getFeedPosts', 'as'   => 'feed.posts']);
 
     // File uploader routes

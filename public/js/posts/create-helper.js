@@ -21,6 +21,26 @@ var PostCreate = {
     postExpireDate: null,
     suggessionList: [],
     taggedList: [],
+    isCategoryRequired: false,
+    categories: [],
+
+    updateCategoryOption: function(){
+        var hasVideo = FileUpload.attachaments.filter(item => item.type == 'video');
+
+        if(hasVideo.length > 0) {
+            PostCreate.isCategoryRequired = true;
+            $("#select-category").removeClass('d-none');
+            $("#select-category").addClass('d-flex');
+
+        } else {
+            PostCreate.categories = [];
+
+            PostCreate.isCategoryRequired = false;
+            $("#select-category").removeClass('d-flex');
+            $("#select-category").addClass('d-none');
+        }
+
+    },
 
     /**
      * Toggles post notification state
@@ -298,6 +318,14 @@ var PostCreate = {
             $('#confirm-post-save').modal('show');
             return false;
         }
+
+        console.log(PostCreate.categories, FileUpload.attachaments);
+
+        if(PostCreate.isCategoryRequired === true && PostCreate.categories.length === 0) {
+            alert("You have to add minoum 1 category to post any video.");
+            return false;
+        }
+
         updateButtonState('loading',$('.post-create-button'));
         PostCreate.savePostScheduleSettings();
         let route = app.baseUrl + '/posts/save';
@@ -308,7 +336,9 @@ var PostCreate = {
             'postNotifications' : PostCreate.postNotifications,
             'postReleaseDate': PostCreate.postReleaseDate,
             'postExpireDate': PostCreate.postExpireDate,
-            'postTagged': PostCreate.taggedList
+            'postTagged': PostCreate.taggedList,
+            'postCategories': PostCreate.categories,
+            'isCategoryRequired': PostCreate.isCategoryRequired
         };
         if(type === 'create'){
             data.type = 'create';
