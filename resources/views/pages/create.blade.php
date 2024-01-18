@@ -2,15 +2,51 @@
 @section('page_title', __('New post'))
 
 @section('styles')
+
+<style>
+    .select2-container--default.select2-container--focus .select2-selection--multiple {
+        background-color: black;
+    }
+    .select2-container--default .select2-selection--multiple {
+        background-color: rgb(32, 32, 32) !important;
+    }
+
+    .select2-results__option--selectable {
+        background-color: black !important;
+    }
+
+    .select2-container--default .select2-selection--multiple .select2-selection__choice {
+        background-color: black !important;
+    }
+    .select2-results__option {
+        background-color: black !important;
+    }
+
+    .select2-container--default .select2-search--inline .select2-search__field {
+        color: white !important;
+    }
+
+    ..select2-container--default .select2-selection--multiple .select2-selection__choice__display {
+        color:  red !important;
+    }
+
+    .select2-results__option--highlighted {
+        color: red !important;
+    }
+</style>
+
     {!!
         Minify::stylesheet([
             '/css/posts/post.css',
             '/libs/dropzone/dist/dropzone.css',
          ])->withFullUrl()
     !!}
-@stop
 
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+@stop
 @section('scripts')
+
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     {!!
         Minify::javascript([
             '/js/Post.js',
@@ -19,6 +55,7 @@
             (Route::currentRouteName() =='posts.create' ? '/js/posts/create.js' : '/js/posts/edit.js'),
             '/libs/dropzone/dist/dropzone.js',
             '/js/FileUpload.js',
+            '/js/posts/category-select.js',
          ])->withFullUrl()
     !!}
 @stop
@@ -56,6 +93,14 @@
                         <span class="invalid-feedback" role="alert">
                             <strong class="post-invalid-feedback">{{__('Your post must contain more than 10 characters.')}}</strong>
                         </span>
+
+                        <div class="d-none justify-content-between w-100 mb-3 mt-3" id="select-category">
+                            <div>
+                                <label for="">Select Genre (Max 3)</label>
+                            <select style="width: 100%;" name="categories[]" multiple="multiple" class="form-control category-select">
+                            </select>
+                            </div>
+                        </div>
 
                         <div id="tagged-list">
                         </div>

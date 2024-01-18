@@ -116,6 +116,17 @@
             </li>
         @endif
 
+        <li class="nav-item">
+            <a href="{{route('categories')}}" class="nav-link {{Route::currentRouteName() == 'categories' ? 'active' : ''}} h-pill h-pill-primary d-flex justify-content-between">
+                <div class="d-flex justify-content-center align-items-center">
+                    <div class="icon-wrapper d-flex justify-content-center align-items-center">
+                        @include('elements.icon',['icon'=>'menu','variant'=>'large'])
+                    </div>
+                    <span class="d-none d-md-block d-xl-block d-lg-block ml-2 text-truncate side-menu-label">{{__('Genre')}}</span>
+                </div>
+            </a>
+        </li>
+
         @if(!Auth::check())
             <li class="nav-item">
                 <a href="{{route('search.get')}}" class="nav-link {{Route::currentRouteName() == 'search.get' ? 'active' : ''}} h-pill h-pill-primary d-flex justify-content-between">

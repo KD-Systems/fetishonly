@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Category;
 use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Http\Request;
@@ -27,5 +28,20 @@ class FetchCreatorController extends Controller
         ->select('id', 'name', 'username')
         ->get();
         return response()->json($users);
+    }
+
+    public function getCategories(Request $request) {
+        $categoreis = Category::where('name', 'LIKE', $request->name.'%')->get();
+
+        $data = [];
+
+        foreach($categoreis as $item) {
+            $data[] = [
+                'id' => $item->id,
+                'text' => ucwords($item->name)
+            ];
+        }
+
+        return response()->json($data);
     }
 }

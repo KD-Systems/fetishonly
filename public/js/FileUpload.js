@@ -62,6 +62,9 @@ var FileUpload = {
                 $(".draft-clear-button").on("click", function() {
                     _this.removeAllFiles(true);
                 });
+
+
+                PostCreate.updateCategoryOption();
             }
         });
 
@@ -101,6 +104,8 @@ var FileUpload = {
                     FileUpload.updatePreviewElement(file, false,response);
                     break;
                 }
+
+                PostCreate.updateCategoryOption();
             }
             FileUpload.isLoading = false;
 
@@ -117,6 +122,7 @@ var FileUpload = {
                 }
             });
             $("#show-warning").css("display", "none");
+            PostCreate.updateCategoryOption();
         });
 
         FileUpload.myDropzone.on("error", (file, errorMessage) => {

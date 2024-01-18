@@ -18,7 +18,7 @@ class FeedController extends Controller
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index(Request $request)
+    public function index(Request $request, $slug = false)
     {
 
         // Avoid (browser) page caching when hitting back button
@@ -27,7 +27,7 @@ class FeedController extends Controller
         header('Expires: 0 '); // Proxies.
 
         $startPage = PostsHelperServiceProvider::getFeedStartPage(PostsHelperServiceProvider::getPrevPage($request));
-        $posts = PostsHelperServiceProvider::getFeedPosts(Auth::user()->id, false, $startPage);
+        $posts = PostsHelperServiceProvider::getFeedPosts(Auth::user()->id, false, $startPage, false, false, '', $slug);
         PostsHelperServiceProvider::shouldDeletePaginationCookie($request);
 
         JavaScript::put([
@@ -58,6 +58,10 @@ class FeedController extends Controller
             'posts' => $posts,
             'suggestions' => MembersHelperServiceProvider::getSuggestedMembers(),
         ]);
+    }
+
+    public function showPostBySlug(Request $request, $slug) {
+
     }
 
     /**

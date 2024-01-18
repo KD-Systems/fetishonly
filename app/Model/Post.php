@@ -2,7 +2,9 @@
 
 namespace App\Model;
 
+use App\Category;
 use App\PostTag;
+use App\UserPostCategory;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
@@ -121,6 +123,10 @@ class Post extends Model
 
     public function tags() {
         return $this->hasMany(PostTag::class, 'post_id', 'id');
+    }
+
+    public function categories(){
+        return $this->belongsToMany(Category::class, 'user_post_categories');
     }
 
 }

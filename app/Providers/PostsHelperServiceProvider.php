@@ -176,9 +176,9 @@ class PostsHelperServiceProvider extends ServiceProvider
      * @param bool $mediaType
      * @return array
      */
-    public static function getFeedPosts($userID, $encodePostsToHtml = false, $pageNumber = false, $mediaType = false, $sortOrder = false, $searchTerm = '')
+    public static function getFeedPosts($userID, $encodePostsToHtml = false, $pageNumber = false, $mediaType = false, $sortOrder = false, $searchTerm = '', $slug=false)
     {
-        return self::getFilteredPosts($userID, $encodePostsToHtml, $pageNumber, $mediaType, false, false, false, $sortOrder, $searchTerm);
+        return self::getFilteredPosts($userID, $encodePostsToHtml, $pageNumber, $mediaType, false, false, false, $sortOrder, $searchTerm, $slug);
     }
 
     /**
@@ -217,9 +217,9 @@ class PostsHelperServiceProvider extends ServiceProvider
      * @param bool $mediaType
      * @return array
      */
-    public static function getFilteredPosts($userID, $encodePostsToHtml, $pageNumber, $mediaType, $ownPosts, $hasSub, $bookMarksOnly, $sortOrder = false, $searchTerm = '')
+    public static function getFilteredPosts($userID, $encodePostsToHtml, $pageNumber, $mediaType, $ownPosts, $hasSub, $bookMarksOnly, $sortOrder = false, $searchTerm = '', $slug=false)
     {
-        $relations = ['user', 'reactions', 'attachments', 'bookmarks', 'postPurchases', 'tags.user'];
+        $relations = ['user', 'reactions', 'attachments', 'bookmarks', 'postPurchases', 'tags.user', 'categories'];
 
         // Fetching basic posts information
         $posts = Post::withCount('tips')
@@ -235,6 +235,12 @@ class PostsHelperServiceProvider extends ServiceProvider
         }
         else{
             $posts->where('status', Post::APPROVED_STATUS);
+        }
+
+        if($slug) {
+            $posts->whereHas('categories', function($q) use ($slug){
+                $q->where('slug', $slug);
+            });
         }
 
         // For profile page
