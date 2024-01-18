@@ -62,7 +62,7 @@ Minify::javascript([
                 <div class="feed-box mt-0 pt-4 px-4 pb-4 posts-wrapper">
                     {{-- @include('elements.feed.posts-wrapper',['posts'=>$posts]) --}}
                     @foreach ($categories as $item)
-                        <a href="{{ route('feed', ['slug' => $item->slug]) }}" class="">{{ $item->name }} ({{ $item->category_post_count }})</a>, &nbsp;
+                        <a href="{{ route('feed', ['slug' => $item->slug]) }}" class="">{{ ucwords($item->name) }} ({{ $item->category_post_count }})</a>, &nbsp;
                     @endforeach
                 </div>
                 @include('elements.feed.posts-loading-spinner')
