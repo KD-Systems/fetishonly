@@ -126,7 +126,9 @@ var PostCreate = {
         var name = e.target.value;
 
         if(name.length === 0) {
-            return;
+            $("#creator-suggest").children().remove();
+            PostCreate.suggessionList = [];
+            return false;
         }
 
         var tags = null;
@@ -148,7 +150,15 @@ var PostCreate = {
             url: '/fetch-creator?mention='+name+tags,
             success: function(data) {
                 if(data.length === 0)
-                    return;
+                {
+                    $("#creator-suggest").children().remove();
+                    PostCreate.suggessionList = [];
+                    return false;
+                }
+
+                PostCreate.suggessionList = [];
+
+                $("#creator-suggest").children().remove();
 
                 var html = '<div style="background-color: white; min-width: 250px; padding: 20px; border-radius: 6px; color: black;">';
 
