@@ -8,11 +8,11 @@
 <tr>
 <td>
     <a href="{{ $url }}" class="button button-{{ $color ?? 'primary' }}" target="_blank" style="
-        background-color:#{{getSetting('colors.theme_color_code') ? getSetting('colors.theme_color_code') : 'cb0c9f'}};
-        border-top: 10px solid #{{getSetting('colors.theme_color_code') ? getSetting('colors.theme_color_code') : 'cb0c9f'}};
-        border-right: 18px solid #{{getSetting('colors.theme_color_code') ? getSetting('colors.theme_color_code') : 'cb0c9f'}};
-        border-bottom: 10px solid #{{getSetting('colors.theme_color_code') ? getSetting('colors.theme_color_code') : 'cb0c9f'}};
-        border-left: 18px solid #{{getSetting('colors.theme_color_code') ? getSetting('colors.theme_color_code') : 'cb0c9f'}};
+        background-color:#C1262C;
+        border-top: 10px solid #C1262C;
+        border-right: 18px solid #C1262C;
+        border-bottom: 10px solid #C1262C;
+        border-left: 18px solid #C1262C;
         ">{{ $slot }}</a>
 </td>
 </tr>
