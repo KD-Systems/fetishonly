@@ -15,8 +15,8 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-lg-7 col-xl-6 mx-auto">
-                                <a href="{{action('HomeController@index')}}">
-                                    <img class="brand-logo pb-4" src="https://freeonlytest.s3.us-west-1.amazonaws.com/WhatsApp%20Image%202023-09-11%20at%2010.24.06%20PM.jpeg">
+                                <a href="{{action('HomeController@index')}}" style="width: 100%; display: flex; justify-content: center;">
+                                    <img class="brand-logo pb-4" style="width: 450px;" src="https://freeonlytest.s3.us-west-1.amazonaws.com/logo-removebg-preview%20%281%29.png">
                                 </a>
                                 @include('auth.register-form')
                                 @include('auth.social-login-box')
