@@ -19,7 +19,7 @@ class SendInvitationController extends Controller
 
         $email = $request->email;
         $user = Auth::user();
-        $text = "Hi I am $user->name, Inviting you to join with me. Please, click the link below.";
+        $text = "Hello, would like you to come join Fetishonly.com as a creator to share content. Click the link below";
         $link = route('register');
         $subject = 'Invitation to join as performer.';
 
