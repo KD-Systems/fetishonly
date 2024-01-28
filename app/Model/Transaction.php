@@ -68,7 +68,7 @@ class Transaction extends Model
         'sender_user_id', 'recipient_user_id', 'subscription_id', 'stripe_transaction_id', 'paypal_payer_id', 'post_id',
         'paypal_transaction_id', 'status', 'type', 'amount', 'payment_provider', 'paypal_transaction_token', 'currency', 'taxes',
         'coinbase_charge_id', 'coinbase_transaction_token', 'ccbill_payment_token', 'ccbill_transaction_id', 'nowpayments_payment_id',
-        'nowpayments_order_id', 'stream_id', 'ccbill_subscription_id', 'user_message_id', 'paystack_transaction_token'
+        'nowpayments_order_id', 'stream_id', 'ccbill_subscription_id', 'user_message_id', 'paystack_transaction_token', 'fee_amount'
     ];
 
     /**

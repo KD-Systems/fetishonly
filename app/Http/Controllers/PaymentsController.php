@@ -60,6 +60,7 @@ class PaymentsController extends Controller
             $transaction['type'] = $transactionType;
             $transaction['status'] = Transaction::INITIATED_STATUS;
             $transaction['amount'] = $request->get('amount');
+            $transaction['fee_amount'] = (($request->get('amount') / 100) * 20);
             $transaction['currency'] = config('app.site.currency_code');
             $transaction['payment_provider'] = $request->get('provider');
             $transaction['taxes'] = $request->get('taxes');
