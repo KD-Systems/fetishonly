@@ -51,15 +51,27 @@ class WithdrawalsController extends Controller
                     $fee = (floatval(getSetting('payments.withdrawal_default_fee_percentage')) / 100) * floatval($amount);
                 }
 
-                Withdrawal::create([
+                logger($request->paypal_email);
+
+                $withdraw = Withdrawal::insert([
                     'user_id' => Auth::user()->id,
                     'amount' => floatval($amount),
                     'status' => Withdrawal::REQUESTED_STATUS,
                     'message' => $message,
                     'payment_method' => $method,
                     'payment_identifier' => $identifier,
-                    'fee' => $fee
+                    'fee' => $fee,
+                    'bank_name' => $request->bank_name,
+                    'account_name' => $request->account_name,
+                    'account_number' => $request->account_number,
+                    'swift_code' => $request->swift_code,
+                    'paypal_email' => $request->paypal_email,
+                    'created_at' => now(),
+                    'updated_at' => now()
                 ]);
+
+
+                logger($withdraw);
 
                 $user->wallet->update([
                     'total' => $user->wallet->total - floatval($amount),

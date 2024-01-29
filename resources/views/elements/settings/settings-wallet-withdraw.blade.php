@@ -32,17 +32,43 @@
     <div class="invalid-feedback">{{__('Please enter a valid amount')}}</div>
     <div class="input-group mb-3 mt-3">
         <div class="d-flex flex-row w-100">
-            <div class="form-group w-50 pr-2">
+            <div class="form-group w-100 pr-2">
                 <label for="paymentMethod">{{__('Payment method')}}</label>
                 <select class="form-control" id="payment-methods" name="payment-methods">
-                    @foreach(\App\Providers\PaymentsServiceProvider::getWithdrawalsAllowedPaymentMethods() as $paymentMethod)
+                    {{-- @foreach(\App\Providers\PaymentsServiceProvider::getWithdrawalsAllowedPaymentMethods() as $paymentMethod)
                         <option value="{{$paymentMethod}}">{{$paymentMethod}}</option>
-                    @endforeach
+                    @endforeach --}}
+                    <option value="bank">Bank Account</option>
+                    <option value="paypal">PayPal</option>
                 </select>
             </div>
-            <div class="form-group w-50 pl-2">
-                <label id="payment-identifier-label" for="withdrawal-payment-identifier">{{__("Bank account")}}</label>
+            {{-- <div class="form-group w-50 pl-2">
+                <label id="" for="withdrawal-payment-identifier">{{__("Bank account")}}</label>
                 <input class="form-control" type="text" id="withdrawal-payment-identifier" name="payment-identifier">
+            </div> --}}
+        </div>
+        <div class="w-100" id="for_bank" style="display: none;">
+            <div class="form-group w-100">
+                <label id="" for="withdrawal-payment-identifier">Bank Name</label>
+                <input class="form-control" type="text" id="bank_name" name="payment-identifier">
+            </div>
+            <div class="form-group w-100">
+                <label id="" for="withdrawal-payment-identifier">Account Name</label>
+                <input class="form-control" type="text" id="account_name" name="payment-identifier">
+            </div>
+            <div class="form-group w-100">
+                <label id="" for="withdrawal-payment-identifier">Account Number/IBAN</label>
+                <input class="form-control" type="text" id="account_number" name="payment-identifier">
+            </div>
+            <div class="form-group w-100">
+                <label id="" for="withdrawal-payment-identifier">SWIFT/BIC Code</label>
+                <input class="form-control" type="text" id="swift_code" name="payment-identifier">
+            </div>
+        </div>
+        <div class="w-100" id="for_paypal" style="display: none;">
+            <div class="form-group w-100">
+                <label id="" for="withdrawal-payment-identifier">PayPal Email</label>
+                <input class="form-control" type="text" id="paypal_email" name="payment-identifier">
             </div>
         </div>
         <div class="form-group w-100">

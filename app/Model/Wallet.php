@@ -16,7 +16,12 @@ class Wallet extends Model
      * @var array
      */
     protected $fillable = [
-        'id', 'user_id', 'total'
+        'id', 'user_id', 'total',
+        'bank_name',
+        'account_name',
+        'account_number',
+        'swift_code',
+        'paypal_email',
     ];
 
     /**

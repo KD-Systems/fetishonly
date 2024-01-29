@@ -40,6 +40,13 @@ var Wallet = {
             return false;
         }
 
+        var method = $("#payment-methods").val() ?? null;
+        var bank_name = $("#bank_name").val() ?? null;
+        var account_name = $("#account_name").val() ?? null;
+        var account_number = $("#account_number").val() ?? null;
+        var swift_code = $("#swift_code").val() ?? null;
+        var paypal_email = $("#paypal_email").val() ?? null;
+
         $('.withdrawal-error-message').hide();
         $.ajax({
             type: 'POST',
@@ -48,6 +55,11 @@ var Wallet = {
                 message: $('#withdrawal-message').val(),
                 identifier: $('#withdrawal-payment-identifier').val(),
                 method: $('#payment-methods').find(":selected").text(),
+                bank_name: bank_name,
+                account_name: account_name,
+                account_number: account_number,
+                swift_code: swift_code,
+                paypal_email: paypal_email
             },
             url: app.baseUrl + '/withdrawals/request',
             success: function (result) {
@@ -135,6 +147,16 @@ var Wallet = {
     setPaymentMethodTitle: function () {
         let paymentIdentifierTitle = trans(Wallet.getPaymentIdentifierTitle());
         $('#payment-identifier-label').text(paymentIdentifierTitle);
+
+        var type = $("#payment-methods").val();
+
+        if(type == 'bank') {
+            $("#for_paypal").css('display', 'none');
+            $("#for_bank").css('display', 'block');
+        } else {
+            $("#for_bank").css('display', 'none');
+            $("#for_paypal").css('display', 'block');
+        }
     }
 
 };
