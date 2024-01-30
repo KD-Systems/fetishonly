@@ -520,7 +520,12 @@ class PaymentHelper
                 if (isset($taxes['exclusiveTaxesAmount'])) {
                     $amountWithTaxesDeducted = $amountWithTaxesDeducted - $taxes['exclusiveTaxesAmount'];
                 }
-                $walletData = ['total' => $userWallet->total + (($amountWithTaxesDeducted/100) * 80)];
+
+                if($this->isSubscriptionPayment($transaction->type)) {
+                    $walletData = ['total' => $userWallet->total + (($amountWithTaxesDeducted/100) * 80)];
+                } else {
+                    $walletData = ['total' => $userWallet->total + $amountWithTaxesDeducted];
+                }
 
                 $userWallet->update($walletData);
             }

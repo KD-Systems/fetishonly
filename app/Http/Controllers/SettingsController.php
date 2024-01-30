@@ -52,6 +52,7 @@ class SettingsController extends Controller
         'notifications' => ['heading' => 'Your email notifications settings', 'icon' => 'notifications'],
         'privacy' => ['heading' => 'Your privacy and safety matters', 'icon' => 'shield'],
         'verify' => ['heading' => 'Get verified and start to earning now', 'icon' => 'checkmark'],
+        'statements' => ['heading' => 'Get statement of subscriptions', 'icon' => 'checkmark'],
     ];
 
     private $user;
@@ -186,6 +187,8 @@ class SettingsController extends Controller
             case 'rates':
                 $data['trail_links'] = TrailLink::where('user_id', Auth::user()->id)->get();
                 break;
+            case 'statements':
+                $data['statements'] = Transaction::with('receiver', 'sender')->where('status', Transaction::APPROVED_STATUS)->orderBy('id', 'DESC')->paginate(6);
         }
 
         return $this->renderSettingView($request->route('type'), $data);

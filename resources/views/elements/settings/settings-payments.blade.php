@@ -2,16 +2,16 @@
     <div class="table-wrapper ">
         <div class="">
             <div class="col d-flex align-items-center py-3 border-bottom text-bold">
-                <div class="col-lg-3 text-truncate">{{__('Type')}}</div>
+                <div class="col-lg-2 text-truncate">{{__('Type')}}</div>
                 <div class="col-lg-2 text-truncate">{{__('Status')}}</div>
                 <div class="col-lg-2 text-truncate">{{__('Amount')}}</div>
+                <div class="col-lg-2 text-truncate">Fee</div>
                 <div class="col-lg-2 text-truncate d-none d-md-block">{{__('From')}}</div>
                 <div class="col-lg-2 text-truncate d-none d-md-block">{{__('To')}}</div>
-                <div class="col-lg-1 text-truncate"></div>
             </div>
             @foreach($payments as $payment)
                 <div class="col d-flex align-items-center py-3 border-bottom">
-                    <div class="col-lg-3 text-truncate">
+                    <div class="col-lg-2 text-truncate">
                         @if($payment->type == 'stream-access')
                             @if($payment->stream->status == 'in-progress')
                                 <a href="{{route('public.stream.get',['streamID'=>$payment->stream->id,'slug'=>$payment->stream->slug])}}" class="text-{{(Cookie::get('app_theme') == null ? (getSetting('site.default_user_theme') == 'dark' ? 'white' : 'dark') : (Cookie::get('app_theme') == 'dark' ? 'white' : 'dark'))}}"> {{ucfirst(__($payment->type))}}</a>
@@ -77,6 +77,9 @@
                             </span>
                             @break
                         @endswitch
+                    </div>
+                    <div class="col-lg-2 text-truncate">
+                        ${{ $payment->fee_amount }}
                     </div>
                     <div class="col-lg-2 text-truncate">{{config('app.site.currency_symbol')}}{{$payment->decodedTaxes && Auth::user()->id == $payment->recipient_user_id ? $payment->amount - $payment->decodedTaxes->taxesTotalAmount : $payment->amount }}</div>
                     <div class="col-lg-2 text-truncate d-none d-md-block">
