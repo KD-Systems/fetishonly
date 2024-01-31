@@ -10,7 +10,7 @@
                         <div class="row">
                             <div class="col-lg-7 col-xl-6 mx-auto">
                                 <a href="{{action('HomeController@index')}}" style="width: 100%; display: flex; justify-content: center;">
-                                    <img class="brand-logo pb-4" style="width: 450px;" src="https://freeonlytest.s3.us-west-1.amazonaws.com/logo-removebg-preview%20%281%29.png">
+                                    <img class="brand-logo pb-4" style="width: 450px;" src="https://freeonlytest.s3.us-west-1.amazonaws.com/Fetishonly%20SVG%20Logo.svg">
                                 </a>
                                 @include('auth.login-form')
                                 @include('auth.social-login-box')
