@@ -235,6 +235,7 @@ return [
           'image/bmp',
           'video/mp4',
           'image/svg+xml',
+          'svg'
         ],
 
         //Path for media-manager. Relative to the filesystem.
