@@ -95,6 +95,7 @@
 
             <hr>
             <p>CCBill Support  <a href="https://support.ccbill.com/">https://support.ccbill.com/</a></p>
+            <p>Billing Support  <a href="http://www.epoch.com">http://www.epoch.com/</a></p>
         </div>
 
     </div>
