@@ -8,6 +8,9 @@
                 @foreach(GenericHelper::getFooterPublicPages() as $page)
                     <a href="{{route('pages.get',['slug' => $page->slug])}}" target="" class="text-dark-r text-hover text-lg m-2">{{__($page->title)}}</a>
                 @endforeach
+                <a href="http://www.epoch.com" class="text-dark-r text-hover text-lg m-2">
+                    Billing Support
+                </a>
             </div>
             <div class="col-lg-8 mx-auto text-center mb-3 mt-2">
                 <div class="d-flex justify-content-center">
