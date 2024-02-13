@@ -40,12 +40,7 @@ var Wallet = {
             return false;
         }
 
-        var method = $("#payment-methods").val() ?? null;
-        var bank_name = $("#bank_name").val() ?? null;
-        var account_name = $("#account_name").val() ?? null;
-        var account_number = $("#account_number").val() ?? null;
-        var swift_code = $("#swift_code").val() ?? null;
-        var paypal_email = $("#paypal_email").val() ?? null;
+        console.log($('.method:checked').val());
 
         $('.withdrawal-error-message').hide();
         $.ajax({
@@ -53,13 +48,7 @@ var Wallet = {
             data: {
                 amount: $('#withdrawal-amount').val(),
                 message: $('#withdrawal-message').val(),
-                identifier: $('#withdrawal-payment-identifier').val(),
-                method: $('#payment-methods').find(":selected").text(),
-                bank_name: bank_name,
-                account_name: account_name,
-                account_number: account_number,
-                swift_code: swift_code,
-                paypal_email: paypal_email
+                method_id: $('.method:checked').val() ?? null,
             },
             url: app.baseUrl + '/withdrawals/request',
             success: function (result) {

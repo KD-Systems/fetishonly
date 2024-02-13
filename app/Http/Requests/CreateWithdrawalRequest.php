@@ -25,7 +25,7 @@ class CreateWithdrawalRequest extends FormRequest
     {
         return [
             'amount' => 'required',
-            'method' => 'required',
+            'method_id' => 'required',
             'identifier' => '',
             'message' => '',
         ];

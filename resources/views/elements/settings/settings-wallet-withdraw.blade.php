@@ -31,53 +31,51 @@
            max="{{\App\Providers\PaymentsServiceProvider::getWithdrawalMaximumAmount()}}">
     <div class="invalid-feedback">{{__('Please enter a valid amount')}}</div>
     <div class="input-group mb-3 mt-3">
+        @forelse ($withdraw_methods as $item)
         <div class="d-flex flex-row w-100">
-            <div class="form-group w-100 pr-2">
-                <label for="paymentMethod">{{__('Payment method')}}</label>
-                <select class="form-control" id="payment-methods" name="payment-methods">
-                    {{-- @foreach(\App\Providers\PaymentsServiceProvider::getWithdrawalsAllowedPaymentMethods() as $paymentMethod)
-                        <option value="{{$paymentMethod}}">{{$paymentMethod}}</option>
-                    @endforeach --}}
-                    <option value="bank">Bank Account</option>
-                    <option value="paypal">PayPal</option>
-                </select>
+
+                @if ($item->type == 'bank')
+                    <div class="select_method" style="display: flex; border: 1px solid #999; padding: 20px; border-radius: 10px; align-items: center; margin-bottom: 10px; width: 100%;">
+                        <div style="width: 80%;">
+                            <h4 class="m-0 p-0">Bank Account</h4>
+                            <p class="m-0 p-0">Account Number/IBAN: {{ $item->account_number }}</p>
+                            <p class="m-0 p-0">SWIFT/BIC Code: {{ $item->swift_code }}</p>
+                            <p class="m-0 p-0">Account Name: {{ $item->account_name }}</p>
+                            <p class="m-0 p-0">Bank Name: {{ $item->bank_name }}</p>
+                        </div>
+                        <div style="width: 20%;">
+                            <div class="btn-group" style="float: right">
+                                <input class="method" type="radio" value="{{ $item->id }}" name="method">
+                            </div>
+                        </div>
+                    </div>
+                @else
+                    <div class="select_method" style="display: flex; border: 1px solid #999; padding: 20px; border-radius: 10px; align-items: center; margin-bottom: 10px; width: 100%;">
+                        <div style="width: 80%;">
+                            <h4 class="m-0 p-0">PayPal</h4>
+                            <p class="m-0 p-0">PayPal Email	: {{ $item->paypal_email }}</p>
+                        </div>
+                        <div style="width: 20%;">
+                            <div class="btn-group" style="float: right">
+                                <input class="method" type="radio" value="{{ $item->id }}" name="method">
+                            </div>
+                        </div>
+                    </div>
+                @endif
             </div>
-            {{-- <div class="form-group w-50 pl-2">
-                <label id="" for="withdrawal-payment-identifier">{{__("Bank account")}}</label>
-                <input class="form-control" type="text" id="withdrawal-payment-identifier" name="payment-identifier">
-            </div> --}}
-        </div>
-        <div class="w-100" id="for_bank" style="display: none;">
-            <div class="form-group w-100">
-                <label id="" for="withdrawal-payment-identifier">Bank Name</label>
-                <input class="form-control" type="text" id="bank_name" name="payment-identifier">
+            @empty
+            <div class="d-flex flex-row w-100">
+                    <p>No Withdraw method available</p>
             </div>
-            <div class="form-group w-100">
-                <label id="" for="withdrawal-payment-identifier">Account Name</label>
-                <input class="form-control" type="text" id="account_name" name="payment-identifier">
-            </div>
-            <div class="form-group w-100">
-                <label id="" for="withdrawal-payment-identifier">Account Number/IBAN</label>
-                <input class="form-control" type="text" id="account_number" name="payment-identifier">
-            </div>
-            <div class="form-group w-100">
-                <label id="" for="withdrawal-payment-identifier">SWIFT/BIC Code</label>
-                <input class="form-control" type="text" id="swift_code" name="payment-identifier">
-            </div>
-        </div>
-        <div class="w-100" id="for_paypal" style="display: none;">
-            <div class="form-group w-100">
-                <label id="" for="withdrawal-payment-identifier">PayPal Email</label>
-                <input class="form-control" type="text" id="paypal_email" name="payment-identifier">
-            </div>
-        </div>
-        <div class="form-group w-100">
-            <label for="withdrawal-message">{{__('Message (Optional)')}}</label>
-            <textarea placeholder="{{__('Bank account, notes, etc')}}" class="form-control" id="withdrawal-message" rows="2"></textarea>
-            <span class="invalid-feedback" role="alert">
-                {{__('Please add your withdrawal notes: EG: Paypal or Bank account.')}}
-            </span>
-        </div>
+            @endforelse
+    </div>
+
+    <div class="form-group w-100">
+        <label for="withdrawal-message">{{__('Message (Optional)')}}</label>
+        <textarea placeholder="{{__('Bank account, notes, etc')}}" class="form-control" id="withdrawal-message" rows="2"></textarea>
+        <span class="invalid-feedback" role="alert">
+            {{__('Please add your withdrawal notes: EG: Paypal or Bank account.')}}
+        </span>
     </div>
 
     <div class="payment-error error text-danger d-none mt-3">{{__('Add all required info')}}</div>

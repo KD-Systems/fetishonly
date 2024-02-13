@@ -9,6 +9,7 @@ use App\Providers\GenericHelperServiceProvider;
 use App\Providers\PaymentsServiceProvider;
 use App\Providers\SettingsServiceProvider;
 use App\User;
+use App\WithdrawMethod;
 use Illuminate\Support\Facades\Auth;
 
 class WithdrawalsController extends Controller
@@ -51,25 +52,27 @@ class WithdrawalsController extends Controller
                     $fee = (floatval(getSetting('payments.withdrawal_default_fee_percentage')) / 100) * floatval($amount);
                 }
 
-                logger($request->paypal_email);
+
+                $method_id = $request->request->get('method_id');
+
+                $withdrawMethod = WithdrawMethod::find($method_id);
 
                 $withdraw = Withdrawal::insert([
                     'user_id' => Auth::user()->id,
                     'amount' => floatval($amount),
                     'status' => Withdrawal::REQUESTED_STATUS,
                     'message' => $message,
-                    'payment_method' => $method,
+                    'payment_method' => $withdrawMethod->type,
                     'payment_identifier' => $identifier,
                     'fee' => $fee,
-                    'bank_name' => $request->bank_name,
-                    'account_name' => $request->account_name,
-                    'account_number' => $request->account_number,
-                    'swift_code' => $request->swift_code,
-                    'paypal_email' => $request->paypal_email,
+                    'bank_name' => $withdrawMethod->bank_name,
+                    'account_name' => $withdrawMethod->account_name,
+                    'account_number' => $withdrawMethod->account_number,
+                    'swift_code' => $withdrawMethod->swift_code,
+                    'paypal_email' => $withdrawMethod->paypal_email,
                     'created_at' => now(),
                     'updated_at' => now()
                 ]);
-
 
                 logger($withdraw);
 

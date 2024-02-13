@@ -23,6 +23,7 @@ use App\Providers\GenericHelperServiceProvider;
 use App\TrailLink;
 use App\TwitterAccess;
 use App\User;
+use App\WithdrawMethod;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -106,6 +107,7 @@ class SettingsController extends Controller
                 ]);
                 $activeWalletTab = $request->get('active');
                 $data['activeTab'] = $activeWalletTab != null ? $activeWalletTab : 'deposit';
+                $data['withdraw_methods'] = WithdrawMethod::where('user_id', auth()->user()->id)->get();
                 break;
             case 'subscriptions':
 
@@ -189,6 +191,9 @@ class SettingsController extends Controller
                 break;
             case 'statements':
                 $data['statements'] = Transaction::with('receiver', 'sender')->where('status', Transaction::APPROVED_STATUS)->orderBy('id', 'DESC')->paginate(6);
+
+            case 'withdraw':
+                $data['withdraw_methods'] = WithdrawMethod::orderBy('id', 'DESC')->get();
         }
 
         return $this->renderSettingView($request->route('type'), $data);
@@ -431,6 +436,9 @@ class SettingsController extends Controller
             case 'referrals':
                 $additionalAssets['js'][] = '/js/pages/settings/referrals.js';
                 $additionalAssets['css'][] = '/css/pages/referrals.css';
+                break;
+            case 'withdraw':
+                $additionalAssets['js'][] = '/js/pages/settings/payout_method.js';
                 break;
         }
 
@@ -691,6 +699,7 @@ class SettingsController extends Controller
         if(auth()->user()->identity_verified_at != null) {
             $this->availableSettings["rates"] = ['heading' => 'Prices & Bundles', 'icon' => 'layers'];
             $this->availableSettings["payments"] = ['heading' => 'Your payments & wallet', 'icon' => 'card'];
+            $this->availableSettings["withdraw"] = ['heading' => 'Setup Your Payout Method', 'icon' => 'card'];
             $this->availableSettings["twitter"] = ['heading' => 'Connect with your twitter account', 'icon' => 'logo-twitter'];
         }
     }

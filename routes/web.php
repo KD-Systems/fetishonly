@@ -88,6 +88,9 @@ Route::group(['middleware' => ['auth','verified','2fa']], function () {
         Route::get('/settings/{type?}', ['uses' => 'SettingsController@index', 'as'   => 'settings']);
         Route::post('/settings/rates/free-trail', ['uses' => 'FreeTrailController@store', 'as'   => 'settings.rates.free-trail']);
         Route::post('/settings/account/save', ['uses' => 'SettingsController@saveAccount', 'as'   => 'settings.account.save']);
+        Route::post('/settings/withdraw/{type}/save', ['uses' => 'WithdrawMethodController@store', 'as'   => 'settings.withdraw.save']);
+        Route::post('/settings/withdraw/{type}/update', ['uses' => 'WithdrawMethodController@update', 'as'   => 'settings.withdraw.update']);
+        Route::get('/settings/withdraw/{id}/remove', ['uses' => 'WithdrawMethodController@remove', 'as'   => 'settings.withdraw.remove']);
 
         /*
          * (My) Notifications
