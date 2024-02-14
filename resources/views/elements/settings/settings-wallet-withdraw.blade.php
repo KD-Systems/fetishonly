@@ -81,3 +81,51 @@
     <div class="payment-error error text-danger d-none mt-3">{{__('Add all required info')}}</div>
     <button class="btn btn-primary btn-block rounded mr-0 withdrawal-continue-btn" type="submit">{{__('Request withdrawal')}}</button>
 </div>
+
+<br>
+<hr>
+<br>
+
+<div class="row">
+    <div class="col-12 w-100">
+        <h4>Withdraw history</h4>
+        <hr>
+    </div>
+    <div class="col-12 w-100">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Method</th>
+                    <th>Details</th>
+                    <th>Status</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($withdraws as $item)
+                    <tr>
+                        <td>{{ now()->create($item->created_at)->toFormattedDateString() }}</td>
+                        <td>{{ $item->payment_method ? ($item->payment_method == 'bank' ? 'Bank Account' : 'PayPal') : 'Bank Account' }}</td>
+                        <td>
+                            @if ($item->payment_method == 'bank')
+                                <p class="m-0 p-0">{{ $item->account_number }}</p>
+                                <p class="m-0 p-0">{{ $item->account_name }}</p>
+                                <p class="m-0 p-0">{{ $item->bank_name }}</p>
+                            @else
+                                <p class="m-0 p-0">{{ $item->paypal_email }}</p>
+                            @endif
+                        </td>
+                        <td>
+                            {{ $item->status }}
+                        </td>
+                        <td>{{ $item->amount }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+    <div class="col-12 100">
+        {!! $withdraws->links() !!}
+    </div>
+</div>

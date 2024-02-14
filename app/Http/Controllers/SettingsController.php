@@ -16,6 +16,7 @@ use App\Model\Transaction;
 use App\Model\UserDevice;
 use App\Model\UserGender;
 use App\Model\UserVerify;
+use App\Model\Withdrawal;
 use App\Providers\AttachmentServiceProvider;
 use App\Providers\AuthServiceProvider;
 use App\Providers\EmailsServiceProvider;
@@ -108,6 +109,7 @@ class SettingsController extends Controller
                 $activeWalletTab = $request->get('active');
                 $data['activeTab'] = $activeWalletTab != null ? $activeWalletTab : 'deposit';
                 $data['withdraw_methods'] = WithdrawMethod::where('user_id', auth()->user()->id)->get();
+                $data['withdraws'] = Withdrawal::where('user_id', auth()->user()->id)->orderBy('id', 'DESC')->paginate(5)->withQueryString();
                 break;
             case 'subscriptions':
 
