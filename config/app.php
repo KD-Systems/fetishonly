@@ -46,6 +46,8 @@ return [
         'max_file_upload_size' => 3,
     ],
 
+    'enable_hotjar' => (bool) env('ENABLE_HOTJAR', false),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment
