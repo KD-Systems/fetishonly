@@ -38,6 +38,16 @@ class PaymentsController extends Controller
         ], 200);
     }
 
+    private function getPlatformFees($user_id) {
+        $user = User::find($user_id);
+
+        if($user->payout_commission == null || $user->payout_commission == 0 || $user->payout_commission == false) {
+            return config('app.payout_commission', 25);
+        }
+
+        return $user->payout_commission;
+    }
+
     /**
      * Initiates the payment based on the required provider.
      * @param CreateTransactionRequest $request
@@ -60,7 +70,7 @@ class PaymentsController extends Controller
             $transaction['type'] = $transactionType;
             $transaction['status'] = Transaction::INITIATED_STATUS;
             $transaction['amount'] = $request->get('amount');
-            $transaction['fee_amount'] = (($request->get('amount') / 100) * 20);
+            $transaction['fee_amount'] = (($request->get('amount') / 100) * $this->getPlatformFees(Auth::user()->id));
             $transaction['currency'] = config('app.site.currency_code');
             $transaction['payment_provider'] = $request->get('provider');
             $transaction['taxes'] = $request->get('taxes');

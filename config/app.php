@@ -48,6 +48,8 @@ return [
 
     'enable_hotjar' => (bool) env('ENABLE_HOTJAR', false),
 
+    'payout_commission' => env('PAYOUT_COMMISSION', 25),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment

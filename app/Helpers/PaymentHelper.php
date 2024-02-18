@@ -84,6 +84,16 @@ class PaymentHelper
         return $this->paypalApiContext;
     }
 
+    private function getPlatformFees($user_id) {
+        $user = User::find($user_id);
+
+        if($user->payout_commission == null || $user->payout_commission == 0 || $user->payout_commission == false) {
+            return config('app.payout_commission', 25);
+        }
+
+        return $user->payout_commission;
+    }
+
     public function generatePaypalSubscriptionByTransaction(Transaction $transaction)
     {
         try {
@@ -522,7 +532,7 @@ class PaymentHelper
                 }
 
                 if($this->isSubscriptionPayment($transaction->type)) {
-                    $walletData = ['total' => $userWallet->total + (($amountWithTaxesDeducted/100) * 80)];
+                    $walletData = ['total' => $userWallet->total + (($amountWithTaxesDeducted/100) * (100 - $this->getPlatformFees($user->id)))];
                 } else {
                     $walletData = ['total' => $userWallet->total + $amountWithTaxesDeducted];
                 }
