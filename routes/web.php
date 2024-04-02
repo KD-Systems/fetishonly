@@ -29,6 +29,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'jsVars'], function () {
 
 
 Route::get('fetch-creator', [App\Http\Controllers\Api\FetchCreatorController::class, 'get']);
+Route::get('fetch-creator-tags', [App\Http\Controllers\Api\FetchCreatorController::class, 'getCreators']);
 Route::get('fetch-categories', [App\Http\Controllers\Api\FetchCreatorController::class, 'getCategories']);
 Route::get('send-invitation/email', [App\Http\Controllers\SendInvitationController::class, 'sendInvitationEmail']);
 

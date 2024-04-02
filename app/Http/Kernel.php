@@ -69,6 +69,8 @@ class Kernel extends HttpKernel
         'verified' => \App\Http\Middleware\EnsureEmailIsVerified::class,
         '2fa' => \App\Http\Middleware\Check2FA::class,
         'jsVars' => \App\Http\Middleware\JavascriptVariables::class,
+        'manager' => \App\Http\Middleware\ManagerMiddleware::class,
+        'guest.manager' => \App\Http\Middleware\ManagerRedirectIfAuthMiddleware::class,
     ];
 
     /**

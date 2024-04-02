@@ -44,4 +44,20 @@ class FetchCreatorController extends Controller
 
         return response()->json($data);
     }
+
+
+    public function getCreators(Request $request) {
+        $creators = User::where('name', 'LIKE', $request->name.'%')->get();
+
+        $data = [];
+
+        foreach($creators as $item) {
+            $data[] = [
+                'id' => $item->id,
+                'text' => ucwords($item->name)
+            ];
+        }
+
+        return response()->json($data);
+    }
 }
