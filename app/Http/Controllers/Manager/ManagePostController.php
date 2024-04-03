@@ -87,7 +87,8 @@ class ManagePostController extends Controller
             ];
         }
 
-        PostTag::insert($post_tags);
+        if(count($post_tags) > 0)
+            PostTag::insert($post_tags);
 
 
         $post_categories = [];
@@ -102,8 +103,8 @@ class ManagePostController extends Controller
             ];
         }
 
-
-        UserPostCategory::insert($post_categories);
+        if(count($post_categories) > 0)
+            UserPostCategory::insert($post_categories);
 
 
         $creatorMedia->delete();
