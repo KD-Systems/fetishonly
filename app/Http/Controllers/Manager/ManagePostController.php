@@ -51,7 +51,7 @@ class ManagePostController extends Controller
     }
 
     public function assign($id) {
-        $media = CreatorMedia::with('attachment', 'user')->firstOrFail();
+        $media = CreatorMedia::whereHas('attachment')->with('attachment', 'user')->firstOrFail();
         return view('manager.view', compact('media'));
     }
 
