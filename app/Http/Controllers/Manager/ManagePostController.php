@@ -46,7 +46,7 @@ class ManagePostController extends Controller
 
 
     public function medias() {
-        $medias = CreatorMedia::with('attachment', 'user')->paginate();
+        $medias = CreatorMedia::whereHas('attachment')->with('attachment', 'user')->paginate();
         return view('manager.medias', compact('medias'));
     }
 
