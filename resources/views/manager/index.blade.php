@@ -116,7 +116,7 @@
             thumbnailWidth: 200,
             chunking: true,
             forceChunking: true,
-            chunkSize: 20000,
+            chunkSize: 200000,
             retryChunks: true,
             retryChunksLimit: 3,
             parallelChunkUploads: false,
