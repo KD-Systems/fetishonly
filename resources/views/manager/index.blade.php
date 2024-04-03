@@ -115,10 +115,11 @@
         let myDropzone = new Dropzone("#myDropzone", {
             thumbnailWidth: 200,
             chunking: true,
+            forceChunking: true,
             chunkSize: 20000,
             retryChunks: true,
             retryChunksLimit: 3,
-            parallelChunkUploads: true
+            parallelChunkUploads: false,
          });
 
          myDropzone.on("addedfile", file => {
