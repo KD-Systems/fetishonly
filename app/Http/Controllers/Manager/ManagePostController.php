@@ -59,6 +59,8 @@ class ManagePostController extends Controller
     public function update(Request $request, $id) {
         $creatorMedia = CreatorMedia::findOrFail($id);
 
+        return $request->all();
+
         $request->validate([
             'text' =>'required'
         ]);
@@ -78,6 +80,7 @@ class ManagePostController extends Controller
 
         $post_tags = [];
 
+        if($request->has('creators'))
         foreach($request->get('creators') as $creator) {
             $post_tags[] = [
                 'post_id' => $post->id,
@@ -93,6 +96,7 @@ class ManagePostController extends Controller
 
         $post_categories = [];
 
+        if($request->has('categories'))
         foreach($request->get('categories') as $category) {
             $post_categories[] = [
                 'user_id' => $creatorMedia->user_id,
