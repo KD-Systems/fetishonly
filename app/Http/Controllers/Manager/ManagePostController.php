@@ -59,8 +59,6 @@ class ManagePostController extends Controller
     public function update(Request $request, $id) {
         $creatorMedia = CreatorMedia::findOrFail($id);
 
-        return $request->all();
-
         $request->validate([
             'text' =>'required'
         ]);
