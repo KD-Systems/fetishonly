@@ -16,6 +16,7 @@ class FileUploadController extends Controller
 {
 
     public function uploadFile(Request $request) {
+        ini_set('memory_limit', '-1');
 
         $receiver = new FileReceiver("file", $request, HandlerFactory::classFromRequest($request));
         if ($receiver->isUploaded() === false) {
