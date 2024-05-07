@@ -19,7 +19,7 @@
     <div class="paid-profile-rates {{isset(Auth::user()->paid_profile) ? (Auth::user()->paid_profile == '1' ? '' : 'd-none') : ''}}">
         <div class="form-group">
             <label for="name">{{__('Your profile subscription price')}}</label>
-            <input class="form-control {{ $errors->has('profile_access_price') ? 'is-invalid' : '' }}" id="profile_access_price" name="profile_access_price" aria-describedby="emailHelp" value="{{Auth::user()->profile_access_price}}">
+            <input class="form-control {{ $errors->has('profile_access_price') ? 'is-invalid' : '' }}" id="profile_access_price" name="profile_access_price" aria-describedby="emailHelp" value="{{Auth::user()->profile_access_price}}" min="9.99" type="number">
             @if($errors->has('profile_access_price'))
                 <span class="invalid-feedback" role="alert">
                 <strong>{{__($errors->first('profile_access_price'))}}</strong>
