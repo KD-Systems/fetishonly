@@ -42,7 +42,7 @@ var SuggestionsSlider = {
                 if(result.success){
                     // launchToast('success',trans('Success'),'Setting saved');
                     SuggestionsSlider.appendSuggestionsResults(result.data);
-                    launchToast('success',trans('Success'),trans('Suggestions list refreshed'));
+                    // launchToast('success',trans('Success'),trans('Suggestions list refreshed'));
                 }
                 else{
                     launchToast('danger',trans('Error'),trans('Error fetching suggestions'));
