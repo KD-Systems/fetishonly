@@ -53,6 +53,30 @@
     @endif
 
     @yield('head')
+
+    <style>
+
+        .app-container {
+            background-color: #222;
+        }
+        h1.page-title, .text-muted {
+            color: #e1e1e1;
+        }
+
+        .primary-link {
+            color: #C1262C
+        }
+
+        .primary-link:hover {
+            color: #C1262C
+        }
+
+        .voyager .side-menu.sidebar-inverse {
+            background-color: hsl(0deg 0% 81.2% / 75%) / #a4a4a4;
+        }
+
+    </style>
+
 </head>
 
 <body class="voyager @if(isset($dataType) && isset($dataType->slug)){{ $dataType->slug }}@endif">
