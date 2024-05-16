@@ -44,6 +44,14 @@
         @endif
         {{__('Set your birthdate.')}}
     </div>
+    <div class="d-flex align-items-center mb-1 ml-4">
+        @if(Auth::user()->location)
+            @include('elements.icon',['icon'=>'checkmark-circle-outline','variant'=>'medium', 'classes'=>'text-success mr-2'])
+        @else
+            @include('elements.icon',['icon'=>'close-circle-outline','variant'=>'medium', 'classes'=>'text-warning mr-2'])
+        @endif
+        {{__('Set your location.')}}
+    </div>
     <div class="d-flex align-items-center ml-4">
         @if((Auth::user()->verification && Auth::user()->verification->status == 'verified'))
             @include('elements.icon',['icon'=>'checkmark-circle-outline','variant'=>'medium', 'classes'=>'text-success mr-2']) {{__('Upload a Goverment issued ID card.')}}
@@ -61,7 +69,7 @@
         <div class="dropzone-previews dropzone w-100 ppl-0 pr-0 pt-1 pb-1 border rounded"></div>
         <hr>
         <label for=""><input type="checkbox" name="terms_all_users" required> I agree Terms of Use for all Users (<a href="https://dev.fetishonly.com/pages/TERMS%20OF%20USE%20FOR%20ALL%20USERS%202">Click Here</a>)</label>
-        <br>    
+        <br>
         <label for=""><input type="checkbox" name="terms_for_creator" required> I agree Terms of Use for all Creators (<a href="https://dev.fetishonly.com/pages/terms-of-use-for-creators">Click Here</a>)</label>
         <hr>
         <div class="d-flex flex-row-reverse">
