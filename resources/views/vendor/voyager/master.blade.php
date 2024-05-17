@@ -56,7 +56,7 @@
 
     <style>
 
-        .app-container {
+        /* .app-container {
             background-color: #222;
         }
         h1.page-title, .text-muted {
@@ -73,7 +73,7 @@
 
         .voyager .side-menu.sidebar-inverse {
             background-color: hsl(0deg 0% 81.2% / 75%) / #a4a4a4;
-        }
+        } */
 
     </style>
 
