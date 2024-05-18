@@ -166,6 +166,48 @@
         @endif
     </div>
 
+
+    <div class="form-group">
+        <label for="city">{{__('City')}}</label>
+        <input class="form-control {{ $errors->has('city') ? 'is-invalid' : '' }}" id="city" name="city" aria-describedby="emailHelp"  value="{{Auth::user()->city}}" required>
+        @if($errors->has('city'))
+            <span class="invalid-feedback" role="alert">
+                <strong>{{$errors->first('city')}}</strong>
+            </span>
+        @endif
+    </div>
+
+
+    <div class="form-group">
+        <label for="country">{{__('Country')}}</label>
+        <input class="form-control {{ $errors->has('country') ? 'is-invalid' : '' }}" id="country" name="country" aria-describedby="emailHelp"  value="{{Auth::user()->country}}" required>
+        @if($errors->has('country'))
+            <span class="invalid-feedback" role="alert">
+                <strong>{{$errors->first('country')}}</strong>
+            </span>
+        @endif
+    </div>
+
+    <div class="form-group">
+        <label for="state">{{__('State')}}</label>
+        <input class="form-control {{ $errors->has('state') ? 'is-invalid' : '' }}" id="state" name="state" aria-describedby="emailHelp"  value="{{Auth::user()->state}}">
+        @if($errors->has('state'))
+            <span class="invalid-feedback" role="alert">
+                <strong>{{$errors->first('state')}}</strong>
+            </span>
+        @endif
+    </div>
+
+    <div class="form-group">
+        <label for="postcode">{{__('Post Code')}}</label>
+        <input class="form-control {{ $errors->has('postcode') ? 'is-invalid' : '' }}" id="postcode" name="postcode" aria-describedby="emailHelp"  value="{{Auth::user()->postcode}}" required>
+        @if($errors->has('postcode'))
+            <span class="invalid-feedback" role="alert">
+                <strong>{{$errors->first('postcode')}}</strong>
+            </span>
+        @endif
+    </div>
+
     <div class="form-group">
         <label for="website" value="{{Auth::user()->website}}">{{__('Website URL')}}</label>
         <input type="url" class="form-control {{ $errors->has('website') ? 'is-invalid' : '' }}" id="website" name="website" aria-describedby="emailHelp" value="{{Auth::user()->website}}">

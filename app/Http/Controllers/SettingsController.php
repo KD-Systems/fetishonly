@@ -260,6 +260,10 @@ class SettingsController extends Controller
             'birthdate' => $request->get('birthdate'),
             'gender_id' => $request->get('gender'),
             'gender_pronoun' => $request->get('pronoun'),
+            'city' => $request->get('city'),
+            'country' => $request->get('country'),
+            'state' => $request->get('state'),
+            'postcode' => $request->get('postcode'),
         ]);
 
         return back()->with('success', __('Settings saved.'));

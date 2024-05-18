@@ -52,6 +52,30 @@
         @endif
         {{__('Set your location.')}}
     </div>
+    <div class="d-flex align-items-center mb-1 ml-4">
+        @if(Auth::user()->city)
+            @include('elements.icon',['icon'=>'checkmark-circle-outline','variant'=>'medium', 'classes'=>'text-success mr-2'])
+        @else
+            @include('elements.icon',['icon'=>'close-circle-outline','variant'=>'medium', 'classes'=>'text-warning mr-2'])
+        @endif
+        {{__('Set your City.')}}
+    </div>
+    <div class="d-flex align-items-center mb-1 ml-4">
+        @if(Auth::user()->country)
+            @include('elements.icon',['icon'=>'checkmark-circle-outline','variant'=>'medium', 'classes'=>'text-success mr-2'])
+        @else
+            @include('elements.icon',['icon'=>'close-circle-outline','variant'=>'medium', 'classes'=>'text-warning mr-2'])
+        @endif
+        {{__('Set your Country.')}}
+    </div>
+    <div class="d-flex align-items-center mb-1 ml-4">
+        @if(Auth::user()->postcode)
+            @include('elements.icon',['icon'=>'checkmark-circle-outline','variant'=>'medium', 'classes'=>'text-success mr-2'])
+        @else
+            @include('elements.icon',['icon'=>'close-circle-outline','variant'=>'medium', 'classes'=>'text-warning mr-2'])
+        @endif
+        {{__('Set your Post Code.')}}
+    </div>
     <div class="d-flex align-items-center ml-4">
         @if((Auth::user()->verification && Auth::user()->verification->status == 'verified'))
             @include('elements.icon',['icon'=>'checkmark-circle-outline','variant'=>'medium', 'classes'=>'text-success mr-2']) {{__('Upload a Goverment issued ID card.')}}
