@@ -13,10 +13,10 @@
         <link rel="stylesheet" href="{{ voyager_asset('css/rtl.css') }}">
     @endif
     <style>
-        body {
+        /* body {
             background-image:url('{{ Voyager::image( Voyager::setting("admin.bg_image"), Storage::disk('public')->url('../img/admin-bg.png') ) }}');
             background-color: {{ Voyager::setting("admin.bg_color", "#FFFFFF" ) }};
-        }
+        } */
         body.login .login-sidebar {
             border-top:5px solid {{ config('voyager.primary_color','#22A7F0') }};
         }
