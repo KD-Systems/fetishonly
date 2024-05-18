@@ -45,25 +45,24 @@
     <!-- Favicon -->
     <?php $admin_favicon = Voyager::setting('admin.icon_image', ''); ?>
     @if($admin_favicon == '')
-        <link rel="shortcut icon" href="{{ Storage::disk('public')->url('../img/rounded-logo-white.svg') }}" type="image/x-icon">
+        <link rel="shortcut icon" href="https://freeonlytest.s3.us-west-1.amazonaws.com/faviucon.png" type="image/x-icon">
     @else
-        <link rel="shortcut icon" href="{{ Voyager::image($admin_favicon) }}" type="image/png">
+        <link rel="shortcut icon" href="https://freeonlytest.s3.us-west-1.amazonaws.com/faviucon.png" type="image/png">
     @endif
 
 </head>
 <body class="login">
 <div class="container-fluid">
     <div class="row">
-        <div class="faded-bg animated"></div>
         <div class="hidden-xs col-sm-6 col-md-8">
             <div class="clearfix">
                 <div class="col-sm-12 col-md-10 col-md-offset-2">
                     <div class="logo-title-container">
                         <?php $admin_logo_img = Voyager::setting('admin.icon_image', ''); ?>
                         @if($admin_logo_img == '')
-                            <img class="img-responsive pull-left flip logo hidden-xs animated fadeIn" src="{{Storage::disk('public')->url('../img/rounded-logo-gradient.svg')}}" alt="Logo Icon">
+                            <img class="img-responsive pull-left flip logo hidden-xs animated fadeIn" src="https://freeonlytest.s3.us-west-1.amazonaws.com/logo-removebg-preview%20%281%29.png" alt="Logo Icon">
                         @else
-                            <img class="img-responsive pull-left flip logo hidden-xs animated fadeIn" src="{{ Voyager::image($admin_logo_img) }}" alt="Logo Icon">
+                            <img class="img-responsive pull-left flip logo hidden-xs animated fadeIn" src="https://freeonlytest.s3.us-west-1.amazonaws.com/logo-removebg-preview%20%281%29.png" alt="Logo Icon">
                         @endif
                         <!-- <div class="copy animated fadeIn">
                             <h1>{{ Voyager::setting('admin.title', 'Voyager') }}</h1>

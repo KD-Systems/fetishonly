@@ -56,6 +56,29 @@
 
     <style>
 
+        h1.page-title i {
+            display: none;
+        }
+
+        h1.page-title {
+            padding-left: 0;
+        }
+
+        .primary-link {
+            color: #C1262C !important;
+        }
+
+        .primary-link:hover {
+            color: #a62a2f !important;
+        }
+
+        .btn-danger {
+            background-color: #C1262C !important;
+        }
+        .btn-danger:hover {
+            background-color: #a62a2f !important;
+        }
+
         /* .app-container {
             background-color: #222;
         }
