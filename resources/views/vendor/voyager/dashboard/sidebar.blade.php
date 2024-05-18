@@ -6,9 +6,9 @@
                     <div class="logo-icon-container">
                         <?php $admin_logo_img = Voyager::setting('admin.icon_image', ''); ?>
                         @if($admin_logo_img == '')
-                            <img src="{{asset('/img/rounded-logo-white.svg')}}" alt="Logo Icon">
+                            <img src="https://freeonlytest.s3.us-west-1.amazonaws.com/logo-removebg-preview%20%281%29.png" alt="Logo Icon">
                         @else
-                            <img src="{{ Voyager::image($admin_logo_img) }}" alt="Logo Icon">
+                            <img src="https://freeonlytest.s3.us-west-1.amazonaws.com/logo-removebg-preview%20%281%29.png" alt="Logo Icon">
                         @endif
                     </div>
                     <!-- <div class="title">{{Voyager::setting('admin.title', 'VOYAGER')}}</div> -->

@@ -17,9 +17,9 @@
     <!-- Favicon -->
     <?php $admin_favicon = Voyager::setting('admin.icon_image', ''); ?>
     @if($admin_favicon == '')
-        <link rel="shortcut icon" href="{{  getSetting('admin.icon_image') }}" type="image/x-icon">
+        <link rel="shortcut icon" href="https://freeonlytest.s3.us-west-1.amazonaws.com/faviucon.png" type="image/x-icon">
     @else
-        <link rel="shortcut icon" href="{{ Voyager::image($admin_favicon) }}" type="image/png">
+        <link rel="shortcut icon" href="https://freeonlytest.s3.us-west-1.amazonaws.com/faviucon.png" type="image/png">
     @endif
 
     <!-- App CSS -->
