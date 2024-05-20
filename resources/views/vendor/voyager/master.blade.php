@@ -104,14 +104,14 @@
 
 <body class="voyager @if(isset($dataType) && isset($dataType->slug)){{ $dataType->slug }}@endif">
 
-<div id="voyager-loader">
+{{-- <div id="voyager-loader">
     <?php $admin_loader_img = Voyager::setting('admin.loader', ''); ?>
     @if($admin_loader_img == '')
         <img src="{{ asset('/img/admin-loader.svg') }}" alt="Voyager Loader">
     @else
         <img src="{{ Voyager::image($admin_loader_img) }}" alt="Voyager Loader">
     @endif
-</div>
+</div> --}}
 
 <?php
 if (\Illuminate\Support\Str::startsWith(Auth::user()->avatar, 'http://') || \Illuminate\Support\Str::startsWith(Auth::user()->avatar, 'https://')) {
