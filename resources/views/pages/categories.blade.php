@@ -14,6 +14,13 @@ Minify::stylesheet([
 '/css/pages/search.css',
 ])->withFullUrl()
 !!}
+
+<style>
+    .alpha-class {
+        margin-right: 15px;
+    }
+</style>
+
 @if(getSetting('feed.post_box_max_height'))
 @include('elements.feed.fixed-height-feed-posts', ['height' => getSetting('feed.post_box_max_height')])
 @endif
@@ -38,6 +45,13 @@ Minify::javascript([
 '/js/plugins/media/mediaswipe-loader.js',
 ])->withFullUrl()
 !!}
+
+<script>
+    function filterAlpha(alpha) {
+        $(".alpha-class").css('display', 'none');
+        $(`.cate-${alpha}`).css('display', 'inline-block')
+    }
+</script>
 @stop
 
 @section('content')
@@ -60,9 +74,16 @@ Minify::javascript([
                 @include('elements.message-alert',['classes'=>'pt-4 pb-4 px-2'])
                 @include('elements.feed.posts-load-more')
                 <div class="feed-box mt-0 pt-4 px-4 pb-4 posts-wrapper">
+                    @foreach ($categories as $key => $items)
+                        <button onclick="filterAlpha('{{$key}}')" class="btn btn-sm">{{ $key }}</button>
+                    @endforeach
+                </div>
+                <div class="feed-box mt-0 pt-4 px-4 pb-4 posts-wrapper">
                     {{-- @include('elements.feed.posts-wrapper',['posts'=>$posts]) --}}
-                    @foreach ($categories as $item)
-                        <a href="{{ route('feed.category', ['slug' => $item->slug]) }}" class="">{{ ucwords($item->name) }} ({{ $item->category_post_count }})</a>, &nbsp;
+                    @foreach ($categories as $key => $items)
+                        @foreach ($items as $item)
+                            <a href="{{ route('feed.category', ['slug' => $item->slug]) }}" class="alpha-class cate-{{ $key }}">{{ ucwords($item->name) }} ({{ $item->category_post_count }})</a>
+                        @endforeach
                     @endforeach
                 </div>
                 @include('elements.feed.posts-loading-spinner')
