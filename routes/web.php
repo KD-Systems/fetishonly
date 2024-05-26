@@ -26,7 +26,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'jsVars'], function () {
 
 });
 
-
+Route::get('identity-submitted', function(){
+    return response()->json([
+        "status" => true,
+        "message" => "Thank you for submitting your identity, Your identity is pending for review.",
+    ]);
+})->name('identity-submitted');
 
 Route::get('fetch-creator', [App\Http\Controllers\Api\FetchCreatorController::class, 'get']);
 Route::get('fetch-creator-tags', [App\Http\Controllers\Api\FetchCreatorController::class, 'getCreators']);
@@ -55,6 +60,8 @@ Route::get('socialAuth/{provider}/callback', ['uses' => 'Auth\LoginController@ha
 Route::group(['middleware' => ['auth','verified','2fa']], function () {
 
     Route::get('admin/creators', 'CreatorController@index');
+
+    Route::get('identity/create', [\App\Http\Controllers\IdentityVerifyController::class, 'create'])->name('create-identity-verify');
 
     Route::get('twitter-verify', ['uses' => 'TwitterAccessController@index']);
     Route::get('twitter-discounnect', ['uses' => 'TwitterAccessController@discounnect', 'as' => 'twitter-discounnect']);

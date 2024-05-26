@@ -216,7 +216,8 @@ return [
         App\Providers\ListsHelperServiceProvider::class,
         App\Providers\IconsServiceProvider::class,
         App\Providers\EmailsServiceProvider::class,
-        App\Providers\WasabiServiceProvider::class
+        App\Providers\WasabiServiceProvider::class,
+        App\Providers\IdentityServiceProvider::class
     ],
 
     /*

@@ -104,4 +104,23 @@
         <p class="mt-3">{{__("Your info looks good, you're all set to post new content!")}}</p>
     @endif
 </form>
+
+@if (Auth::user()->email_verified_at &&
+Auth::user()->birthdate &&
+Auth::user()->location &&
+Auth::user()->city &&
+Auth::user()->country &&
+Auth::user()->postcode)
+    @if ($identity_verified)
+
+        @if ($identity_verified->status != 'approved')
+        <a class="btn btn-link" href="{{ $identity_verified->public_url }}">Verify Your Identity</a>
+        @endif
+
+    @else
+        <a class="btn btn-link" href="{{ route('create-identity-verify') }}">Verify Your Identity</a>
+    @endif
+@endif
+
+
 @include('elements.uploaded-file-preview-template')

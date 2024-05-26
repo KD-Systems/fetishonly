@@ -17,3 +17,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
+Route::post("identity-verify-webhook", [\App\Http\Controllers\Api\ProcessIdentityWebhookController::class, 'process'])->name('identity-verify-webhook');
+Route::post("identity-verify-create", [\App\Http\Controllers\Api\BlueCheckProcessWebhookController::class, 'process'])->name('identity-verify-create');

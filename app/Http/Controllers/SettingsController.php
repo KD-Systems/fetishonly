@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateUserProfileSettingsRequest;
 use App\Http\Requests\UpdateUserRatesSettingsRequest;
 use App\Http\Requests\UpdateUserSettingsRequest;
 use App\Http\Requests\VerifyProfileAssetsRequest;
+use App\IdentityVerification;
 use App\Model\Country;
 use App\Model\CreatorOffer;
 use App\Model\ReferralCodeUsage;
@@ -100,6 +101,9 @@ class SettingsController extends Controller
         $userID = $user->id;
         $data = [];
         switch ($request->route('type')) {
+            case 'verify':
+                $data['identity_verified'] = IdentityVerification::where('user_id', auth()->user()->id)->first();
+                break;
             case 'wallet':
                 JavaScript::put([
                     'stripeConfig' => [
