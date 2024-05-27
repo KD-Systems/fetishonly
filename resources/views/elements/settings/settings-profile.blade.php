@@ -95,6 +95,21 @@
         @endif
     </div>
     <div class="form-group">
+        <label for="name">{{__('Phone')}}</label>
+        <input class="form-control {{ $errors->has('phone') ? 'is-invalid' : '' }}" id="phone" name="phone" aria-describedby="phoneHelp" value="{{Auth::user()->phone}}">
+
+        @error('phone')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{$message}}</strong>
+            </span>
+        @enderror
+    </div>
+
+    <div class="form-group">
+        <input type="checkbox" class="" id="is_whatsapp" name="is_whatsapp" aria-describedby="whatsappHelp" value="{{Auth::user()->whatsapp ?? true}}" {{ Auth::user()->whatsapp ? 'checked' : '' }}>
+        <label for="is_whatsapp">{{__('WhatsApp with this phone?')}}</label>
+    </div>
+    <div class="form-group">
         <div class="d-flex justify-content-between">
             <label for="bio">
                 {{__('Bio')}}
@@ -112,6 +127,7 @@
             </span>
         @endif
     </div>
+
     <div class="form-group">
         <label for="birthdate">{{__('Birthdate')}}</label>
         <input type="date" class="form-control {{ $errors->has('location') ? 'is-invalid' : '' }}" id="birthdate" name="birthdate" aria-describedby="emailHelp"  value="{{Auth::user()->birthdate}}" max="{{$minBirthDate}}">
@@ -120,6 +136,11 @@
                 <strong>{{$errors->first('birthdate')}}</strong>
             </span>
         @endif
+        @error('birthdate')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{$message}}</strong>
+            </span>
+        @enderror
     </div>
 
     <div class="d-flex flex-row">

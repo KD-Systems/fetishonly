@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\AgeValidationRule;
 use App\Rules\MaxLengthMarkdown;
+use App\Rules\PhoneValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -32,10 +34,11 @@ class UpdateUserProfileSettingsRequest extends FormRequest
             'username' => 'required|string|alpha_dash|max:255|unique:users,username,'.Auth::user()->id,
             'email' => 'required|unique:users,email,'.Auth::user()->id,
             'location' => 'max:500',
-            'birthdate' => 'required|date_format:Y-m-d|'. Carbon::now()->subYears(18)->format('Y-m-d'),
+            'birthdate' => ['required', 'date', new AgeValidationRule],
             'city' => 'required',
             'country' => 'required',
             'postcode' => 'required',
+            'phone' => ['required', 'min:10', new PhoneValidationRule]
         ];
 
         if(getSetting('profiles.max_profile_bio_length') && getSetting('profiles.max_profile_bio_length') !== 0){

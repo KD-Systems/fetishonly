@@ -268,6 +268,8 @@ class SettingsController extends Controller
             'country' => $request->get('country'),
             'state' => $request->get('state'),
             'postcode' => $request->get('postcode'),
+            'phone' => $request->get('phone'),
+            'whatsapp' => $request->has('is_whatsapp') ? $request->get('phone') : null,
         ]);
 
         return back()->with('success', __('Settings saved.'));
