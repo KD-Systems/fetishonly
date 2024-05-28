@@ -119,7 +119,8 @@ Auth::user()->phone &&
 Auth::user()->location &&
 Auth::user()->city &&
 Auth::user()->country &&
-Auth::user()->postcode)
+Auth::user()->postcode &&
+Auth::user()->verification)
     @if ($identity_verified)
 
         @if ($identity_verified->status != 'approved')
