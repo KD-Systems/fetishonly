@@ -24,6 +24,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'jsVars'], function () {
     Route::post('/theme/generate', 'GenericController@generateCustomTheme')->name('admin.theme.generate');
     Route::post('/license/save', 'GenericController@saveLicense')->name('admin.license.save');
 
+    Route::get('/identity-verifications-details/{id}/logs', [App\Http\Controllers\IdentityVerifyController::class, 'showLogs'])->name('admin.identity-verifications.showlogs');
+
 });
 
 Route::get('identity-submitted', function(){
