@@ -16,6 +16,8 @@ class ProcessIdentityWebhookController extends Controller
     }
     public function process(Request $request) {
 
+        logger("ID WH => ", [$request->all()]);
+
         if($request->verification_order['type'] != 'photo_id')
             return response()->json([
                 'status' => 'success',

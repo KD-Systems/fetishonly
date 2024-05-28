@@ -89,7 +89,7 @@ class BlueCheckService implements IdentityVerificationService {
           $body['data']['address']['district'] = $user->state ?? '';
           $body['data']['address']['postal_code'] = $user->postcode ?? '';
           $body['data']['address']['city'] = $user->city ?? '';
-          $body['data']['address']['line_1'] = $user->billing_address ?? '';
+          $body['data']['address']['line_1'] = (string) $user->location ?? $user->billing_address ?? '';
 
 
         try {
@@ -101,6 +101,8 @@ class BlueCheckService implements IdentityVerificationService {
               ];
 
             $response = Http::withHeaders($headers)->post(config('bluecheck.base_url').'/verification', $body)->json();
+
+            logger("RESPONSE: ",[$response]);
 
             DB::beginTransaction();
 
