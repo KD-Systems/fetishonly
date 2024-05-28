@@ -18,9 +18,14 @@ class IdentityVerifyController extends Controller
     public function create() {
         $user = auth()->user();
 
-        $response = $this->identityVerificationService->verify($user);
+        try {
+            $response = $this->identityVerificationService->verify($user);
+            return redirect()->to($response['public_url']);
+        } catch (\Exception $exception) {
+            //throw $th;
+            return response()->json(['success' => false, 'errors' => [$exception->getMessage()]]);
+        }
 
-        return redirect()->to($response['public_url']);
     }
 
 }
