@@ -25,6 +25,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'jsVars'], function () {
     Route::post('/license/save', 'GenericController@saveLicense')->name('admin.license.save');
 
     Route::get('/identity-verifications-details/{id}/logs', [App\Http\Controllers\IdentityVerifyController::class, 'showLogs'])->name('admin.identity-verifications.showlogs');
+    Route::get('/reset-user-identity-verifications/{id}', [App\Http\Controllers\IdentityVerifyController::class, 'resetVerification'])->name('admin.identity-reset.verifications');
 
 });
 

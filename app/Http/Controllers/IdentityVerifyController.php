@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\IdentityVerificationService;
+use App\IdentityVerification;
 use App\IdentityVerificationLog;
 use Illuminate\Http\Request;
 
@@ -35,6 +36,13 @@ class IdentityVerifyController extends Controller
         $details = IdentityVerificationLog::where('identity_verification_id', $id)->orderBy('id')->get();
 
         return view('admin/identity-verification/details', compact('details'));
+    }
+
+
+    public function resetVerification($id) {
+        IdentityVerification::where('user_id', $id)->delete();
+
+        return back();
     }
 
 }
