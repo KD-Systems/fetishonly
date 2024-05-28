@@ -16,16 +16,17 @@ class ProcessIdentityWebhookController extends Controller
     }
     public function process(Request $request) {
 
-        logger("ID WH => ", [$request->all()]);
+        $data = json_decode($request->getContent(), true);
+        logger("ID WH => ", [$data['verification_order']]);
 
-        if($request->verification_order['type'] != 'photo_id')
+        if($data['verification_order']['type'] != 'photo_id')
             return response()->json([
                 'status' => 'success',
             ], 200);
 
 
-        $status = $request->verification_order['verification']['status'];
-        $uuid = $request->verification_order['verification']['uuid'];
+        $status = $data['verification_order']['verification']['status'];
+        $uuid = $data['verification_order']['verification']['uuid'];
         try {
             switch ($status) {
                 case 'approved':
