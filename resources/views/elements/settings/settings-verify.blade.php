@@ -45,6 +45,14 @@
         {{__('Set your birthdate.')}}
     </div>
     <div class="d-flex align-items-center mb-1 ml-4">
+        @if(Auth::user()->phone)
+            @include('elements.icon',['icon'=>'checkmark-circle-outline','variant'=>'medium', 'classes'=>'text-success mr-2'])
+        @else
+            @include('elements.icon',['icon'=>'close-circle-outline','variant'=>'medium', 'classes'=>'text-warning mr-2'])
+        @endif
+        {{__('Set your phone number.')}}
+    </div>
+    <div class="d-flex align-items-center mb-1 ml-4">
         @if(Auth::user()->location)
             @include('elements.icon',['icon'=>'checkmark-circle-outline','variant'=>'medium', 'classes'=>'text-success mr-2'])
         @else
@@ -107,6 +115,7 @@
 
 @if (Auth::user()->email_verified_at &&
 Auth::user()->birthdate &&
+Auth::user()->phone &&
 Auth::user()->location &&
 Auth::user()->city &&
 Auth::user()->country &&
