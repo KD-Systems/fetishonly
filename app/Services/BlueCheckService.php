@@ -202,7 +202,7 @@ class BlueCheckService implements IdentityVerificationService {
             DB::beginTransaction();
             $getStatus = $this->getStatus($verification);
 
-            if($getStatus['verification_order']['status'] == 'completed' && $getStatus['verification_order']['verification']['status'] =='rejected') {
+            if($getStatus['verification_order']['status'] == 'completed' && ($getStatus['verification_order']['verification']['status'] =='rejected' || $getStatus['verification_order']['verification']['status'] =='cancelled')) {
                 $verification->update([
                     'status' =>'rejected',
                     'reason' => $getStatus['verification_order']['verification']['reason'] ?? null
