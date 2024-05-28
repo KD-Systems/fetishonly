@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Contracts\IdentityVerificationService;
 use App\IdentityVerification;
 use App\IdentityVerificationLog;
+use App\Model\UserVerify;
 use App\User;
 use Exception;
 use GuzzleHttp\Client;
@@ -169,6 +170,15 @@ class BlueCheckService implements IdentityVerificationService {
                     'status' => 'approved'
                 ]);
                 $this->updateLog($verification, $getStatus);
+
+                User::where('id', $verification->user_id)->update([
+                    'identity_verified_at' => now()
+                ]);
+
+                UserVerify::where('user_id', $verification->user_id)->update([
+                    'status' => 'verified'
+                ]);
+
                 DB::commit();
 
             }
