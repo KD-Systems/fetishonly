@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Contracts\IdentityVerificationService;
 use App\IdentityVerification;
 use App\IdentityVerificationLog;
+use App\Model\UserVerify;
 use Illuminate\Http\Request;
 
 class IdentityVerifyController extends Controller
@@ -41,7 +42,7 @@ class IdentityVerifyController extends Controller
 
     public function resetVerification($id) {
         IdentityVerification::where('user_id', $id)->delete();
-
+        UserVerify::where('user_id', $id)->delete();
         return back();
     }
 
