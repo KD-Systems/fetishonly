@@ -3,6 +3,7 @@
 namespace App\Contracts;
 
 use App\IdentityVerification;
+use App\Model\UserVerify;
 use App\User;
 
 interface IdentityVerificationService {
@@ -10,5 +11,5 @@ interface IdentityVerificationService {
 
     public function getStatus(IdentityVerification $verification);
 
-    public function uploadFiles(IdentityVerification $verification);
+    public function uploadFiles(IdentityVerification $verification, UserVerify $userVerify);
 }

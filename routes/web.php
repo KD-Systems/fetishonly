@@ -95,6 +95,7 @@ Route::group(['middleware' => ['auth','verified','2fa']], function () {
         Route::post('/settings/verify/upload', ['uses' => 'SettingsController@verifyUpload', 'as'   => 'settings.verify.upload']);
         Route::post('/settings/verify/upload/delete', ['uses' => 'SettingsController@deleteVerifyAsset', 'as'   => 'settings.verify.delete']);
         Route::post('/settings/verify/save', ['uses' => 'SettingsController@saveVerifyRequest', 'as'   => 'settings.verify.save']);
+        Route::post('/settings/verify/save/upload', ['uses' => 'SettingsController@uploadSaveVerifyRequest', 'as'   => 'settings.verify.save.upload']);
         Route::get('/settings/privacy/countries', ['uses' => 'SettingsController@getCountries', 'as'   => 'settings.verify.countries']);
 
         // Profile save

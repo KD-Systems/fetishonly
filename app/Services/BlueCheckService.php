@@ -26,12 +26,13 @@ class BlueCheckService implements IdentityVerificationService {
 
     public function verify(User $user) {
 
-        $verification = IdentityVerification::where("user_id", $user->id)->first();
+        $verification = IdentityVerification::where("user_id", $user->id)->whereNotIn('status', ['approved', 'rejected'])->first();
 
         if($verification) {
             return [
                 'public_url' => $verification->public_url,
-                'qr_code' => $verification->qr_code
+                'qr_code' => $verification->qr_code,
+                'uuid' => $verification->uuid,
             ];
         }
 
@@ -126,7 +127,8 @@ class BlueCheckService implements IdentityVerificationService {
 
             return [
                 'public_url' => $verification->public_url,
-                'qr_code' => $verification->qr_code
+                'qr_code' => $verification->qr_code,
+                'uuid' => $verification->uuid
             ];
 
         } catch (Exception $th) {
@@ -261,7 +263,48 @@ class BlueCheckService implements IdentityVerificationService {
 
     }
 
-    public function uploadFiles(IdentityVerification $verification){
+    public function uploadFiles(IdentityVerification $verification, UserVerify $userVerify){
 
+        $client = new Client();
+
+        $headers = [
+            'accept' => 'application/json',
+            'Authorization' => 'Bearer '.config('bluecheck.access_token')
+          ];
+
+
+          $files = json_decode($userVerify->files, true);
+          $selfie = $files['selfi'];
+          $document = $files['front_side'];
+
+          $multipart = [
+            [
+                'name'     => 'files[document]',
+                'contents' => file_get_contents($document),
+                'filename' => basename($document),
+            ],
+            [
+                'name'     => 'files[selfie]',
+                'contents' => file_get_contents($selfie),
+                'filename' => basename($selfie),
+            ],
+        ];
+
+
+        try {
+                $response = $client->post(config('bluecheck.base_url').'/verification/'.$verification->uuid.'/upload_files', [
+                    'headers' => [
+                        'Accept' => 'application/json',
+                        'Authorization' => 'Bearer '.config('bluecheck.access_token')
+                    ],
+                    'multipart' => $multipart,
+                ]);
+
+                return json_decode($response->getBody(), true);
+        } catch (\Throwable $th) {
+            //throw $th;
+            logger("EX => ", [$th->getMessage()]);
+            throw $th;
+        }
     }
 }

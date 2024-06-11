@@ -52,8 +52,8 @@ class UserVerifyObserver
 
         // Deleting files
         $storage = Storage::disk(config('filesystems.defaultFilesystemDriver'));
-        $oldFiles = json_decode($userVerify->getOriginal('files')) ? json_decode($userVerify->getOriginal('files')) : [];
-        $newFiles = json_decode($userVerify->files) ? json_decode($userVerify->files) : [];
+        $oldFiles = json_decode($userVerify->getOriginal('files'), true) ? json_decode($userVerify->getOriginal('files'), true) : [];
+        $newFiles = json_decode($userVerify->files, true) ? json_decode($userVerify->files, true) : [];
 
         $toDelete = array_diff($oldFiles, $newFiles);
 

@@ -95,10 +95,31 @@
             @endif
         @endif
     </div>
-    @if((!Auth::user()->verification || (Auth::user()->verification && Auth::user()->verification->status !== 'verified' && Auth::user()->verification->status !== 'pending')) )
+
+    @if(Auth::user()->email_verified_at && Auth::user()->birthdate && (Auth::user()->verification && Auth::user()->verification->status == 'verified'))
+        <p class="mt-3">{{__("Your info looks good, you're all set to post new content!")}}</p>
+    @endif
+</form>
+
+@if((!Auth::user()->verification || (Auth::user()->verification && Auth::user()->verification->status !== 'verified' && Auth::user()->verification->status !== 'pending')) )
+<form action="{{ route('my.settings.verify.save.upload') }}" method="POST" enctype="multipart/form-data">
+    @csrf
         <h5 class="mt-5 mb-3">{{__("Complete your verification")}}</h5>
         <p class="mb-1 mt-2">{{__("Please attach clear photos of your ID card back and front side.")}}</p>
-        <div class="dropzone-previews dropzone w-100 ppl-0 pr-0 pt-1 pb-1 border rounded"></div>
+        <hr>
+        <label for="">Add Selfi Image</label>
+        <br>
+        <input type="file" name="selfi" accept="image/png, image/jpg, image/jpeg" required>
+        <br>
+        <br>
+        <label for="">Add Identity Front Image</label>
+        <br>
+        <input type="file" name="front_side" accept="image/png, image/jpg, image/jpeg" required>
+        <br>
+        <br>
+        <label for="">Add Identity Back Image</label>
+        <br>
+        <input type="file" name="back_side" accept="image/png, image/jpg, image/jpeg" required>
         <hr>
         <label for=""><input type="checkbox" name="terms_all_users" required> I agree Terms of Use for all Users (<a href="https://dev.fetishonly.com/pages/TERMS%20OF%20USE%20FOR%20ALL%20USERS%202">Click Here</a>)</label>
         <br>
@@ -107,30 +128,9 @@
         <div class="d-flex flex-row-reverse">
             <button class="btn btn-primary mt-2">{{__("Submit")}}</button>
         </div>
-    @endif
-    @if(Auth::user()->email_verified_at && Auth::user()->birthdate && (Auth::user()->verification && Auth::user()->verification->status == 'verified'))
-        <p class="mt-3">{{__("Your info looks good, you're all set to post new content!")}}</p>
-    @endif
-</form>
-
-@if (Auth::user()->email_verified_at &&
-Auth::user()->birthdate &&
-Auth::user()->phone &&
-Auth::user()->location &&
-Auth::user()->city &&
-Auth::user()->country &&
-Auth::user()->postcode &&
-Auth::user()->verification)
-    @if ($identity_verified)
-
-        @if ($identity_verified->status != 'approved')
-        <a class="btn btn-link" href="{{ $identity_verified->public_url }}">Verify Your Identity</a>
-        @endif
-
-    @else
-        <a class="btn btn-link" href="{{ route('create-identity-verify') }}">Verify Your Identity</a>
-    @endif
+    </form>
 @endif
+
 
 
 @include('elements.uploaded-file-preview-template')

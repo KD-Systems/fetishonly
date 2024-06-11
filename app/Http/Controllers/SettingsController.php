@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateUserRatesSettingsRequest;
 use App\Http\Requests\UpdateUserSettingsRequest;
 use App\Http\Requests\VerifyProfileAssetsRequest;
 use App\IdentityVerification;
+use App\Jobs\UserIdentityVerifyJob;
 use App\Model\Country;
 use App\Model\CreatorOffer;
 use App\Model\ReferralCodeUsage;
@@ -601,7 +602,7 @@ class SettingsController extends Controller
             $s3->put($filePath, $img, 'public');
 
             if ($request->session()->get('verifyAssets')) {
-                $data = json_decode($request->session()->get('verifyAssets'));
+                $data = json_decode($request->session()->get('verifyAssets'), true);
                 $data[] = $filePath;
                 session(['verifyAssets' => json_encode($data)]);
             } else {
@@ -684,6 +685,72 @@ class SettingsController extends Controller
         } else {
             return back()->with('error', __('Please attach photos with the front and back sides of your ID.'));
         }
+    }
+
+
+    public function  uploadSaveVerifyRequest(Request $request)
+    {
+        $request->validate([
+            'selfi' => ['required', 'mimes:jpg,jpeg,png'],
+            'front_side' => ['required', 'mimes:jpg,jpeg,png'],
+            'back_side' => ['required', 'mimes:jpg,jpeg,png']
+        ]);
+
+        $storage = Storage::disk(config('filesystems.defaultFilesystemDriver'));
+
+        $selfi = $storage->put('/users/verification', $request->file('selfi'), 'public');
+        $back_side = $storage->put('/users/verification', $request->file('back_side'), 'public');
+        $front_side = $storage->put('/users/verification', $request->file('front_side'), 'public');
+
+        $files = [
+            'selfi' => $storage->url($selfi),
+            'back_side' => $storage->url($back_side),
+            'front_side' => $storage->url($front_side),
+        ];
+
+
+        if (! Auth::user()->verification) {
+            UserVerify::create([
+                'user_id' => Auth::user()->id,
+                'files' => json_encode($files, true),
+            ]);
+        } else {
+            Auth::user()->verification->update(
+                [
+                    'user_id' => Auth::user()->id,
+                    'files' => json_encode($files, true),
+                    'status' => 'pending',
+                ]
+            );
+        }
+
+        $userVerify = UserVerify::where('user_id', Auth::user()->id)->first();
+
+        UserIdentityVerifyJob::dispatch(Auth::user(), $userVerify);
+
+        // Sending out admin email
+        $adminEmails = User::where('role_id', 1)->select(['email', 'name'])->get();
+
+        try {
+            foreach ($adminEmails as $user) {
+                EmailsServiceProvider::sendGenericEmail(
+                    [
+                        'email' => $user->email,
+                        'subject' => __('Action required | New identity check'),
+                        'title' => __('Hello, :name,', ['name' => $user->name]),
+                        'content' => __('There is a new identity check on :siteName that requires your attention.', ['siteName' => getSetting('site.name')]),
+                        'button' => [
+                            'text' => __('Go to admin'),
+                            'url' => route('voyager.dashboard'),
+                        ],
+                    ]
+                );
+            }
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+
+        return back()->with('success', __('Request sent. You will be notified once your verification is processed.'));
     }
 
     public static function getCountries(){
