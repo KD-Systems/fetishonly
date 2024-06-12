@@ -101,7 +101,7 @@
     @endif
 </form>
 
-@if((!Auth::user()->verification || (Auth::user()->verification && Auth::user()->verification->status !== 'verified' && Auth::user()->verification->status !== 'pending')) )
+@if((!Auth::user()->verification || (Auth::user()->verification && Auth::user()->verification->status !== 'verified' && Auth::user()->verification->status !== 'pending') && (Auth::user()->email_verified_at && Auth::user()->birthdate && Auth::user()->phone && Auth::user()->country && Auth::user()->postcode)) )
 <form action="{{ route('my.settings.verify.save.upload') }}" method="POST" enctype="multipart/form-data">
     @csrf
         <h5 class="mt-5 mb-3">{{__("Complete your verification")}}</h5>
