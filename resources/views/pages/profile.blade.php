@@ -73,7 +73,7 @@
                 </div>
                 @if (!Auth::check() || Auth::user()->id !== $user->id)
                     <div class="">
-                        <small class="p-0 m-0">{{trans_choice('fans', $user->fansCount, ['number'=> count(ListsHelper::getUserFollowers(Auth::user()->id))])}} - {{trans_choice('following', Auth::user()->followingCount, ['number'=>$user->followingCount])}}</small>
+                        <small class="p-0 m-0">{{trans_choice('fans', $user->fansCount, ['number'=> count(ListsHelper::getUserFollowers(Auth::user()->id))])}} - {{trans_choice('following', Auth::user()->followingCount, ['number'=>$user->followingCount])}} Of the users</small>
                     </div>
                 @else
                     <div class="">
