@@ -71,6 +71,9 @@
                 <div class="z-index-3 avatar-holder">
                     <img src="{{$user->avatar}}" class="rounded-circle">
                 </div>
+                <div class="">
+                    <small class="p-0 m-0">{{trans_choice('fans', Auth::user()->fansCount, ['number'=> count(ListsHelper::getUserFollowers(Auth::user()->id))])}} - {{trans_choice('following', Auth::user()->followingCount, ['number'=>Auth::user()->followingCount])}}</small>
+                </div>
                 <div>
                     @if(!Auth::check() || Auth::user()->id !== $user->id)
                         <div class="d-flex flex-row">
@@ -117,6 +120,7 @@
                                     </span>
                                     @endif
                                 </div>
+
                                 <span class="p-pill ml-2 pointer-cursor" data-toggle="tooltip" data-placement="top" title="{{__('Add to your lists')}}" onclick="Lists.showListAddModal();">
                                  @include('elements.icon',['icon'=>'list-outline'])
                             </span>
