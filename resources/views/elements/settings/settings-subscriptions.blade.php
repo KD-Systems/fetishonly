@@ -45,7 +45,7 @@
                         @switch($subscription->status)
                             @case('pending')
                                 @if ($activeSubsTab != 'subscriptions')
-                                    <span class="badge badge-warning">Initiate subscription</span>
+                                    <span class="badge badge-warning">Initiate</span>
                                     @break
                                 @endif
                             @case('update-needed')
