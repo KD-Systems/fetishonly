@@ -44,6 +44,10 @@
                     <div class="col-4 col-md-2">
                         @switch($subscription->status)
                             @case('pending')
+                                @if ($activeSubsTab != 'subscriptions')
+                                    <span class="badge badge-warning">Initiate subscription</span>
+                                    @break
+                                @endif
                             @case('update-needed')
                             @case('canceled')
                             <span class="badge badge-warning">{{ucfirst(__($subscription->status))}}</span>
