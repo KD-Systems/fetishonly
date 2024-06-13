@@ -44,6 +44,23 @@ class MembersHelperServiceProvider extends ServiceProvider
     public static function getSuggestedMembers($encodeToHtml = false, $filters = [])
     {
 
+        $members = User::whereHas('verification', function($q) {
+            $q->where('status', 'verified');
+        })->where('identity_verified_at', '!=', null)->inRandomOrder()->limit(3)->get();
+
+        // Return either raw data to the views or json encoded, rendered views
+        if ($encodeToHtml) {
+            $viewData = View::make('elements.feed.suggestions-wrapper')->with('profiles', $members);
+            if(isset($filters['isMobile'])){
+                $viewData->with('isMobile',true);
+            }
+            $membersData['html'] = $viewData->render();
+            return $membersData;
+        } else {
+            return $members;
+        }
+
+
         $skipEmptyProfiles = getSetting('feed.suggestions_skip_empty_profiles') ? true : false;
         $skipUnverifiedProfiles = getSetting('feed.suggestions_skip_unverified_profiles') ? true : false;
 
