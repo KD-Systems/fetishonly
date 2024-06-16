@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\BannedWord;
 use App\Http\Requests\DeletePostRequest;
 use App\Http\Requests\SavePostCommentRequest;
 use App\Http\Requests\SavePostRequest;
@@ -127,6 +128,9 @@ class PostsController extends Controller
                 $canPost = false;
             }
         }
+
+        $bannedWords = BannedWord::all()->pluck('word');
+
         Javascript::put([
             'isAllowedToPost' => $canPost,
             'mediaSettings' => [
@@ -134,7 +138,8 @@ class PostsController extends Controller
                 'max_file_upload_size' => (int)getSetting('media.max_file_upload_size'),
                 'use_chunked_uploads' => (bool)getSetting('media.use_chunked_uploads'),
                 'upload_chunk_size' => (int)getSetting('media.upload_chunk_size'),
-                'max_post_description_size' => (int)getSetting('feed.min_post_description')
+                'max_post_description_size' => (int)getSetting('feed.min_post_description'),
+                'banned_words' => $bannedWords
             ],
         ]);
 

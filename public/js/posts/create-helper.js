@@ -320,6 +320,18 @@ var PostCreate = {
      * @param postID
      */
     save: function (type = 'create', postID = false, forceSave = false) {
+
+        var draftText = $('#dropzone-uploader').val();
+        var banned_words = mediaSettings.banned_words;
+
+        for (let i = 0; i < banned_words.length; i++) {
+            // Check if the current word is a substring of the paragraph
+            if (draftText.includes(banned_words[i])) {
+                alert("You can't use the word " + banned_words[i]);
+                return false;
+            }
+        }
+
         if(FileUpload.isLoading === true && forceSave === false){
             $('.confirm-post-save').unbind('click');
             $('.confirm-post-save').on('click',function () {
@@ -328,8 +340,6 @@ var PostCreate = {
             $('#confirm-post-save').modal('show');
             return false;
         }
-
-        console.log(PostCreate.categories, FileUpload.attachaments);
 
         if(PostCreate.isCategoryRequired === true && PostCreate.categories.length === 0) {
             alert("You have to add minoum 1 category to post any video.");
