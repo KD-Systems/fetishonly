@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Model\Country;
+use App\Providers\AttachmentServiceProvider;
 use App\Providers\GenericHelperServiceProvider;
 use App\Providers\ListsHelperServiceProvider;
 use App\Providers\PostsHelperServiceProvider;
@@ -111,7 +112,13 @@ class ProfileController extends Controller
         if(getSetting('profiles.allow_profile_qr_code')){
             $additionalAssets[] = '/libs/easyqrcodejs/dist/easy.qrcode.min.js';
         }
+
+        // $additionalAssets['css'][] = '/libs/dropzone/dist/dropzone.css';
+        // $additionalAssets['js'][] = '/libs/dropzone/dist/dropzone.js';
+        // $additionalAssets['js'][] = '/js/pages/settings/profile.js';
+
         $data['additionalAssets'] = $additionalAssets;
+
 
         $paginatorConfig = [
             'next_page_url' => str_replace(['?page=', '?filter='], ['/posts?page=', '/posts?filter='], $posts->nextPageUrl()),
@@ -147,7 +154,14 @@ class ProfileController extends Controller
                 'user_id' =>  $this->user->id,
             ],
             'showLoginDialog' => $data['showLoginDialog'],
-            'postsFilter' => $postsFilter
+            'postsFilter' => $postsFilter,
+            'mediaSettings' => [
+                    'allowed_file_extensions' => '.'.str_replace(',', ',.', AttachmentServiceProvider::filterExtensions('imagesOnly')),
+                    'max_file_upload_size' => (int) getSetting('media.max_file_upload_size'),
+                    'manual_payments_file_extensions' => '.'.str_replace(',', ',.', AttachmentServiceProvider::filterExtensions('manualPayments')),
+                    'manual_payments_excel_icon' => asset('/img/excel-preview.svg'),
+                    'manual_payments_pdf_icon' => asset('/img/pdf-preview.svg'),
+                ],
         ]);
 
         return view('pages.profile', $data);

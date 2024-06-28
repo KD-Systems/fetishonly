@@ -25,8 +25,120 @@
             '/js/plugins/media/mediaswipe-loader.js',
             '/js/LoginModal.js',
             '/js/messenger/messenger.js',
+            '/js/pages/settings/settings.js',
+            '/js/suggestions.js',
+            '/libs/dropzone/dist/dropzone.js'
          ],$additionalAssets))->withFullUrl()
+
     !!}
+
+    {!!
+
+                JavaScript::put([
+                    'bioConfig' => [
+                        'allow_profile_bio_markdown' => getSetting('profiles.allow_profile_bio_markdown'),
+                        'allow_profile_bio_markdown_links' => getSetting('profiles.allow_profile_bio_markdown_links'),
+                    ],
+                ]);
+
+    !!}
+
+
+    <script>
+
+        $(function () {
+
+        ProfileSettings.initUploader('cover');
+
+        $('.profile-cover-bg').on('tap', function(e) {
+        e.preventDefault();
+        $('.profile-cover-bg .actions-holder').toggleClass('d-none');
+        });
+
+        $('.profile-cover-bg').on({
+        mouseenter: function() {
+        $('.profile-cover-bg .actions-holder').removeClass('d-none');
+        },
+        mouseleave: function() {
+        $('.profile-cover-bg .actions-holder').addClass('d-none');
+        }
+        });
+
+        });
+
+        var ProfileSettings = {
+
+        dropzones : {},
+        mdeEditor : null,
+
+        /**
+        * Instantiates the media uploader for avatar / cover
+        */
+        initUploader:function (type) {
+        let selector = '';
+        selector = '.profile-cover-bg';
+        if(type === 'avatar'){
+        selector = '.avatar-holder';
+        }
+        ProfileSettings.dropzones[type] = new window.Dropzone(selector, {
+        url: app.baseUrl + '/my/settings/profile/upload/'+type,
+        previewTemplate: document.querySelector('.dz-preview').innerHTML.replace('d-none', ''),
+        paramName: "file", // The name that will be used to transfer the file
+        headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        clickable:[`${selector} .upload-button`],
+        maxFilesize: mediaSettings.max_file_upload_size, // MB
+        addRemoveLinks: true,
+        dictRemoveFile: "x",
+        acceptedFiles: mediaSettings.allowed_file_extensions,
+        autoDiscover: false,
+        sending: function(file) {
+        file.previewElement.innerHTML = "";
+        },
+        success: function(file, response) {
+        $(selector + ' .card-img-top').attr('src',response.assetSrc);
+        if(type === 'avatar') {
+        $('.user-avatar').attr('src', response.assetSrc);
+        }
+        file.previewElement.innerHTML = "";
+        },
+        error: function(file, errorMessage) {
+        if(typeof errorMessage === 'string'){
+        launchToast('danger','Error ',errorMessage,'now');
+        }
+        else{
+        launchToast('danger','Error ',errorMessage.errors.file,'now');
+        }
+        file.previewElement.innerHTML = "";
+        }
+        });
+        },
+
+        /**
+        * Removes the user asset ( avatar / cover )
+        * @param type
+        */
+        removeUserAsset(type){
+        $.ajax({
+        type: 'POST',
+        url: app.baseUrl + '/my/settings/profile/remove/'+type,
+        success: function (result) {
+        launchToast('success','Success ',result.message,'now');
+        $('.profile-cover-bg img').attr('src', result.data.cover);
+        $('.avatar-holder img').attr('src', result.data.avatar);
+        },
+        error: function (result) {
+        // eslint-disable-next-line no-console
+        console.warn(result);
+        }
+        });
+        }
+
+        };
+
+    </script>
+
 @stop
 
 @section('styles')
@@ -40,6 +152,8 @@
             '/libs/photoswipe/dist/default-skin/default-skin.css',
             '/css/pages/profile.css',
             '/css/pages/lists.css',
+            '/css/pages/settings.css',
+            '/libs/dropzone/dist/dropzone.css',
             '/css/posts/post.css'
          ])->withFullUrl()
     !!}
@@ -61,11 +175,36 @@
     <div class="row">
         <div class="min-vh-100 col-12 col-md-8 border-right pr-md-0">
 
-            <div class="">
-                <div class="profile-cover-bg">
-                    <img class="card-img-top centered-and-cropped" src="{{$user->cover}}">
+            @if (Auth::check() && $user->id == Auth::user()->id)
+                <form method="POST" action="{{route('my.settings.profile.save',['type'=>'profile'])}}">
+                    @csrf
+                    @include('elements.dropzone-dummy-element')
+                    <div class="">
+                        <div class="card profile-cover-bg" style="background-color: black;">
+                            <img class="card-img-top centered-and-cropped" src="{{Auth::user()->cover}}">
+                            <div class="card-img-overlay d-flex justify-content-center align-items-center">
+                                <div class="actions-holder d-none">
+
+                                    <div class="d-flex">
+                                    <span class="h-pill h-pill-accent pointer-cursor mr-1 upload-button" data-toggle="tooltip" data-placement="top" title="{{__('Upload cover image')}}">
+                                         @include('elements.icon',['icon'=>'image','variant'=>'medium'])
+                                    </span>
+                                        <span class="h-pill h-pill-accent pointer-cursor" onclick="ProfileSettings.removeUserAsset('cover')" data-toggle="tooltip" data-placement="top" title="{{__('Remove cover image')}}">
+                                        @include('elements.icon',['icon'=>'close','variant'=>'medium'])
+                                    </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            @else
+                <div class="">
+                    <div class="profile-cover-bg">
+                        <img class="card-img-top centered-and-cropped" src="{{$user->cover}}">
+                    </div>
                 </div>
-            </div>
+            @endif
 
             <div class="container d-flex justify-content-between align-items-center">
                 <div class="z-index-3 avatar-holder">
