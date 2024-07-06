@@ -325,6 +325,9 @@ var PostCreate = {
         var banned_words = mediaSettings.banned_words;
 
         for (let i = 0; i < banned_words.length; i++) {
+
+            if(banned_words[i] === "")
+                continue;
             // Check if the current word is a substring of the paragraph
             if (draftText.includes(banned_words[i])) {
                 alert("You can't use the word " + banned_words[i]);
