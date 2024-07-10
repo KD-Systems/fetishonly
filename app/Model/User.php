@@ -76,7 +76,7 @@ class User extends \TCG\Voyager\Models\User implements MustVerifyEmail
      */
     public function getFansCountAttribute(){
         $activeSubscriptionsCount = Subscription::query()
-            ->where('recipient_user_id', Auth::user()->id)
+            ->where('recipient_user_id', $this->id)
             ->whereDate('expires_at', '>=', new \DateTime('now', new \DateTimeZone('UTC')))
             ->count();
 
@@ -88,7 +88,7 @@ class User extends \TCG\Voyager\Models\User implements MustVerifyEmail
      * @return int|mixed
      */
     public function getFollowingCountAttribute(){
-        $userId = Auth::user()->id;
+        $userId = $this->id;
         $userFollowingMembers = UserList::query()
             ->where(['user_id' => $userId, 'type' => 'following'])
             ->withCount('members')->first();
