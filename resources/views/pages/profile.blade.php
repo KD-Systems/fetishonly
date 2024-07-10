@@ -48,71 +48,72 @@
 
         $(function () {
 
-        ProfileSettings.initUploader('cover');
+            ProfileSettings.initUploader('avatar');
+            ProfileSettings.initUploader('cover');
 
-        $('.profile-cover-bg').on('tap', function(e) {
-        e.preventDefault();
-        $('.profile-cover-bg .actions-holder').toggleClass('d-none');
-        });
+            $('.profile-cover-bg').on('tap', function(e) {
+            e.preventDefault();
+            $('.profile-cover-bg .actions-holder').toggleClass('d-none');
+            });
 
-        $('.profile-cover-bg').on({
-        mouseenter: function() {
-        $('.profile-cover-bg .actions-holder').removeClass('d-none');
-        },
-        mouseleave: function() {
-        $('.profile-cover-bg .actions-holder').addClass('d-none');
-        }
-        });
+            $('.profile-cover-bg').on({
+            mouseenter: function() {
+            $('.profile-cover-bg .actions-holder').removeClass('d-none');
+            },
+            mouseleave: function() {
+            $('.profile-cover-bg .actions-holder').addClass('d-none');
+            }
+            });
 
-        });
+            });
 
-        var ProfileSettings = {
+            var ProfileSettings = {
 
-        dropzones : {},
-        mdeEditor : null,
+            dropzones : {},
+            mdeEditor : null,
 
-        /**
-        * Instantiates the media uploader for avatar / cover
-        */
-        initUploader:function (type) {
-        let selector = '';
-        selector = '.profile-cover-bg';
-        if(type === 'avatar'){
-        selector = '.avatar-holder';
-        }
-        ProfileSettings.dropzones[type] = new window.Dropzone(selector, {
-        url: app.baseUrl + '/my/settings/profile/upload/'+type,
-        previewTemplate: document.querySelector('.dz-preview').innerHTML.replace('d-none', ''),
-        paramName: "file", // The name that will be used to transfer the file
-        headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        clickable:[`${selector} .upload-button`],
-        maxFilesize: mediaSettings.max_file_upload_size, // MB
-        addRemoveLinks: true,
-        dictRemoveFile: "x",
-        acceptedFiles: mediaSettings.allowed_file_extensions,
-        autoDiscover: false,
-        sending: function(file) {
-        file.previewElement.innerHTML = "";
-        },
-        success: function(file, response) {
-        $(selector + ' .card-img-top').attr('src',response.assetSrc);
-        if(type === 'avatar') {
-        $('.user-avatar').attr('src', response.assetSrc);
-        }
-        file.previewElement.innerHTML = "";
-        },
-        error: function(file, errorMessage) {
-        if(typeof errorMessage === 'string'){
-        launchToast('danger','Error ',errorMessage,'now');
-        }
-        else{
-        launchToast('danger','Error ',errorMessage.errors.file,'now');
-        }
-        file.previewElement.innerHTML = "";
-        }
-        });
+            /**
+            * Instantiates the media uploader for avatar / cover
+            */
+            initUploader:function (type) {
+            let selector = '';
+            selector = '.profile-cover-bg';
+            if(type === 'avatar'){
+            selector = '.avatar-holder';
+            }
+            ProfileSettings.dropzones[type] = new window.Dropzone(selector, {
+            url: app.baseUrl + '/my/settings/profile/upload/'+type,
+            previewTemplate: document.querySelector('.dz-preview').innerHTML.replace('d-none', ''),
+            paramName: "file", // The name that will be used to transfer the file
+            headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            clickable:[`${selector} .upload-button`],
+            maxFilesize: mediaSettings.max_file_upload_size, // MB
+            addRemoveLinks: true,
+            dictRemoveFile: "x",
+            acceptedFiles: mediaSettings.allowed_file_extensions,
+            autoDiscover: false,
+            sending: function(file) {
+            file.previewElement.innerHTML = "";
+            },
+            success: function(file, response) {
+            $(selector + ' .card-img-top').attr('src',response.assetSrc);
+            if(type === 'avatar') {
+            $('.user-avatar').attr('src', response.assetSrc);
+            }
+            file.previewElement.innerHTML = "";
+            },
+            error: function(file, errorMessage) {
+            if(typeof errorMessage === 'string'){
+            launchToast('danger','Error ',errorMessage,'now');
+            }
+            else{
+            launchToast('danger','Error ',errorMessage.errors.file,'now');
+            }
+            file.previewElement.innerHTML = "";
+            }
+            });
         },
 
         /**
@@ -120,20 +121,20 @@
         * @param type
         */
         removeUserAsset(type){
-        $.ajax({
-        type: 'POST',
-        url: app.baseUrl + '/my/settings/profile/remove/'+type,
-        success: function (result) {
-        launchToast('success','Success ',result.message,'now');
-        $('.profile-cover-bg img').attr('src', result.data.cover);
-        $('.avatar-holder img').attr('src', result.data.avatar);
-        },
-        error: function (result) {
-        // eslint-disable-next-line no-console
-        console.warn(result);
-        }
-        });
-        }
+            $.ajax({
+                type: 'POST',
+                url: app.baseUrl + '/my/settings/profile/remove/'+type,
+                success: function (result) {
+                    launchToast('success','Success ',result.message,'now');
+                    $('.profile-cover-bg img').attr('src', result.data.cover);
+                    $('.avatar-holder img').attr('src', result.data.avatar);
+            },
+                error: function (result) {
+                    // eslint-disable-next-line no-console
+                    console.warn(result);
+                    }
+                });
+            }
 
         };
 
@@ -182,9 +183,8 @@
                     <div class="">
                         <div class="card profile-cover-bg" style="background-color: black;">
                             <img class="card-img-top centered-and-cropped" src="{{Auth::user()->cover}}">
-                            <div class="card-img-overlay d-flex justify-content-center align-items-center">
-                                <div class="actions-holder d-none">
-
+                            <div class="card-img-overlay d-flex justify-content-end align-items-end">
+                                <div class="bg-white">
                                     <div class="d-flex">
                                     <span class="h-pill h-pill-accent pointer-cursor mr-1 upload-button" data-toggle="tooltip" data-placement="top" title="{{__('Upload cover image')}}">
                                          @include('elements.icon',['icon'=>'image','variant'=>'medium'])
@@ -207,9 +207,28 @@
             @endif
 
             <div class="container d-flex justify-content-between align-items-center">
-                <div class="z-index-3 avatar-holder">
-                    <img src="{{$user->avatar}}" class="rounded-circle">
-                </div>
+                @if (Auth::check() && $user->id == Auth::user()->id)
+                    <div class="card avatar-holder">
+                        <img class="card-img-top" src="{{Auth::user()->avatar}}">
+                            <div class="card-img-overlay d-flex justify-content-center align-items-end">
+                                <div class="bg-white">
+                                    <div class="d-flex">
+                                    <span class="h-pill h-pill-accent pointer-cursor mr-1 upload-button" data-toggle="tooltip" data-placement="top" title="{{__('Upload avatar')}}">
+                                        @include('elements.icon',['icon'=>'image','variant'=>'medium'])
+                                    </span>
+                                        <span class="h-pill h-pill-accent pointer-cursor" onclick="ProfileSettings.removeUserAsset('avatar')" data-toggle="tooltip" data-placement="top" title="{{__('Remove avatar')}}">
+                                        @include('elements.icon',['icon'=>'close','variant'=>'medium'])
+                                    </span>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                @else
+                    <div class="z-index-3 avatar-holder">
+                        <img src="{{$user->avatar}}" class="rounded-circle">
+                    </div>
+                @endif
                 @if (!Auth::check() || Auth::user()->id !== $user->id)
                     <div class="">
                         <small class="p-0 m-0">{{trans_choice('fans', $user->fansCount, ['number'=> count(ListsHelper::getUserFollowers($user->id))])}} - {{trans_choice('following', $user->followingCount, ['number'=>$user->followingCount])}}</small>
