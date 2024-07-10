@@ -32,17 +32,6 @@
 
     !!}
 
-    {!!
-
-                JavaScript::put([
-                    'bioConfig' => [
-                        'allow_profile_bio_markdown' => getSetting('profiles.allow_profile_bio_markdown'),
-                        'allow_profile_bio_markdown_links' => getSetting('profiles.allow_profile_bio_markdown_links'),
-                    ],
-                ]);
-
-    !!}
-
 
     <script>
 
