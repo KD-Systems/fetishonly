@@ -78,7 +78,7 @@ class User extends \TCG\Voyager\Models\User implements MustVerifyEmail
         $activeSubscriptionsCount = Subscription::query()
             ->where('recipient_user_id', Auth::user()->id)
             ->whereDate('expires_at', '>=', new \DateTime('now', new \DateTimeZone('UTC')))
-            ->count('id');
+            ->count();
 
         return $activeSubscriptionsCount;
     }
