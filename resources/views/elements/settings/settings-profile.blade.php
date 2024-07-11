@@ -11,8 +11,8 @@
         <div class="">
             <div class="card profile-cover-bg">
                 <img class="card-img-top centered-and-cropped" src="{{Auth::user()->cover}}">
-                <div class="card-img-overlay d-flex justify-content-center align-items-center">
-                    <div class="actions-holder d-none">
+                <div class="card-img-overlay d-flex justify-content-end align-items-end">
+                    <div class="actions-holder bg-white" style="display: block !important;">
 
                         <div class="d-flex">
                         <span class="h-pill h-pill-accent pointer-cursor mr-1 upload-button" data-toggle="tooltip" data-placement="top" title="{{__('Upload cover image')}}">
@@ -29,8 +29,8 @@
         <div class="container">
             <div class="card avatar-holder">
                 <img class="card-img-top" src="{{Auth::user()->avatar}}">
-                <div class="card-img-overlay d-flex justify-content-center align-items-center">
-                    <div class="actions-holder d-none">
+                <div class="card-img-overlay d-flex justify-content-center align-items-end">
+                    <div class="actions-holder bg-white" style="display: block !important;">
                         <div class="d-flex">
                         <span class="h-pill h-pill-accent pointer-cursor mr-1 upload-button" data-toggle="tooltip" data-placement="top" title="{{__('Upload avatar')}}">
                             @include('elements.icon',['icon'=>'image','variant'=>'medium'])
