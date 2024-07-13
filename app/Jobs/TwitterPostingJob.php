@@ -62,7 +62,20 @@ class TwitterPostingJob implements ShouldQueue
         $client = new Client();
 
         if($this->post->attachments->count() > 0) {
-            $media_id = $this->uploadMedia($this->post->attachments->first()->path);
+            $media_id = $this->uploadMedia($this->post->attachments->first()->path)->media_id;
+        }
+
+        if($media_id != false) {
+            $json = [
+                'text' => "$text $route",
+                "media" => [
+                    "media_ids" => [$media_id]
+                ]
+            ];
+        } else {
+            $json = [
+                'text' => "$text $route",
+            ];
         }
 
 
@@ -73,12 +86,7 @@ class TwitterPostingJob implements ShouldQueue
                     'Content-Type' => 'application/json',
                     'Authorization' => 'Bearer '. $twitterAccess->access_token
                 ],
-                'json' => [
-                    'text' => "$text $route",
-                    ($media_id) ?? "media" => [
-                        "media_ids" => [$media_id]
-                    ]
-                ]
+                'json' => $json
             ]);
         } catch (Exception $ex) {
             logger("Twitter Posting Exception: ", [$ex->getMessage()]);
