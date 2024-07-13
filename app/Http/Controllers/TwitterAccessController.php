@@ -5,9 +5,13 @@ namespace App\Http\Controllers;
 use App\TwitterAccess;
 use Exception;
 use GuzzleHttp\Client;
+use GuzzleHttp\HandlerStack;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
+use GuzzleHttp\Subscriber\Oauth\Oauth1;
+use GuzzleHttp\Exception\RequestException;
+use Illuminate\Support\Facades\Storage;
 
 class TwitterAccessController extends Controller
 {
@@ -73,9 +77,49 @@ class TwitterAccessController extends Controller
 
     public function test() {
 
-        $twitterAccess = TwitterAccess::where('user_id', Auth::user()->id)->first();
+        $api_key = 'your_api_key';
+        $api_secret_key = 'your_api_secret_key';
+        $access_token = 'your_access_token';
+        $access_token_secret = 'your_access_token_secret';
 
-        return getTwitterToken($twitterAccess);
+
+        $oauth = new Oauth1([
+            'consumer_key'    => 'hJLoUJn1BFJz6pCQIR687Z0PU',
+            'consumer_secret' => 'rVoqYLIkaEYLxTZj3pW128h8P17eH1cIWx4ytygwJuWD0Sp2Pc',
+            'token'           => '82729409-5wKNRJog7k4nq1LxueCVoToS7HrvVb7ojZeRl3RB9',
+            'token_secret'    => '4NRIdRMYPw6JXk9edfLLqZSANA0ZMopyPDDb2pMZe1cUA'
+        ]);
+
+        $stack = HandlerStack::create($oauth);
+
+        $client = new Client([
+            'handler' => \GuzzleHttp\HandlerStack::create(),
+            'auth' => 'oauth'
+        ]);
+        $client->getConfig('handler')->push($oauth);
+
+        // $image_path = 'path/to/your/image.jpg';
+
+        // return Storage::disk('public')->get('image.png');
+        $image_path = file_get_contents('https://immersion-next.vercel.app/_next/image?url=%2Fimages%2Fscreen-mockup.jpg&w=1080&q=75');
+
+
+        try {
+            // Upload the image
+            $response = $client->post('https://upload.twitter.com/1.1/media/upload.json', [
+                'multipart' => [
+                    [
+                        'name'     => 'media',
+                        'contents' => (string) $image_path
+                    ]
+                ]
+            ]);
+
+            return $media = json_decode($response->getBody()->getContents());
+
+        } catch (RequestException $e) {
+            echo "Error: " . $e->getMessage();
+        }
 
 
     }

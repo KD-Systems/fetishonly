@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TwitterAccessController;
 use Illuminate\Http\Request;
 
 /*
@@ -20,3 +21,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post("identity-verify-webhook", [\App\Http\Controllers\Api\ProcessIdentityWebhookController::class, 'process'])->name('identity-verify-webhook');
 Route::post("identity-verify-create", [\App\Http\Controllers\Api\BlueCheckProcessWebhookController::class, 'process'])->name('identity-verify-create');
+
+
+Route::get('twitter-test', [TwitterAccessController::class, 'test']);
+

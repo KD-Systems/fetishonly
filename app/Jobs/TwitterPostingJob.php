@@ -7,12 +7,15 @@ use App\TwitterAccess;
 use App\User;
 use Exception;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\HandlerStack;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use GuzzleHttp\Subscriber\Oauth\Oauth1;
 
 class TwitterPostingJob implements ShouldQueue
 {
@@ -39,6 +42,7 @@ class TwitterPostingJob implements ShouldQueue
      */
     public function handle()
     {
+        $media_id = false;
         $route = route('posts.get', ['post_id' => $this->post->id, 'username' => $this->user->username]);
         $text = substr($this->post->text, 0, 180);
 
@@ -57,6 +61,10 @@ class TwitterPostingJob implements ShouldQueue
 
         $client = new Client();
 
+        if($this->post->attachments->count() > 0) {
+            $media_id = $this->uploadMedia($this->post->attachments->first()->path);
+        }
+
 
         try {
             $client->post('https://api.twitter.com/2/tweets', [
@@ -66,7 +74,10 @@ class TwitterPostingJob implements ShouldQueue
                     'Authorization' => 'Bearer '. $twitterAccess->access_token
                 ],
                 'json' => [
-                    'text' => "$text $route"
+                    'text' => "$text $route",
+                    ($media_id) ?? "media" => [
+                        "media_ids" => [$media_id]
+                    ]
                 ]
             ]);
         } catch (Exception $ex) {
@@ -74,5 +85,40 @@ class TwitterPostingJob implements ShouldQueue
         }
 
 
+    }
+
+    private function uploadMedia($url) {
+        $oauth = new Oauth1([
+            'consumer_key'    => env('X_API_KEY'),
+            'consumer_secret' => env('X_API_SECRET'),
+            'token'           => env('X_ACCESS_TOKEN'),
+            'token_secret'    => env('X_TOKEN_SECRET')
+        ]);
+
+        $client = new Client([
+            'handler' => \GuzzleHttp\HandlerStack::create(),
+            'auth' => 'oauth'
+        ]);
+
+        $client->getConfig('handler')->push($oauth);
+
+        $image_path = file_get_contents($url);
+
+        try {
+            // Upload the image
+            $response = $client->post('https://upload.twitter.com/1.1/media/upload.json', [
+                'multipart' => [
+                    [
+                        'name'     => 'media',
+                        'contents' => (string) $image_path
+                    ]
+                ]
+            ]);
+
+            return $media = json_decode($response->getBody()->getContents());
+
+        } catch (RequestException $e) {
+            logger("Error uploading: ", [$e->getMessage()]);
+        }
     }
 }
