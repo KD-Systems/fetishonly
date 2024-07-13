@@ -103,7 +103,7 @@ class TwitterPostingJob implements ShouldQueue
         $client = new Client();
 
         try {
-            $response = $client->post('https://api.twitter.com/2/users/me', [
+            $response = $client->get('https://api.twitter.com/2/users/me', [
                 'headers' => [
                     'Accept' => 'application/json',
                     'Content-Type' => 'application/json',
