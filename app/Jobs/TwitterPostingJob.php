@@ -65,7 +65,7 @@ class TwitterPostingJob implements ShouldQueue
         $client = new Client();
 
         if($this->post->attachments->count() > 0) {
-            $media_id = $this->uploadMedia($this->post->attachments->first()->path)->media_id;
+            $media_id = $this->uploadMedia($this->post->attachments->first()->path, $twitterUser['data']['id'])->media_id;
         }
 
         if($media_id != false) {
@@ -111,13 +111,13 @@ class TwitterPostingJob implements ShouldQueue
                 ]
             ]);
 
-            return json_decode($response->getBody()->getContents());
+            return json_decode($response->getBody()->getContents(), true);
         } catch (\Throwable $th) {
             logger("Error: ", [$th->getMessage()]);
         }
     }
 
-    private function uploadMedia($url) {
+    private function uploadMedia($url, $ownerId) {
         $oauth = new Oauth1([
             'consumer_key'    => env('X_API_KEY'),
             'consumer_secret' => env('X_API_SECRET'),
@@ -141,6 +141,14 @@ class TwitterPostingJob implements ShouldQueue
                     [
                         'name'     => 'media',
                         'contents' => (string) $image_path
+                    ],
+                    [
+                        'name'     => 'media_category',
+                        'contents' => 'tweet_image'
+                    ],
+                    [
+                        'name'     => 'additional_owners',
+                        'contents' => ["$ownerId"]
                     ]
                 ]
             ]);
