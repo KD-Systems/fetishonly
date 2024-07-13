@@ -59,6 +59,9 @@ class TwitterPostingJob implements ShouldQueue
         if(!$twitterAccess)
             return;
 
+
+        $twitterUser = $this->getTwiteerUser($twitterAccess);
+
         $client = new Client();
 
         if($this->post->attachments->count() > 0) {
@@ -93,6 +96,25 @@ class TwitterPostingJob implements ShouldQueue
         }
 
 
+    }
+
+
+    private function getTwiteerUser($twitterAccess) {
+        $client = new Client();
+
+        try {
+            $response = $client->post('https://api.twitter.com/2/tweets', [
+                'headers' => [
+                    'Accept' => 'application/json',
+                    'Content-Type' => 'application/json',
+                    'Authorization' => 'Bearer '. $twitterAccess->access_token
+                ]
+            ]);
+
+            return json_decode($response->getBody()->getContents());
+        } catch (\Throwable $th) {
+            logger("Error: ", [$th->getMessage()]);
+        }
     }
 
     private function uploadMedia($url) {
