@@ -69,7 +69,7 @@ class TwitterPostingJob implements ShouldQueue
             $json = [
                 'text' => "$text $route",
                 "media" => [
-                    "media_ids" => [$media_id]
+                    "media_ids" => ["$media_id"]
                 ]
             ];
         } else {
