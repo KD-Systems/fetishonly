@@ -148,7 +148,7 @@ class TwitterPostingJob implements ShouldQueue
                     ],
                     [
                         'name'     => 'additional_owners',
-                        'contents' => ["$ownerId"]
+                        'contents' => $ownerId
                     ]
                 ]
             ]);
