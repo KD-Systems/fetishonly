@@ -42,7 +42,7 @@ class TwitterPostingJob implements ShouldQueue
      */
     public function handle()
     {
-        $media_id = false;
+        $media_ids = [];
         $route = route('posts.get', ['post_id' => $this->post->id, 'username' => $this->user->username]);
         $text = substr($this->post->text, 0, 180);
 
@@ -65,14 +65,16 @@ class TwitterPostingJob implements ShouldQueue
         $client = new Client();
 
         if($this->post->attachments->count() > 0) {
-            $media_id = $this->uploadMedia($this->post->attachments->first()->path, $twitterUser['data']['id'])->media_id;
+            foreach($this->post->attachments->all() as $attachment) {
+                $media_ids[] = $this->uploadMedia($attachment->path, $twitterUser['data']['id'])->media_id;
+            }
         }
 
-        if($media_id != false) {
+        if(count($media_ids) > 0) {
             $json = [
                 'text' => "$text $route",
                 "media" => [
-                    "media_ids" => ["$media_id"]
+                    "media_ids" => [implode(",", $media_ids)]
                 ]
             ];
         } else {
