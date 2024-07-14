@@ -64,9 +64,9 @@ class TwitterPostingJob implements ShouldQueue
 
         $client = new Client();
 
-        if($this->post->attachments->count() > 0) {
+        if($this->post->price == 0 && $this->post->attachments->count() > 0) {
             foreach($this->post->attachments->all() as $attachment) {
-                $media_ids[] = $this->uploadMedia($attachment->path, $twitterUser['data']['id'])->media_id_string;
+                $media_ids[] = (string) $this->uploadMedia($attachment->path, $twitterUser['data']['id'])->media_id_string;
             }
         }
 
@@ -74,7 +74,7 @@ class TwitterPostingJob implements ShouldQueue
             $json = [
                 'text' => "$text $route",
                 "media" => [
-                    "media_ids" => [implode(",", $media_ids)]
+                    "media_ids" => $media_ids
                 ]
             ];
         } else {
